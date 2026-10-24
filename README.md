@@ -6,16 +6,11 @@
 
 **An expanding realism and immersion suite for Farming Simulator 25.**
 
-<img src="docs/assets/ars-hero.png" alt="ARS concept artwork depicting connected vehicle physics, wear, maintenance and machinery systems" width="100%">
+<a href="docs/ROADMAP.md"><img src="docs/assets/roadmap-live.png" alt="ARS cinematic roadmap with eight feature themes, live GitHub Issue status and evidence-based verified-share bars" width="100%"></a>
 
-<sub>Promotional concept artwork — not an in-game screenshot.</sub>
+<sub>Cinematic concept artwork, not an in-game screenshot. The eight status indicators and verified-share bars are regenerated from public GitHub roadmap Issues. A bar shows the proportion of assigned epics explicitly **verified or released**, not guessed engineering completion. Some cross-cutting epics belong to more than one theme.</sub>
 
-### Live Development Roadmap
-
-<a href="docs/ROADMAP.md"><img src="docs/assets/roadmap.svg" alt="Live ARS development roadmap showing Now, Next, Planned and Future, automatically generated from labeled GitHub Issues" width="100%"></a>
-
-<sub>Live from [GitHub roadmap issues](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues?q=is%3Aissue+label%3Aroadmap) · [Read the full accessible roadmap](docs/ROADMAP.md) · Status is evidence-based; plans are not release promises.</sub>
-
+<sub>[View all public roadmap issues](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues?q=is%3Aissue+label%3Aroadmap) · [Accessible text roadmap and live phase status](docs/ROADMAP.md) · [Original phase dashboard](docs/assets/roadmap.svg) · No invented deadlines or percentages.</sub>
 
 ## The Mission
 
