@@ -10,27 +10,37 @@
 
 <sub>Promotional concept artwork, not an in-game screenshot.</sub>
 
-[The idea](#the-idea) · [Connected systems](#connected-systems) · [Built to grow](#built-to-grow) · [Follow ARS](#follow-ars)
+[The Mission](#the-mission) · [Connected Systems](#connected-systems) · [Built to Grow](#built-to-grow) · [Follow ARS](#follow-ars)
 
 </div>
 
-## The idea
+<div align="center">
 
-**Realism should not be a patchwork.**
+## The Mission
 
-One mod changes driving. Another handles damage. A third adds maintenance. More mods bring more features, but overlapping vehicle systems can also mean inconsistent behavior, competing calculations and endless compatibility juggling.
+**More realism should mean more farming — not more troubleshooting.**
+
+ARS was born from a familiar frustration: building a truly immersive FS25 setup can mean assembling a small fleet of separate mods, only to spend more time managing overlapping systems than enjoying the machinery.
+
+**The tractor should need maintenance. Your mod list shouldn't.**
 
 **Advanced Realms Suite takes a different approach.**
 
-ARS is being developed as **one integrated realism ecosystem**, where vehicle physics, operating loads, component condition, wear, failures and maintenance are designed to work together from the start.
+Vehicle physics, operating loads, mechanical condition, wear, breakdowns and maintenance are being developed as **one connected realism ecosystem** — designed to share information and complement each other from the start.
 
 **Fewer disconnected mechanics. More meaningful interactions. One coherent machinery experience.**
 
-## Connected systems
+</div>
 
-The ambition is to make what happens to a machine matter throughout its working life:
+<div align="center">
+
+## Connected Systems
+
+What happens to a machine should matter throughout its working life.
 
 **Drive & work → Load & stress → Wear & failures → Diagnosis & repairs → Back to work**
+
+</div>
 
 | ARS system | What it brings together |
 | :--- | :--- |
@@ -41,24 +51,28 @@ The ambition is to make what happens to a machine matter throughout its working 
 | **Operational immersion** | Fuel behavior, dirt, exhaust and feedback from real machinery use |
 | **Unified game integration** | Connected interfaces, persistent machine state and multiplayer-aware design |
 
-These systems are the **scope and direction of ARS**. Individual features are implemented, tested and expanded over time.
+<div align="center">
 
-## Built to grow
+*These are the scope and direction of ARS. Individual features are implemented, tested and expanded over time.*
+
+## Built to Grow
 
 **One suite does not mean one small feature.**
 
-ARS is designed as an expanding foundation for machinery realism. New capabilities should become part of the same technical ecosystem, share relevant vehicle information and complement existing mechanics rather than compete with them.
+ARS is designed as an expanding foundation for machinery realism. New capabilities should fit into the same ecosystem, share relevant vehicle information and reinforce existing mechanics instead of competing with them.
 
-The long-term goal is an all-in-one experience that reduces the need to assemble a large collection of partially overlapping realism mods.
+The long-term goal: replace the hassle of assembling a large stack of partially overlapping realism mods with **one growing, coherent experience**.
 
-That is the ARS philosophy: **integrate, connect, expand.**
+**Integrate. Connect. Expand.**
 
 ## Follow ARS
 
-Development is active, with new gameplay systems and integrations being built and evaluated step by step. The project prioritizes real in-game behavior, understandable technical feedback and stable interactions over inflated feature claims.
+Development is active. New gameplay systems and integrations are being built and evaluated step by step, with real in-game behavior, understandable feedback and stable interactions taking priority.
 
-[**GitHub Discussions**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/discussions) · [**Issues & suggestions**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/new/choose) · [**Releases**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/releases) · [**Support on Ko-fi**](https://ko-fi.com/keilerhirsch)
+[**GitHub Discussions**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/discussions) · [**Issues & Suggestions**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/new/choose) · [**Releases**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/releases) · [**Support on Ko-fi**](https://ko-fi.com/keilerhirsch)
 
 ---
 
 <sub>ARS is an independent community project, not affiliated with or endorsed by GIANTS Software. Project-controlled software is licensed under [EUPL-1.2](LICENSE); third-party resources retain their respective rights. See [Contributing](CONTRIBUTING.md), [Security](SECURITY.md) and [Third-party notices](THIRD_PARTY_NOTICES.md).</sub>
+
+</div>
