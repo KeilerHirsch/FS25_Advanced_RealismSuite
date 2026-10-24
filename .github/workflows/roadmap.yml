@@ -1,0 +1,51 @@
+name: Refresh live ARS roadmap
+
+on:
+  workflow_dispatch:
+  issues:
+    types: [opened, edited, labeled, unlabeled, closed, reopened, deleted, transferred]
+  push:
+    branches: [main]
+    paths:
+      - tools/render_roadmap.py
+      - .github/workflows/roadmap.yml
+  schedule:
+    - cron: "23 */6 * * *"
+
+permissions:
+  contents: write
+  issues: read
+
+concurrency:
+  group: refresh-ars-roadmap
+  cancel-in-progress: false
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Generate SVG and readable issue overview
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python tools/render_roadmap.py
+      - name: Commit updated roadmap only when it changed
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add docs/assets/roadmap.svg docs/ROADMAP.md
+          if git diff --cached --quiet; then
+            echo "Roadmap content unchanged"
+            exit 0
+          fi
+          git -c user.name='github-actions[bot]' \
+              -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+              commit -m "docs(roadmap): refresh visual from public issues"
+          git pull --rebase origin main
+          git push origin HEAD:main
