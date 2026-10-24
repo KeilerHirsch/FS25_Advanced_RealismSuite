@@ -10,6 +10,13 @@
 
 <sub>Promotional concept artwork — not an in-game screenshot.</sub>
 
+### Live Development Roadmap
+
+<a href="docs/ROADMAP.md"><img src="docs/assets/roadmap.svg" alt="Live ARS development roadmap showing Now, Next, Planned and Future, automatically generated from labeled GitHub Issues" width="100%"></a>
+
+<sub>Live from [GitHub roadmap issues](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues?q=is%3Aissue+label%3Aroadmap) · [Read the full accessible roadmap](docs/ROADMAP.md) · Status is evidence-based; plans are not release promises.</sub>
+
+
 ## The Mission
 
 **More realism. Less mod juggling.**
