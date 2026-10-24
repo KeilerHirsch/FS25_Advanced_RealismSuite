@@ -7,7 +7,9 @@
 
 **IN DEVELOPMENT · NO PUBLIC RELEASE YET**
 
-*Hero artwork placeholder — the final visual and verified in-game screenshots will be added later.*
+<img src="docs/assets/ars-hero.png" alt="Advanced Realms Suite concept artwork: a tractor connecting machinery condition, vehicle physics, fuel and maintenance systems" width="100%">
+
+*Early promotional concept artwork — not an in-game screenshot. Actual gameplay previews will be added after testing.*
 
 [Vision](#why-one-suite) · [Systems](#systems) · [Development status](#development-status) · [Contribute](CONTRIBUTING.md) · [Discussions](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/discussions)
 
