@@ -24,7 +24,7 @@ ARS takes a different approach: **vehicle physics, driving, machinery wear, brea
 
 ### Discover ARS
 
-[**Explore the Wiki**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/wiki) · [**Connected Systems**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/wiki/Connected-Systems) · [**Join the Discussion**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/discussions) · [**Releases**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/releases)
+[**Community Inspirations & Thanks**](docs/COMMUNITY_INSPIRATIONS.md) · [**Explore the Wiki**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/wiki) · [**Connected Systems**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/wiki/Connected-Systems) · [**Join the Discussion**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/discussions) · [**Releases**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/releases)
 
 <sub>ARS is an independent community project under active development. Feature availability will expand through tested releases.</sub>
 
