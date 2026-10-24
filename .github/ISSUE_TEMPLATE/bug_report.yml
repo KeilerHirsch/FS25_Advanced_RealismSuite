@@ -1,0 +1,66 @@
+name: Bug report
+description: Report a reproducible gameplay or technical defect
+title: "[Bug] "
+labels: ["bug", "needs-reproduction"]
+body:
+  - type: markdown
+    attributes:
+      value: "Please redact personal information from logs. Do not upload your only savegame."
+  - type: input
+    id: ars_version
+    attributes:
+      label: ARS version / build
+      placeholder: "For example, development build and date"
+    validations:
+      required: true
+  - type: input
+    id: game_version
+    attributes:
+      label: Farming Simulator 25 version
+    validations:
+      required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Game mode
+      options:
+        - Singleplayer
+        - Multiplayer host
+        - Multiplayer client
+        - Dedicated server
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Vehicle, map and relevant mods
+      description: "Name the machine, attachments and other mods that may interact."
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps
+      placeholder: "1. Start on a test save ...\n2. ...\n3. ..."
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized logs, screenshots or additional evidence
+      description: "Remove personal paths, tokens, account IDs and other private data."
+      render: text
+    validations:
+      required: false

@@ -1,0 +1,21 @@
+# Local builds, tests and user-specific files
+/dist/
+/work/
+*.log
+*.tmp
+*.bak
+*.zip
+
+# Local tooling
+__pycache__/
+.pytest_cache/
+node_modules/
+.env
+.env.*
+!.env.example
+
+# Operating system / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

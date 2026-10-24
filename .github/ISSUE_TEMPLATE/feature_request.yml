@@ -1,0 +1,33 @@
+name: Feature request
+description: Suggest an improvement to integrated ARS gameplay
+title: "[Feature] "
+labels: ["enhancement", "gameplay"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Player problem or missing behavior
+      description: "What feels unrealistic, fragmented or difficult today?"
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Desired gameplay behavior
+      description: "Focus on outcomes, not copied code or assets from other mods."
+    validations:
+      required: true
+  - type: textarea
+    id: interactions
+    attributes:
+      label: Which ARS systems should interact?
+      description: "For example: physics, load, wear, repair, UI or savegame."
+    validations:
+      required: false
+  - type: textarea
+    id: references
+    attributes:
+      label: References or examples
+      description: "Links and observations are welcome; do not paste proprietary content."
+    validations:
+      required: false

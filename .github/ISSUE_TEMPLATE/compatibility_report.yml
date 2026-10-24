@@ -1,0 +1,48 @@
+name: Compatibility report
+description: Investigate interactions with another Farming Simulator 25 mod
+title: "[Compatibility] "
+labels: ["compatibility", "needs-reproduction"]
+body:
+  - type: input
+    id: other_mod
+    attributes:
+      label: Other mod and version
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: ARS and FS25 versions
+    validations:
+      required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Mode
+      options:
+        - Singleplayer
+        - Multiplayer host
+        - Multiplayer client
+        - Dedicated server
+    validations:
+      required: true
+  - type: textarea
+    id: interaction
+    attributes:
+      label: What conflicts or behaves unexpectedly?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: How to reproduce
+      description: "Ideally compare each mod separately and both enabled on a copied save."
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Sanitized logs or screenshots
+      description: "Do not expose player identities, paths or secrets."
+    validations:
+      required: false

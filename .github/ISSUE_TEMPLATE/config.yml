@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: General questions and gameplay discussions
+    url: https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/discussions
+    about: Ask questions and share ideas before opening an implementation issue.
