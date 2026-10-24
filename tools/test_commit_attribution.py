@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
+import subprocess
 import unittest
-from check_commit_attribution import ambiguous_coauthors
+from unittest.mock import patch
+from check_commit_attribution import ambiguous_coauthors, audit
 
 
 class AttributionTests(unittest.TestCase):
@@ -36,6 +38,41 @@ class AttributionTests(unittest.TestCase):
         self.assertEqual(ambiguous_coauthors(
             "An older commit said Co-authored-by: "
             "KeilerHirsch <noreply@users.noreply.github.com>."), [])
+
+
+    @patch("check_commit_attribution.git")
+    def test_history_rewrite_scans_entire_new_history(self, mocked_git):
+        def fake_git(*args):
+            if args[0] == "cat-file":
+                raise subprocess.CalledProcessError(128, args)
+            if args[0] == "rev-list":
+                self.assertEqual(args[-1], "b" * 40)
+                return "abcde12345"
+            if args[0] == "log":
+                return "Co-authored-by: Bad <noreply@users.noreply.github.com>"
+            raise AssertionError(args)
+        mocked_git.side_effect = fake_git
+        violations, scanned = audit("push", {
+            "before": "a" * 40, "after": "b" * 40})
+        self.assertEqual(scanned, 1)
+        self.assertEqual(violations, [(
+            "abcde12345", ["noreply@users.noreply.github.com"])])
+
+    @patch("check_commit_attribution.git")
+    def test_normal_push_checks_only_delta(self, mocked_git):
+        def fake_git(*args):
+            if args[0] == "cat-file":
+                return ""
+            if args[0] == "rev-list":
+                self.assertEqual(args[-1], "a" * 40 + ".." + "b" * 40)
+                return "abcde12345"
+            if args[0] == "log":
+                return "Plain correctly attributed commit"
+            raise AssertionError(args)
+        mocked_git.side_effect = fake_git
+        violations, scanned = audit("push", {
+            "before": "a" * 40, "after": "b" * 40})
+        self.assertEqual((violations, scanned), ([], 1))
 
 
 if __name__ == "__main__":

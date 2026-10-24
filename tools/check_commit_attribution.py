@@ -32,7 +32,15 @@ def audit(event, payload):
             raise ValueError("Cannot verify a push without a previous commit")
     else:
         raise ValueError(f"Unsupported event {event}")
-    commits = git("rev-list", "--no-merges", f"{old}..{new}").splitlines()
+    # A force-push may leave the previous commit outside the new clone.
+    # Do not treat missing history as success: audit the entire new chain.
+    try:
+        git("cat-file", "-e", f"{old}^{{commit}}")
+        revision = f"{old}..{new}"
+    except subprocess.CalledProcessError:
+        revision = new
+        print("Previous commit unavailable after history rewrite; auditing all new commits")
+    commits = git("rev-list", "--no-merges", revision).splitlines()
     violations = []
     for sha in commits:
         bad = ambiguous_coauthors(git("log", "-1", "--format=%B", sha))
