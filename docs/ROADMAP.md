@@ -9,7 +9,7 @@ This page and the [visual dashboard](assets/roadmap.svg) are generated from [roa
 
 | Public feature epic | Status |
 |---|---|
-| [#3 — Complete vehicle condition, workshop, parts and tuning](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/3) | BUILDING |
+| [#3 — Option C: Complete vehicle condition, workshop, parts and tuning](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/3) | BUILDING |
 | [#4 — Build a unified ARS navigation hub in the P-shop menu](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/4) | PLANNED |
 
 ## Next — Release Foundations
