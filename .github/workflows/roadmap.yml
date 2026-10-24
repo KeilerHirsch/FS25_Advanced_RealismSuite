@@ -4,10 +4,21 @@ on:
   workflow_dispatch:
   issues:
     types: [opened, edited, labeled, unlabeled, closed, reopened, deleted, transferred]
+  pull_request:
+    paths:
+      - README.md
+      - tools/render_roadmap.py
+      - tools/render_roadmap_hud.py
+      - tools/test_roadmap_hud.py
+      - docs/assets/ars-roadmap-hud-base.png
+      - .github/workflows/roadmap.yml
   push:
     branches: [main]
     paths:
       - tools/render_roadmap.py
+      - tools/render_roadmap_hud.py
+      - tools/test_roadmap_hud.py
+      - docs/assets/ars-roadmap-hud-base.png
       - .github/workflows/roadmap.yml
   schedule:
     - cron: "23 */6 * * *"
@@ -30,22 +41,29 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Generate SVG and readable issue overview
+      - name: Install deterministic image renderer
+        run: python -m pip install "Pillow==13.0.0"
+      - name: Test evidence-based status calculations
+        run: python tools/test_roadmap_hud.py
+      - name: Generate live roadmap graphics and accessible text
         env:
           GITHUB_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
-        run: python tools/render_roadmap.py
+        run: |
+          python tools/render_roadmap.py
+          python tools/render_roadmap_hud.py
       - name: Commit updated roadmap only when it changed
+        if: github.event_name != 'pull_request'
         shell: bash
         run: |
           set -euo pipefail
-          git add docs/assets/roadmap.svg docs/ROADMAP.md
+          git add docs/assets/roadmap.svg docs/assets/roadmap-live.png docs/ROADMAP.md
           if git diff --cached --quiet; then
             echo "Roadmap content unchanged"
             exit 0
           fi
           git -c user.name='github-actions[bot]' \
               -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
-              commit -m "docs(roadmap): refresh visual from public issues"
+              commit -m "docs(roadmap): refresh cinematic live status"
           git pull --rebase origin main
           git push origin HEAD:main
