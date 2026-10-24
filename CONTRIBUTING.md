@@ -17,6 +17,7 @@ Search existing [Issues](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSui
 - Identify external material and its actual licence; never introduce source code or assets from other projects without the rights needed for redistribution.
 - Do not include credentials, personal data, private server details or game saves.
 - Document known limitations and report what was actually tested.
+- Do not invent or add generic `Co-authored-by` identities such as `noreply@users.noreply.github.com`. Credit real co-authors only using their verified GitHub-associated email or their exact personal GitHub privacy address (including numeric user ID). GitHub's merge bot `noreply@github.com` is a **committer**, not an additional human co-author. The commit-attribution workflow checks incoming commit metadata.
 
 ## Licensing
 

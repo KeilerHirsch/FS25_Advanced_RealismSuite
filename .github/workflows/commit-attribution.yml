@@ -1,0 +1,27 @@
+name: Validate Git commit attribution
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  commit-attribution:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout commit history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Test attribution guard
+        run: python3 tools/test_commit_attribution.py
+      - name: Inspect new commit metadata
+        env:
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
+        run: python3 tools/check_commit_attribution.py
