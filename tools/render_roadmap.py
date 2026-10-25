@@ -41,11 +41,33 @@ def phase(issue):
     return "future"
 
 
+def has_verification_evidence(issue):
+    """Require an explicit public evidence pointer, not just a self-assigned label.
+
+    A link is a traceable claim, not automatic proof of in-game behavior.
+    Reviewers still have to verify the linked build, game log, video or report.
+    """
+    body = issue.get("body") or ""
+    for line in body.splitlines():
+        normalized = line.strip().replace("**", "")
+        if normalized.lower().startswith("verification evidence:"):
+            reference = normalized.split(":", 1)[1]
+            return bool(re.search(
+                r"https://(?:github\.com|gist\.github\.com)/[^\s<>)]+",
+                reference, re.I))
+    return False
+
+
 def status(issue):
     names = label_names(issue)
-    for tag, state, _ in STATES:
-        if tag in names:
-            return state
+    selected = [(tag, state) for tag, state, _ in STATES if tag in names]
+    if len(selected) > 1:
+        return "STATUS CONFLICT"
+    if selected:
+        _, state = selected[0]
+        if state in {"RELEASED", "VERIFIED"} and not has_verification_evidence(issue):
+            return "EVIDENCE REQUIRED"
+        return state
     return "CLOSED / UNVERIFIED" if issue.get("state") == "closed" else "PLANNED"
 
 
@@ -171,7 +193,7 @@ def render_md(issues):
         "# ARS public roadmap", "",
         "This page and the [visual dashboard](assets/roadmap.svg) are generated from "
         "[roadmap-labeled GitHub issues](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues?q=is%3Aissue+label%3Aroadmap). "
-        "The 54 internal research and planning topics are not 54 shipped features.",
+        "Internal research and planning topics are not shipped features.",
         "",
         "**Status contract:** Commits, PR merges and closed issues do not automatically "
         "mean verified or released. The verified status needs in-game acceptance evidence; "
@@ -193,7 +215,10 @@ def render_md(issues):
         "- A public GitHub Issue becomes visible with the roadmap label and one phase label: "
         "phase:now, phase:next, phase:planned or phase:future.",
         "- Add status:building or status:testing only when supported by work. "
-        "Reserve status:verified for in-game evidence and status:released for published builds.",
+        "For status:verified or status:released, the epic must also contain a "
+        "Verification evidence: HTTPS GitHub link to a public build, log, test report "
+        "or release; conflicting status labels are not accepted. Human review of "
+        "the linked in-game evidence is still necessary.",
         "- Issue changes regenerate both the SVG dashboard and this text page using GitHub Actions.",
         "- Detailed internal research remains separate; the public board tracks outcome-focused epics.",
         "", "[Public discussion](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/discussions/2) · [Project home](../README.md)", "",
