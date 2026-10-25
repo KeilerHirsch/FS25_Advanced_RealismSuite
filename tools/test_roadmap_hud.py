@@ -2,7 +2,7 @@
 """Offline checks for evidence-integrity and the eight cinematic roadmap cards."""
 import unittest
 
-from render_roadmap import has_verification_evidence, status
+from render_roadmap import has_verification_evidence, render_md, markdown_link_label, status
 from render_roadmap_hud import THEMES, card_metrics
 
 ROOT = "https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite"
@@ -23,6 +23,26 @@ def issue(number, labels, state="open", evidence="", release=""):
 
 
 class LiveHudMetricsTest(unittest.TestCase):
+    def test_untrusted_issue_titles_cannot_break_roadmap_links(self):
+        attacks = (
+            "Fuel](https://evil.example/phish) [more",
+            "x ![t](https://evil.example/p.png)",
+            "a\\](https://evil.example/phish)",
+            "<img src=https://evil.example/p.png>",
+            "Markdown `ticks` [label] & entities",
+        )
+        for title in attacks:
+            with self.subTest(title=title):
+                entry = issue(2, ["phase:now"])
+                entry["title"] = title
+                entry["html_url"] = ROOT + "/issues/2"
+                rendered = render_md([entry])
+                self.assertIn("](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/2)", rendered)
+                self.assertIn(markdown_link_label(title), rendered)
+                self.assertNotIn("](https://evil.example/phish)", rendered)
+                self.assertNotIn("![t](https://evil.example/p.png)", rendered)
+                self.assertNotIn("<img src=", rendered)
+
     def test_eight_approved_themes(self):
         self.assertEqual(len(THEMES), 8)
         self.assertEqual([name for name, _ in THEMES],
