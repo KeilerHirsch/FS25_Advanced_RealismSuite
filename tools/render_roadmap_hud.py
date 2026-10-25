@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 """Render the approved cinematic ARS roadmap with evidence-based live status.
 
-Progress means the percentage of assigned public roadmap epics explicitly labeled
-status:verified or status:released. It is NOT an estimate of code completion.
+Progress means the share of assigned epics with verified/released status AND
+an explicit public evidence link. It is NOT an estimate of code completion or
+a machine-verification of gameplay evidence.
 No artwork percentages, unverified PR merges or closed issues are used as evidence.
 """
 from pathlib import Path
 import io
 
 from PIL import Image, ImageDraw, ImageFont
-from render_roadmap import fetch_issues, label_names
+from render_roadmap import fetch_issues, label_names, status
 
 ROOT = Path(__file__).resolve().parent.parent
 BASE = ROOT / "docs/assets/ars-roadmap-hud-base.png"
@@ -58,14 +59,14 @@ def card_metrics(numbered_issues, expected):
     if len(relevant) != len(expected):
         # An issue has been deleted or lost its roadmap label; don't fake completion.
         return "UNTRACKED", 0, 0, 0
-    finished = sum(bool(label_names(i) & {"status:verified", "status:released"})
-                   for i in relevant)
-    all_labels = set().union(*(label_names(i) for i in relevant))
+    # Conflicting or evidence-free labels never increase the verified share.
+    states = [status(issue) for issue in relevant]
+    finished = sum(value in {"VERIFIED", "RELEASED"} for value in states)
     if finished == len(relevant):
         state = "VERIFIED"
-    elif "status:testing" in all_labels:
+    elif "TESTING" in states:
         state = "IN TEST"
-    elif "status:building" in all_labels:
+    elif "BUILDING" in states:
         state = "ACTIVE"
     else:
         state = "PLANNED"

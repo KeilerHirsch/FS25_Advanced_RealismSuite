@@ -65,6 +65,10 @@ def snapshot(issues, release=None):
             acceptance = ("IN-GAME GATE", "ISSUE #6 VERIFIED", "#4df1ad")
         elif state == "TESTING":
             acceptance = ("IN-GAME GATE", "ISSUE #6 IN TEST", "#e5cf8b")
+        elif state == "EVIDENCE REQUIRED":
+            acceptance = ("IN-GAME GATE", "#6 NEEDS EVIDENCE", "#f1bb74")
+        elif state == "STATUS CONFLICT":
+            acceptance = ("IN-GAME GATE", "#6 STATUS CONFLICT", "#f1bb74")
         else:
             acceptance = ("IN-GAME GATE", "ISSUE #6 OPEN", "#e5cf8b")
 

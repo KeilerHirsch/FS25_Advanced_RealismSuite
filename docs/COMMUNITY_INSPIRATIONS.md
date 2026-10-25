@@ -40,7 +40,12 @@ This is an **inspiration and research acknowledgement**, not a list of code depe
 
 - **Ozz / Ozz-Modding** — [RedTape](https://github.com/Ozz-Modding/FS25_RedTape) and [Hire Purchasing](https://github.com/Ozz-Modding/FS25_HirePurchasing) (policies, grants, tax systems and financing).
 - **Squallqt** — [Bank & Credit](https://github.com/Squallqt/FS25_BankCredit) and [Invoices](https://github.com/Squallqt/FS25_Invoices) (loans, bookkeeping and inter-farm payments).
-- **Evan Kirsch** — Net Worth Tracker (farm value and financial history).
+- **Evan Kirsch** — [Net Worth Tracker](https://github.com/EvanKirsch/fs25-nwt) (farm value and financial history).
+
+## Field and transport automation
+
+- **Courseplay team** — [Courseplay FS25](https://github.com/Courseplay/Courseplay_FS25) (fieldwork planning and automated field operations).
+- **Stephan-S and AutoDrive contributors** — [AutoDrive FS25](https://github.com/Stephan-S/FS25_AutoDrive) (route-based transport logistics and automation).
 
 ## Convenience, accessibility and information
 

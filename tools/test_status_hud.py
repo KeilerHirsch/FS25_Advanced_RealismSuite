@@ -5,8 +5,11 @@ from xml.etree import ElementTree
 from render_status_hud import render_svg, snapshot
 
 
-def issue(number, *tags, state="open"):
-    return {"number": number, "state": state,
+def issue(number, *tags, state="open", evidence=False):
+    body = ("Verification evidence: "
+            "https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/6"
+            if evidence else "")
+    return {"number": number, "state": state, "body": body,
             "labels": [{"name": x} for x in ("roadmap", *tags)]}
 
 
@@ -29,11 +32,26 @@ class LiveStatusTest(unittest.TestCase):
         self.issues[1]["labels"].append({"name": "status:testing"})
         self.assertEqual(snapshot(self.issues)[1][1], "ISSUE #6 IN TEST")
         self.issues[1]["labels"][-1]["name"] = "status:verified"
+        self.assertEqual(snapshot(self.issues)[1][1], "#6 NEEDS EVIDENCE")
+        self.issues[1]["body"] = (
+            "Verification evidence: https://github.com/KeilerHirsch/"
+            "FS25_Advanced_RealmsSuite/issues/6")
         self.assertEqual(snapshot(self.issues)[1][1], "ISSUE #6 VERIFIED")
 
     def test_ticket_released_without_release_is_not_shipped(self):
         self.issues[0]["labels"][-1]["name"] = "status:released"
+        self.assertEqual(snapshot(self.issues)[0][1], "#3  /  EVIDENCE REQUIRED")
+        self.issues[0]["body"] = ("Verification evidence: "
+            "https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/releases/tag/v1")
         self.assertEqual(snapshot(self.issues)[0][1], "#3  /  VERIFY RELEASE")
+
+    def test_conflicting_gate_labels_not_green(self):
+        self.issues[1]["labels"].append({"name": "status:verified"})
+        self.issues[1]["labels"].append({"name": "status:building"})
+        self.issues[1]["body"] = (
+            "Verification evidence: https://github.com/KeilerHirsch/"
+            "FS25_Advanced_RealmsSuite/issues/6")
+        self.assertEqual(snapshot(self.issues)[1][1], "#6 STATUS CONFLICT")
 
     def test_published_release_precedes_development_label(self):
         release = {"tag_name": "v0.2.0-beta", "prerelease": True, "draft": False}
