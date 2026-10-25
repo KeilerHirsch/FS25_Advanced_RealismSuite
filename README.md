@@ -8,6 +8,8 @@
 
 <a href="docs/ROADMAP.md"><img src="docs/assets/roadmap-live.png" alt="ARS cinematic roadmap with eight feature themes, live GitHub Issue status and evidence-based verified-share bars" width="100%"></a>
 
+<a href="docs/ROADMAP.md"><img src="docs/assets/status-live.svg" alt="Live ARS project status: current development activity, in-game acceptance gate and tracked roadmap epics, calculated from GitHub Issues and published Releases" width="100%"></a>
+
 <sub>Cinematic concept artwork, not an in-game screenshot. The eight status indicators and verified-share bars are regenerated from public GitHub roadmap Issues. A bar shows the proportion of assigned epics explicitly **verified or released**, not guessed engineering completion. Some cross-cutting epics belong to more than one theme.</sub>
 
 <sub>[View all public roadmap issues](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues?q=is%3Aissue+label%3Aroadmap) · [Accessible text roadmap and live phase status](docs/ROADMAP.md) · [Original phase dashboard](docs/assets/roadmap.svg) · No invented deadlines or percentages.</sub>
