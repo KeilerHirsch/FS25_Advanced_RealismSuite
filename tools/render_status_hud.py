@@ -17,7 +17,7 @@ OUTPUT = Path(__file__).resolve().parent.parent / "docs/assets/status-live.svg"
 def latest_downloadable_release(releases):
     """Only present a real public FS25 ZIP release as a downloadable build."""
     return next((release for release in releases if any(
-        re.fullmatch(r"FS25_[A-Za-z0-9._-]+\\.zip", asset.get("name", ""), re.I)
+        re.fullmatch(r"FS25_[A-Za-z0-9._-]+\.zip", asset.get("name", ""), re.I)
         for asset in release.get("assets", []) if isinstance(asset, dict)
     )), None)
 
