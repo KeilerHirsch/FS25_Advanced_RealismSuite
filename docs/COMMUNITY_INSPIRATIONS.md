@@ -6,8 +6,23 @@ Great mods have made Farming Simulator richer for years. ARS grew out of playing
 
 This is an **inspiration and research acknowledgement**, not a list of code dependencies or already-shipped ARS features. Mentioning a creator does **not** imply that they contributed to, approved, collaborated on or endorse ARS. No third-party Lua, XML, graphics or other proprietary assets are being claimed as ARS's own. Any third-party material actually distributed with ARS requires separate licensing and disclosure in [Third-party notices](../THIRD_PARTY_NOTICES.md).
 
+## ARS Community Signal // assimilation, with manners
+
+```text
+   [ ARS COMMUNITY UPLINK ]
+   SCAN .............. outstanding FS25 creativity detected
+   FIRST DIRECTIVE ... credit the creators
+   SECOND DIRECTIVE .. design our own interconnected implementation
+   FINAL GATE ........ prove it in-game before calling it done
+```
+
+*No modders were assimilated in the making of this roadmap. Their ideas earned a respectful place in our research notes; their code, assets and authorship remain theirs.* The future may involve fewer ZIPs, but it will never require fewer thank-yous. 🚜
+
+
 ## Machinery, physics and equipment
 
+- **id577** — [Advanced Damage System](https://github.com/id577/FS25_AdvancedDamageSystem) (vehicle wear, multi-component damage, audible failures, diagnostics and workshop operations; an important gameplay research reference, including edge cases to improve independently).
+- **Papa_Matze** — [DynamicDrive Pro](https://www.farming-simulator.com/mod.php?mod_id=352451) (weight-, terrain- and slope-dependent driving, tire and braking behavior).
 - **ViperGTS96** — [Real Dirt Color](https://www.farming-simulator.com/mod.php?mod_id=307474) (environment-dependent dirt).
 - **DARIOX7** — [Increased Fuel And AdBlue Consumption](https://www.farming-simulator.com/mod.php?mod_id=367555) (fuel and DEF use).
 - **KryskiPL** — [Realistic Diesel Price](https://www.farming-simulator.com/mod.php?mod_id=363612) (country-based fuel pricing).
@@ -41,6 +56,19 @@ This is an **inspiration and research acknowledgement**, not a list of code depe
 - **Ozz / Ozz-Modding** — [RedTape](https://github.com/Ozz-Modding/FS25_RedTape) and [Hire Purchasing](https://github.com/Ozz-Modding/FS25_HirePurchasing) (policies, grants, tax systems and financing).
 - **Squallqt** — [Bank & Credit](https://github.com/Squallqt/FS25_BankCredit) and [Invoices](https://github.com/Squallqt/FS25_Invoices) (loans, bookkeeping and inter-farm payments).
 - **Evan Kirsch** — [Net Worth Tracker](https://github.com/EvanKirsch/fs25-nwt) (farm value and financial history).
+
+## Dealerships, land markets and production
+
+- **SimuTools** — [Farmland Auctions](https://www.farming-simulator.com/mod.php?mod_id=357191) (field auctions, competitive bidding and optional NPC bidders).
+- **Reddog** — [Dynamic Dealership](https://www.farming-simulator.com/mod.php?mod_id=369544) (dealer inventories, factory orders, deposits and delivery lead times).
+- **Ozz / Ozz-Modding** — [Used Equipment Yards](https://www.farming-simulator.com/mod.php?mod_id=359834) (physical used-machine yards, changing stock, sales and equipment quality).
+- **Achimobil** — [Production Revamp](https://www.farming-simulator.com/mod.php?mod_id=378044) (production inputs, outputs, recipe and logistics management). Also thanks to **Braeven**, whose earlier FS22 Production Revamp was continued for FS25 with acknowledged permission.
+- **ModdingAssociation – Tidde** — [Advanced Silage Types](https://www.farming-simulator.com/mod.php?mod_id=342332) (fermentation products and silo / biogas / feeding compatibility).
+- **Fabian** — [Spreader Section Control](https://www.farming-simulator.com/mod.php?mod_id=368230) (automatic section width and rate regulation for compatible fertilizer/slurry equipment).
+- **(KaiGo Modding) emproLoop** — [Dynamic Mission Rewards](https://www.farming-simulator.com/mod.php?mod_id=330807) (time-varying, configurable rewards for available contracts).
+
+These additional references feed **proposed future research groups**, especially dealer stock and used machines connected to vehicle history, condition diagnostics and paid repairs. They are **not features claimed to be implemented or released in ARS**.
+
 
 ## Field and transport automation
 
