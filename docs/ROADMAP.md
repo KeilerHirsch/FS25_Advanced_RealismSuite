@@ -1,7 +1,7 @@
 <!-- Generated from GitHub Issues by tools/render_roadmap.py. Do not edit manually. -->
 # ARS public roadmap
 
-This page and the [visual dashboard](assets/roadmap.svg) are generated from [roadmap-labeled GitHub issues](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues?q=is%3Aissue+label%3Aroadmap). The 54 internal research and planning topics are not 54 shipped features.
+This page and the [visual dashboard](assets/roadmap.svg) are generated from [roadmap-labeled GitHub issues](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues?q=is%3Aissue+label%3Aroadmap). Internal research and planning topics are not shipped features.
 
 **Status contract:** Commits, PR merges and closed issues do not automatically mean verified or released. The verified status needs in-game acceptance evidence; released means a publicly shipped build. No release dates are promised.
 
@@ -38,7 +38,7 @@ This page and the [visual dashboard](assets/roadmap.svg) are generated from [roa
 ## How this stays current
 
 - A public GitHub Issue becomes visible with the roadmap label and one phase label: phase:now, phase:next, phase:planned or phase:future.
-- Add status:building or status:testing only when supported by work. Reserve status:verified for in-game evidence and status:released for published builds.
+- Add status:building or status:testing only when supported by work. For status:verified or status:released, the epic must also contain a Verification evidence: HTTPS GitHub link to a public build, log, test report or release; conflicting status labels are not accepted. Human review of the linked in-game evidence is still necessary.
 - Issue changes regenerate both the SVG dashboard and this text page using GitHub Actions.
 - Detailed internal research remains separate; the public board tracks outcome-focused epics.
 
