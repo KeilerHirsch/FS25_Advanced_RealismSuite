@@ -41,7 +41,9 @@ class LiveHudMetricsTest(unittest.TestCase):
                 self.assertIn(markdown_link_label(title), rendered)
                 self.assertNotIn("](https://evil.example/phish)", rendered)
                 self.assertNotIn("![t](https://evil.example/p.png)", rendered)
-                self.assertNotIn("<img src=", rendered)
+                self.assertNotIn("— <img src=", rendered)
+                if title.startswith("<img"):
+                    self.assertIn(r"\<img src=", rendered)
 
     def test_eight_approved_themes(self):
         self.assertEqual(len(THEMES), 8)
