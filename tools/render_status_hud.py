@@ -41,9 +41,7 @@ def snapshot(issues, release=None, releases=None):
         public = ("DEVELOPMENT", "UNTRACKED", "#f1bb74")
     else:
         stage = status(focus, releases)
-        # An issue marked released is not evidence that a release really exists.
-        if stage == "RELEASED":
-            stage = "VERIFY RELEASE"
+        # The shared status() function already checks release evidence and ZIP assets.
         public = ("DEVELOPMENT", f"#3  /  {stage}",
                   "#4df1ad" if stage == "BUILDING" else "#e5cf8b")
 
