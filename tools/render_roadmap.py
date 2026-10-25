@@ -131,6 +131,14 @@ def clean_title(issue):
     text = re.sub(r"[\x00-\x1f\x7f]+", " ", str(issue.get("title", "")))
     return re.sub(r"^\[Roadmap\]\s*", "", text, flags=re.I).strip()[:160]
 
+def markdown_link_label(value):
+    """Escape untrusted issue titles before inserting them into Markdown links.
+
+    Backslash first, then the GFM metacharacters that can change link,
+    image, entity or inline formatting in the label.
+    """
+    return re.sub(r"([\\`*_{}\[\]()<>#+.!|~&-])", r"\\\1", value)
+
 
 def fetch_issues():
     token = os.getenv("GITHUB_TOKEN", "")
@@ -262,7 +270,7 @@ def render_md(issues, releases=()):
         if not chosen:
             lines.append("| No epics currently tracked | — |")
         for issue in chosen:
-            label = clean_title(issue).replace("|", "\\|")
+            label = markdown_link_label(clean_title(issue))
             lines.append("| [#" + str(issue["number"]) + " — " + label + "](" +
                          issue["html_url"] + ") | " + status(issue, releases) + " |")
         lines.append("")
