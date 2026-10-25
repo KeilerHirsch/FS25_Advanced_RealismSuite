@@ -40,7 +40,7 @@ def assert_pinned_actions(workflow):
     """Refuse mutable action tags in either the read-only or publishing job."""
     for action in ("actions/checkout", "actions/setup-python"):
         refs = re.findall(r"uses: " + re.escape(action) +
-                          r"@([0-9a-f]{40})(?:\\s|$)", workflow)
+                          r"@([0-9a-f]{40})(?:\s|$)", workflow)
         assert len(refs) == 2, f"{action} must have two full SHA references"
 
 
