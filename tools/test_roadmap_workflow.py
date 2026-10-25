@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Regression guard for generated ARS roadmap files and PR permissions."""
 from pathlib import Path
+import re
 import unittest
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -35,12 +36,35 @@ def assert_pr_roadmap_contract(workflow):
     assert "continue-on-error: true" not in verify[rendered:checked]
 
 
+def assert_pinned_actions(workflow):
+    """Refuse mutable action tags in either the read-only or publishing job."""
+    for action in ("actions/checkout", "actions/setup-python"):
+        refs = re.findall(r"uses: " + re.escape(action) +
+                          r"@([0-9a-f]{40})(?:\s|$)", workflow)
+        assert len(refs) == 2, f"{action} must have two full SHA references"
+
+
 class RoadmapWorkflowContractTest(unittest.TestCase):
     def test_real_workflow_checks_generated_content(self):
         workflow = (ROOT / ".github/workflows/roadmap.yml").read_text(
             encoding="utf-8"
         )
         assert_pr_roadmap_contract(workflow)
+
+    def test_actions_use_immutable_commit_refs(self):
+        workflow = (ROOT / ".github/workflows/roadmap.yml").read_text(
+            encoding="utf-8"
+        )
+        assert_pinned_actions(workflow)
+
+    def test_mutable_action_tag_rejected(self):
+        workflow = (ROOT / ".github/workflows/roadmap.yml").read_text(
+            encoding="utf-8"
+        )
+        tampered = re.sub(r"actions/checkout@[0-9a-f]{40}",
+                          "actions/checkout@v4", workflow, count=1)
+        with self.assertRaisesRegex(AssertionError, "two full SHA"):
+            assert_pinned_actions(tampered)
 
     def test_missing_generated_asset_trigger_is_rejected(self):
         workflow = (ROOT / ".github/workflows/roadmap.yml").read_text(
