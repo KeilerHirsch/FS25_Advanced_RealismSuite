@@ -10,7 +10,7 @@ from pathlib import Path
 import io
 
 from PIL import Image, ImageDraw, ImageFont
-from render_roadmap import fetch_issues, label_names, status
+from render_roadmap import fetch_issues, fetch_releases, label_names, status
 
 ROOT = Path(__file__).resolve().parent.parent
 BASE = ROOT / "docs/assets/ars-roadmap-hud-base.png"
@@ -53,14 +53,14 @@ def font(size, bold=False):
     return ImageFont.load_default()
 
 
-def card_metrics(numbered_issues, expected):
+def card_metrics(numbered_issues, expected, releases=()):
     relevant = [numbered_issues[num] for num in expected if num in numbered_issues
                 and "roadmap" in label_names(numbered_issues[num])]
     if len(relevant) != len(expected):
         # An issue has been deleted or lost its roadmap label; don't fake completion.
         return "UNTRACKED", 0, 0, 0
     # Conflicting or evidence-free labels never increase the verified share.
-    states = [status(issue) for issue in relevant]
+    states = [status(issue, releases) for issue in relevant]
     finished = sum(value in {"VERIFIED", "RELEASED"} for value in states)
     if finished == len(relevant):
         state = "VERIFIED"
@@ -125,14 +125,14 @@ def redraw_theme_titles(image):
     return Image.alpha_composite(image.convert("RGBA"), overlay).convert("RGB")
 
 
-def render(issues):
+def render(issues, releases=()):
     indexed = {int(i["number"]): i for i in issues}
     image = Image.open(BASE).convert("RGB")
     if image.size != (1672, 941):
         raise ValueError(f"Unexpected HUD base dimensions {image.size}")
     fonts = {"state": font(16, True), "small": font(11, False)}
     for n, (_, epic_numbers) in enumerate(THEMES):
-        state, done, total, percent = card_metrics(indexed, epic_numbers)
+        state, done, total, percent = card_metrics(indexed, epic_numbers, releases)
         x = COLUMNS[n % 4]
         y = ROWS[n // 4]
         draw_footer(image, x, y, state, done, total, percent, fonts)
@@ -146,4 +146,4 @@ def render(issues):
 
 
 if __name__ == "__main__":
-    render(fetch_issues())
+    render(fetch_issues(), fetch_releases())
