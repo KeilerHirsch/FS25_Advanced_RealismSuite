@@ -41,24 +41,60 @@ def phase(issue):
     return "future"
 
 
-def has_verification_evidence(issue):
-    """Require an explicit public evidence pointer, not just a self-assigned label.
+REPORT_URL = re.compile(
+    r"https://github\.com/KeilerHirsch/FS25_Advanced_RealmsSuite/"
+    r"blob/[0-9a-f]{40}/docs/acceptance/"
+    r"[A-Za-z0-9._/-]+\.md(?:#L[0-9]+(?:-L[0-9]+)?)?",
+    re.I,
+)
 
-    A link is a traceable claim, not automatic proof of in-game behavior.
-    Reviewers still have to verify the linked build, game log, video or report.
+
+def evidence_reference(issue, field="Verification evidence"):
+    """Return a complete evidence URL for a specifically named body field."""
+    prefix = field.lower() + ":"
+    for line in (issue.get("body") or "").splitlines():
+        clean = line.strip().replace("**", "")
+        if clean.lower().startswith(prefix):
+            return clean[len(prefix):].strip()
+    return ""
+
+
+def has_verification_evidence(issue):
+    """Accept only a commit-pinned, public ARS acceptance report reference.
+
+    This is still a provenance pointer, NOT machine verification of gameplay.
+    The report must be inspected and accepted by a human before labeling.
     """
-    body = issue.get("body") or ""
-    for line in body.splitlines():
-        normalized = line.strip().replace("**", "")
-        if normalized.lower().startswith("verification evidence:"):
-            reference = normalized.split(":", 1)[1]
-            return bool(re.search(
-                r"https://(?:github\.com|gist\.github\.com)/[^\s<>)]+",
-                reference, re.I))
+    url = evidence_reference(issue)
+    if not REPORT_URL.fullmatch(url):
+        return False
+    # Do not allow path traversal disguised as a report link.
+    suffix = url.split("/docs/acceptance/", 1)[-1].split("#", 1)[0]
+    return all(segment not in {".", "..", ""} for segment in suffix.split("/"))
+
+
+def published_release_for_issue(issue, releases):
+    """Match a stated release URL to a real public release with an FS25 ZIP."""
+    claimed = evidence_reference(issue, "Release evidence")
+    if not claimed:
+        return False
+    for release in releases:
+        if release.get("draft") or not release.get("tag_name"):
+            continue
+        canonical = release.get("html_url", "").rstrip("/")
+        if not canonical or claimed.rstrip("/") != canonical:
+            continue
+        assets = release.get("assets") or []
+        if any(
+            re.fullmatch(r"FS25_[A-Za-z0-9._-]+\.zip", asset.get("name", ""), re.I)
+            for asset in assets if isinstance(asset, dict)
+        ):
+            return True
     return False
 
 
-def status(issue):
+def status(issue, releases=()):
+    """Conservative status shared by roadmap text, image, and pulse."""
     names = label_names(issue)
     selected = [(tag, state) for tag, state, _ in STATES if tag in names]
     if len(selected) > 1:
@@ -67,8 +103,28 @@ def status(issue):
         _, state = selected[0]
         if state in {"RELEASED", "VERIFIED"} and not has_verification_evidence(issue):
             return "EVIDENCE REQUIRED"
+        if state == "RELEASED" and not published_release_for_issue(issue, releases):
+            return "VERIFY RELEASE"
         return state
     return "CLOSED / UNVERIFIED" if issue.get("state") == "closed" else "PLANNED"
+
+
+def fetch_releases():
+    """Fetch published Release metadata; do not infer releases from tags/labels."""
+    token = os.getenv("GITHUB_TOKEN", "")
+    headers = {"Accept": "application/vnd.github+json",
+               "User-Agent": "ARS-Live-Roadmap/1.1",
+               "X-GitHub-Api-Version": "2022-11-28"}
+    if token:
+        headers["Authorization"] = "Bearer " + token
+    req = Request("https://api.github.com/repos/" + REPO +
+                  "/releases?per_page=100", headers=headers)
+    with urlopen(req, timeout=30) as response:
+        releases = json.load(response)
+    if not isinstance(releases, list):
+        raise ValueError("Unexpected GitHub releases response")
+    return [x for x in releases if not x.get("draft")]
+
 
 
 def clean_title(issue):
@@ -112,7 +168,7 @@ def rectangle(x, y, w, h, fill, corner=18, stroke="none"):
             'fill="%s" stroke="%s"/>' % (x, y, w, h, corner, fill, stroke))
 
 
-def render_svg(issues):
+def render_svg(issues, releases=()):
     parts = [
         '<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="744" '
         'viewBox="0 0 1160 744" role="img" aria-labelledby="roadmapTitle roadmapDesc">',
@@ -167,7 +223,7 @@ def render_svg(issues):
                 parts.append(text_el(x + 43, top + 33, wrapped[1], 15, "#cbe2e4", 500))
             parts.append(text_el(x + w - 65, top + 14, "#" + str(issue["number"]),
                                  13, "#a4bbc2", 600))
-            value = status(issue)
+            value = status(issue, releases)
             if value != "PLANNED":
                 color = next((c for _, state, c in STATES if state == value), "#ddbd9b")
                 parts.append(text_el(x + w - 25, top + 35, value, 10, color, 700,
@@ -187,7 +243,7 @@ def render_svg(issues):
     return rendered
 
 
-def render_md(issues):
+def render_md(issues, releases=()):
     lines = [
         "<!-- Generated from GitHub Issues by tools/render_roadmap.py. Do not edit manually. -->",
         "# ARS public roadmap", "",
@@ -208,7 +264,7 @@ def render_md(issues):
         for issue in chosen:
             label = clean_title(issue).replace("|", "\\|")
             lines.append("| [#" + str(issue["number"]) + " — " + label + "](" +
-                         issue["html_url"] + ") | " + status(issue) + " |")
+                         issue["html_url"] + ") | " + status(issue, releases) + " |")
         lines.append("")
     lines += [
         "## How this stays current", "",
@@ -216,9 +272,11 @@ def render_md(issues):
         "phase:now, phase:next, phase:planned or phase:future.",
         "- Add status:building or status:testing only when supported by work. "
         "For status:verified or status:released, the epic must also contain a "
-        "Verification evidence: HTTPS GitHub link to a public build, log, test report "
-        "or release; conflicting status labels are not accepted. Human review of "
-        "the linked in-game evidence is still necessary.",
+        "Verification evidence: must link to a commit-pinned ARS "
+        "docs/acceptance/*.md report. For status:released, Release evidence: "
+        "must additionally link to the exact published GitHub Release containing "
+        "an FS25 ZIP. Conflicting status labels are rejected. Humans must review "
+        "the actual gameplay evidence; URLs alone are not gameplay proof.",
         "- Roadmap Issue changes, GitHub Release events and periodic checks refresh the SVG "
         "phase dashboard, cinematic roadmap image, compact live-status HUD and "
         "this text page via GitHub Actions. PR runs verify only and never publish.",
@@ -230,11 +288,12 @@ def render_md(issues):
 
 def main():
     issues = fetch_issues()
+    releases = fetch_releases()
     img_path = ROOT / "docs" / "assets" / "roadmap.svg"
     text_path = ROOT / "docs" / "ROADMAP.md"
     img_path.parent.mkdir(parents=True, exist_ok=True)
-    img_path.write_text(render_svg(issues), encoding="utf-8")
-    text_path.write_text(render_md(issues), encoding="utf-8")
+    img_path.write_text(render_svg(issues, releases), encoding="utf-8")
+    text_path.write_text(render_md(issues, releases), encoding="utf-8")
     print("Rendered %d public roadmap issues" % len(issues))
 
 
