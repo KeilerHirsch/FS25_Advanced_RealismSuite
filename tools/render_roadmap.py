@@ -219,7 +219,9 @@ def render_md(issues):
         "Verification evidence: HTTPS GitHub link to a public build, log, test report "
         "or release; conflicting status labels are not accepted. Human review of "
         "the linked in-game evidence is still necessary.",
-        "- Issue changes regenerate both the SVG dashboard and this text page using GitHub Actions.",
+        "- Roadmap Issue changes, GitHub Release events and periodic checks refresh the SVG "
+        "phase dashboard, cinematic roadmap image, compact live-status HUD and "
+        "this text page via GitHub Actions. PR runs verify only and never publish.",
         "- Detailed internal research remains separate; the public board tracks outcome-focused epics.",
         "", "[Public discussion](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/discussions/2) · [Project home](../README.md)", "",
     ]
