@@ -4,39 +4,29 @@
 This is an engineering activity indicator, NOT an FS25 playability assertion.
 No invented percentages, guessed dates or manually maintained status mirrors.
 """
-import json
-import os
 from pathlib import Path
 import re
-from urllib.request import Request, urlopen
 from xml.etree import ElementTree
 from xml.sax.saxutils import escape
 
-from render_roadmap import REPO, fetch_issues, label_names, status
+from render_roadmap import fetch_issues, fetch_releases, label_names, status
 
 OUTPUT = Path(__file__).resolve().parent.parent / "docs/assets/status-live.svg"
 
 
-def fetch_latest_release():
-    headers = {
-        "Accept": "application/vnd.github+json",
-        "User-Agent": "ARS-Status-HUD/1.0",
-        "X-GitHub-Api-Version": "2022-11-28",
-    }
-    token = os.getenv("GITHUB_TOKEN")
-    if token:
-        headers["Authorization"] = "Bearer " + token
-    request = Request(f"https://api.github.com/repos/{REPO}/releases?per_page=30",
-                      headers=headers)
-    with urlopen(request, timeout=30) as response:
-        releases = json.load(response)
-    if not isinstance(releases, list):
-        raise ValueError("Unexpected GitHub releases response")
-    return next((x for x in releases if not x.get("draft") and x.get("tag_name")), None)
+def latest_downloadable_release(releases):
+    """Only present a real public FS25 ZIP release as a downloadable build."""
+    return next((release for release in releases if any(
+        re.fullmatch(r"FS25_[A-Za-z0-9._-]+\\.zip", asset.get("name", ""), re.I)
+        for asset in release.get("assets", []) if isinstance(asset, dict)
+    )), None)
 
 
-def snapshot(issues, release=None):
+
+def snapshot(issues, release=None, releases=None):
     """Only explicit status labels or an actual published Release count as evidence."""
+    if releases is None:
+        releases = [release] if release else []
     documented = [x for x in issues if "roadmap" in label_names(x)]
     by_number = {int(x["number"]): x for x in documented}
     focus, gate = by_number.get(3), by_number.get(6)
@@ -50,7 +40,7 @@ def snapshot(issues, release=None):
     elif focus is None:
         public = ("DEVELOPMENT", "UNTRACKED", "#f1bb74")
     else:
-        stage = status(focus)
+        stage = status(focus, releases)
         # An issue marked released is not evidence that a release really exists.
         if stage == "RELEASED":
             stage = "VERIFY RELEASE"
@@ -60,7 +50,7 @@ def snapshot(issues, release=None):
     if gate is None:
         acceptance = ("IN-GAME GATE", "UNTRACKED", "#f1bb74")
     else:
-        state = status(gate)
+        state = status(gate, releases)
         if state in {"VERIFIED", "RELEASED"}:
             acceptance = ("IN-GAME GATE", "ISSUE #6 VERIFIED", "#4df1ad")
         elif state == "TESTING":
@@ -84,8 +74,8 @@ def svg_text(x, y, content, size, color, weight=600, tracking="0.4"):
             (x, y, color, size, weight, tracking, escape(str(content))))
 
 
-def render_svg(issues, release=None):
-    cards = snapshot(issues, release)
+def render_svg(issues, release=None, releases=None):
+    cards = snapshot(issues, release, releases)
     out = [
         '<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="144" '
         'viewBox="0 0 1160 144" role="img" aria-labelledby="statusTitle statusDesc">',
@@ -122,8 +112,9 @@ def render_svg(issues, release=None):
 
 def main():
     issues = fetch_issues()
-    release = fetch_latest_release()
-    svg = render_svg(issues, release)
+    releases = fetch_releases()
+    release = latest_downloadable_release(releases)
+    svg = render_svg(issues, release, releases)
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     if not OUTPUT.exists() or OUTPUT.read_text(encoding="utf-8") != svg:
         OUTPUT.write_text(svg, encoding="utf-8")
