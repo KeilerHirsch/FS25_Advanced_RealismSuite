@@ -137,7 +137,7 @@ def markdown_link_label(value):
     Backslash first, then the GFM metacharacters that can change link,
     image, entity or inline formatting in the label.
     """
-    return re.sub(r"([\\`*_{}\[\]()<>#+.!|~&-])", r"\\\1", value)
+    return re.sub(r"([\\`*_{}\[\]()<>#!|~&])", r"\\\1", value)
 
 
 def fetch_issues():
