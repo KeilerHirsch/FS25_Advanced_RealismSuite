@@ -14,6 +14,10 @@ on:
       - tools/test_roadmap_hud.py
       - tools/render_status_hud.py
       - tools/test_status_hud.py
+      - tools/test_roadmap_workflow.py
+      - docs/ROADMAP.md
+      - docs/assets/roadmap.svg
+      - docs/assets/roadmap-live.png
       - docs/assets/ars-roadmap-hud-base.png
       - docs/assets/status-live.svg
       - .github/workflows/roadmap.yml
@@ -26,6 +30,10 @@ on:
       - tools/test_roadmap_hud.py
       - tools/render_status_hud.py
       - tools/test_status_hud.py
+      - tools/test_roadmap_workflow.py
+      - docs/ROADMAP.md
+      - docs/assets/roadmap.svg
+      - docs/assets/roadmap-live.png
       - docs/assets/ars-roadmap-hud-base.png
       - docs/assets/status-live.svg
       - .github/workflows/roadmap.yml
@@ -62,6 +70,7 @@ jobs:
         run: |
           python tools/test_roadmap_hud.py
           python tools/test_status_hud.py
+          python tools/test_roadmap_workflow.py
       - name: Render preview without publishing
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -70,6 +79,11 @@ jobs:
           python tools/render_roadmap.py
           python tools/render_roadmap_hud.py
           python tools/render_status_hud.py
+      - name: Reject stale or tampered generated files
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --exit-code -- docs/ROADMAP.md docs/assets/roadmap.svg docs/assets/roadmap-live.png docs/assets/status-live.svg
 
   publish:
     if: github.event_name != 'pull_request'
@@ -93,6 +107,7 @@ jobs:
         run: |
           python tools/test_roadmap_hud.py
           python tools/test_status_hud.py
+          python tools/test_roadmap_workflow.py
       - name: Generate live roadmap graphics and accessible text
         env:
           GITHUB_TOKEN: ${{ github.token }}
