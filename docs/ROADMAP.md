@@ -38,7 +38,7 @@ This page and the [visual dashboard](assets/roadmap.svg) are generated from [roa
 ## How this stays current
 
 - A public GitHub Issue becomes visible with the roadmap label and one phase label: phase:now, phase:next, phase:planned or phase:future.
-- Add status:building or status:testing only when supported by work. For status:verified or status:released, the epic must also contain a Verification evidence: HTTPS GitHub link to a public build, log, test report or release; conflicting status labels are not accepted. Human review of the linked in-game evidence is still necessary.
+- Add status:building or status:testing only when supported by work. For status:verified or status:released, the epic must also contain a Verification evidence: must link to a commit-pinned ARS docs/acceptance/*.md report. For status:released, Release evidence: must additionally link to the exact published GitHub Release containing an FS25 ZIP. Conflicting status labels are rejected. Humans must review the actual gameplay evidence; URLs alone are not gameplay proof.
 - Roadmap Issue changes, GitHub Release events and periodic checks refresh the SVG phase dashboard, cinematic roadmap image, compact live-status HUD and this text page via GitHub Actions. PR runs verify only and never publish.
 - Detailed internal research remains separate; the public board tracks outcome-focused epics.
 
