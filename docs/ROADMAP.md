@@ -10,30 +10,30 @@ This page and the [visual dashboard](assets/roadmap.svg) are generated from [roa
 | Public feature epic | Status |
 |---|---|
 | [#3 — Option C: Complete vehicle condition, workshop, parts and tuning](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/3) | BUILDING |
-| [#4 — Build a unified ARS navigation hub in the P-shop menu](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/4) | PLANNED |
+| [#4 — Build a unified ARS navigation hub in the P-shop menu](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/4) | CLOSED / UNVERIFIED |
 
 ## Next — Release Foundations
 
 | Public feature epic | Status |
 |---|---|
-| [#5 — Compatibility Shield and domain-safe mod interoperability](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/5) | PLANNED |
-| [#6 — In-game, multiplayer and ModHub-ready acceptance gate](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/6) | PLANNED |
+| [#5 — Compatibility Shield and domain-safe mod interoperability](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/5) | CLOSED / UNVERIFIED |
+| [#6 — In-game, multiplayer and ModHub-ready acceptance gate](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/6) | CLOSED / UNVERIFIED |
 
 ## Planned — Connected Systems
 
 | Public feature epic | Status |
 |---|---|
-| [#7 — Connected machine physics, fuel and equipment realism](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/7) | PLANNED |
-| [#8 — Agronomy: soil, regional calendars, crop rotation and health](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/8) | PLANNED |
-| [#9 — Farm economics: accounting, credits, taxes and inspections](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/9) | PLANNED |
+| [#7 — Connected machine physics, fuel and equipment realism](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/7) | CLOSED / UNVERIFIED |
+| [#8 — Agronomy: soil, regional calendars, crop rotation and health](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/8) | CLOSED / UNVERIFIED |
+| [#9 — Farm economics: accounting, credits, taxes and inspections](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/9) | CLOSED / UNVERIFIED |
 
 ## Future — Long-Term Vision
 
 | Public feature epic | Status |
 |---|---|
-| [#10 — Animal husbandry, storage and production quality](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/10) | PLANNED |
-| [#11 — Forestry, cargo logistics and agricultural markets](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/11) | PLANNED |
-| [#12 — Field and transport automation inspired by CP and AD](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/12) | PLANNED |
+| [#10 — Animal husbandry, storage and production quality](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/10) | CLOSED / UNVERIFIED |
+| [#11 — Forestry, cargo logistics and agricultural markets](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/11) | CLOSED / UNVERIFIED |
+| [#12 — Field and transport automation inspired by CP and AD](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/12) | CLOSED / UNVERIFIED |
 
 ## How this stays current
 
