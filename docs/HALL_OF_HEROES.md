@@ -11,6 +11,14 @@ We are not pretending we invented vehicle damage, intelligent fieldwork, transpo
 
 **Museum admission policy:** Original creators get their names on the plaques. ARS features get a place in the *Hall of Honor* only after they actually work, pass acceptance tests, and ship. No imaginary retirements.
 
+## Live assimilation display
+
+The single [ARS live hero](../README.md) combines the cinematic roadmap, public
+engineering status and the featured pioneer exhibits. Browse **[all credited
+mods and their current research status](ASSIMILATION_INDEX.md)** for the
+automatically maintained full index. Status labels are derived from public
+GitHub roadmap Issues, not guessed code progress or declared replacement.
+
 ## Gallery I — The living legends
 
 These are **research and compatibility references**, *not* completed ARS replacements. All original projects remain independent and deserve their own recognition.
