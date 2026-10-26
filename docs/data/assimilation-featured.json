@@ -1,46 +1,38 @@
 {
   "schema_version": 1,
-  "description": "Optional featured settings only. Source credits are docs/COMMUNITY_INSPIRATIONS.md; status is public GitHub issue state. Only redistribute original icons when permission is recorded.",
+  "description": "Curated public text selection for the single Hero; original names and creators are always derived from canonical community credits. No mod artwork and no manual rendering for status changes.",
   "featured": [
     {
       "source": "https://github.com/id577/FS25_AdvancedDamageSystem",
-      "issue": 3,
-      "glyph": "engine"
+      "issue": 3
     },
     {
       "source": "https://github.com/Courseplay/Courseplay_FS25",
-      "issue": 12,
-      "glyph": "field"
+      "issue": 12
     },
     {
       "source": "https://github.com/Stephan-S/FS25_AutoDrive",
-      "issue": 12,
-      "glyph": "route"
+      "issue": 12
     },
     {
       "source": "https://www.farming-simulator.com/mod.php?mod_id=367297",
-      "issue": 8,
-      "glyph": "soil"
+      "issue": 8
     },
     {
       "source": "https://www.farming-simulator.com/mod.php?mod_id=308890",
-      "issue": 7,
-      "glyph": "year"
+      "issue": 7
     },
     {
       "source": "https://github.com/Ozz-Modding/FS25_MoistureSystem",
-      "issue": 8,
-      "glyph": "weather"
+      "issue": 8
     },
     {
       "source": "https://www.farming-simulator.com/mod.php?mod_id=368629",
-      "issue": 8,
-      "glyph": "soil"
+      "issue": 8
     },
     {
       "source": "https://www.farming-simulator.com/mod.php?mod_id=368342",
-      "issue": 8,
-      "glyph": "calendar"
+      "issue": 8
     }
   ]
 }

@@ -1,59 +1,49 @@
 #!/usr/bin/env python3
-"""Single ARS README hero: live roadmap + public engineering pulse + mod tribute.
+"""Public ARS single-image hero: immersive garage, development, and two-state Hall.
 
-This renderer is intentionally conservative. Being inspired by a mod, having an
-active epic, or closing an issue is NEVER proof that its mod was replaced.
-Community credits are the source of authorship; featured JSON only adds layout
-and maps a mod to its related public roadmap epic.
+The GitHub roadmap is the source for public product focus, not the developer's
+private Codex plans. The Hall records only INSPIRATION or HONORED. A fully honored
+mod needs a matching pinned acceptance report, published ARS ZIP, and explicit
+human-accepted, full-replacement proof. No external mod icons are used.
 """
 from __future__ import annotations
 
+import io
 import json
 import re
-import textwrap
 from pathlib import Path
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 from render_roadmap import (
     REPORT_URL, evidence_reference, fetch_issues, fetch_releases,
-    label_names, status,
+    label_names, phase, status, clean_title
 )
-from render_status_hud import latest_downloadable_release, snapshot
 
 ROOT = Path(__file__).resolve().parent.parent
 CREDITS = ROOT / "docs/COMMUNITY_INSPIRATIONS.md"
 REGISTRY = ROOT / "docs/data/assimilation-featured.json"
 PROOFS = ROOT / "docs/data/assimilation-proofs.json"
-ART = ROOT / "docs/assets/roadmap-live.png"
+SCENERY = ROOT / "docs/assets/ars-roadmap-hud-base.png"
 OUT = ROOT / "docs/assets/ars-unified-live-hero.png"
 INDEX = ROOT / "docs/ASSIMILATION_INDEX.md"
 
-W, H = 1672, 1782
-BG = "#060f0c"
-PANEL = "#091b15"
-BORDER = "#316c4b"
-GREEN = "#5df2a7"
-CREAM = "#f0e8d5"
-MUTED = "#afc8ba"
-GOLD = "#cfaa6b"
-COLORS = {
-    "UNDER DISSECTION": "#ffbe76",
-    "FIELD TEST": "#eebf67",
-    "IN QUEUE": "#98c5f2",
-    "RESEARCH": "#95c0a7",
-    "HONORED": "#6ef5a4",
-}
+W, H = 1672, 1176
+BG = "#07110e"
+PANEL = "#0a1d15"
+CREAM = "#f3eee1"
+GREEN = "#67efb0"
+GOLD = "#d9b778"
+SOFT = "#b3cdbb"
+BORDER = "#3b7256"
 LINK = re.compile(r"\[([^\]]+)\]\((https://[^)\s]+)\)")
 CREDIT = re.compile(r"^\s*-\s+\*\*([^*]+)\*\*\s+[\u2014-]\s+(.+)$")
-SKIP = {"original project", "original", "source", "modhub", "readme", "license"}
 ALLOWED_SOURCES = ("https://github.com/", "https://gitlab.com/",
                    "https://www.farming-simulator.com/mod.php?",
                    "https://farming-simulator.com/mod.php?")
-ALLOWED_GLYPHS = {"engine", "field", "route", "soil", "year", "weather",
-                  "calendar", "tractor", "wrench"}
+SKIP = {"original project", "original", "source", "modhub", "readme", "license"}
 
 
-def font(size: int, bold=False) -> ImageFont.FreeTypeFont:
+def font(size: int, bold=False):
     for name in (
         "DejaVuSansMono-Bold.ttf" if bold else "DejaVuSansMono.ttf",
         "C:/Windows/Fonts/consolab.ttf" if bold else "C:/Windows/Fonts/consola.ttf",
@@ -67,9 +57,23 @@ def font(size: int, bold=False) -> ImageFont.FreeTypeFont:
     return ImageFont.load_default()
 
 
+def serif(size: int, bold=False):
+    for name in (
+        "DejaVuSerif-Bold.ttf" if bold else "DejaVuSerif.ttf",
+        "C:/Windows/Fonts/georgiab.ttf" if bold else "C:/Windows/Fonts/georgia.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf"
+        if bold else "/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf",
+    ):
+        try:
+            return ImageFont.truetype(name, size)
+        except OSError:
+            continue
+    return font(size, bold)
+
+
 def credited_mods(text: str) -> list[dict]:
-    """Read original authors and source links from the canonical credits doc."""
-    found, seen = [], set()
+    """Get original authors and source links from the one canonical public list."""
+    results, seen = [], set()
     for raw in text.splitlines():
         row = CREDIT.match(raw)
         if not row:
@@ -81,286 +85,353 @@ def credited_mods(text: str) -> list[dict]:
             if url in seen:
                 continue
             seen.add(url)
-            found.append({"name": name.strip(), "author": author.strip(),
-                          "source": url})
+            results.append({"name": name.strip(), "author": author.strip(),
+                            "source": url})
+    return results
+
+
+def validate_config(config, mods):
+    if config.get("schema_version") != 1:
+        raise ValueError("Unknown featured-source schema")
+    by_source = {m["source"]: m for m in mods}
+    selected, seen = [], set()
+    for entry in config.get("featured", []):
+        source = entry["source"]
+        if source not in by_source or source in seen:
+            raise ValueError("Featured source missing or duplicate: " + str(source))
+        seen.add(source)
+        issue_id = entry.get("issue")
+        if not isinstance(issue_id, int) or issue_id <= 0:
+            raise ValueError("Invalid related public Issue")
+        selected.append({**by_source[source], "issue": issue_id})
+    if not selected:
+        raise ValueError("At least one highlighted credited source is needed")
+    return selected
+
+
+def read_proofs(sources):
+    data = json.loads(PROOFS.read_text(encoding="utf-8"))
+    if data.get("schema_version") != 1:
+        raise ValueError("Unknown replacement-proof schema")
+    found = {}
+    for item in data.get("replacements", []):
+        source = item.get("source")
+        if source not in sources or source in found:
+            raise ValueError("Unknown or duplicated replacement proof: " + str(source))
+        found[source] = item
     return found
 
 
-def validate_config(config: dict, mods: list[dict]) -> list[dict]:
-    if config.get("schema_version") != 1:
-        raise ValueError("Unsupported assimilation-featured schema")
-    sources = {m["source"]: m for m in mods}
-    featured, used = [], set()
-    for row in config.get("featured", []):
-        source = row["source"]
-        if source not in sources:
-            raise ValueError(f"Featured source missing from credits: {source}")
-        if source in used:
-            raise ValueError(f"Duplicate featured source: {source}")
-        used.add(source)
-        glyph = row.get("glyph", "tractor")
-        if glyph not in ALLOWED_GLYPHS:
-            raise ValueError(f"Unknown original glyph type: {glyph}")
-        issue = row.get("issue")
-        if not isinstance(issue, int) or issue < 1:
-            raise ValueError(f"Invalid roadmap issue for {source}")
-        featured.append({**sources[source], "glyph": glyph, "issue": issue})
-    if len(featured) != 8:
-        raise ValueError(f"Hero uses exactly 8 framed exhibits; got {len(featured)}")
-    return featured
-
-
-def verified_replacement(mod: dict, issues: dict, releases, proofs: dict) -> bool:
-    """Require *per-mod* human approval AND exact issue evidence + public ZIP release."""
+def verified_replacement(mod, issues, releases, proofs) -> bool:
+    """Public Issue + per-mod human review + pinned report + ZIP release required."""
     proof = proofs.get(mod.get("source"))
     if not proof or proof.get("human_accepted") is not True:
         return False
     if proof.get("complete_replacement") is not True:
         return False
-    issue_number = proof.get("issue")
-    if not isinstance(issue_number, int) or issue_number < 1:
+    issue_num = proof.get("issue")
+    if not isinstance(issue_num, int) or issue_num <= 0:
         return False
-    issue = issues.get(issue_number)
+    issue = issues.get(issue_num)
     if not issue or "roadmap" not in label_names(issue):
         return False
     if status(issue, releases) != "RELEASED":
         return False
-    acceptance = proof.get("acceptance", "")
-    if not isinstance(acceptance, str) or not REPORT_URL.fullmatch(acceptance):
+    report = proof.get("acceptance", "")
+    if not isinstance(report, str) or not REPORT_URL.fullmatch(report):
         return False
-    if acceptance != evidence_reference(issue):
+    if evidence_reference(issue) != report:
         return False
-    link = proof.get("release", "")
-    if not isinstance(link, str) or link != evidence_reference(issue, "Release evidence"):
+    release = proof.get("release", "")
+    if not isinstance(release, str) or evidence_reference(issue, "Release evidence") != release:
         return False
     return True
 
 
-def read_proofs(sources: set[str]) -> dict:
-    """No magic inference: an explicit evidence record is mandatory for every full replacement."""
-    config = json.loads(PROOFS.read_text(encoding="utf-8"))
-    if config.get("schema_version") != 1:
-        raise ValueError("Unknown assimilation proof schema")
-    found = {}
-    for entry in config.get("replacements", []):
-        key = entry["source"]
-        if key not in sources or key in found:
-            raise ValueError(f"Unknown or duplicate source in assimilation proofs: {key}")
-        found[key] = entry
-    return found
+def stage_for(mod, issues, releases=(), proofs=None) -> str:
+    return "HONORED" if verified_replacement(mod, issues, releases, proofs or {}) \
+        else "INSPIRATION"
 
 
-def stage_for(mod: dict, issues: dict, releases=(), proofs=None) -> str:
-    """Never infer full replacement from an epic-level status or merge."""
-    if verified_replacement(mod, issues, releases, proofs or {}):
-        return "HONORED"
-    number = mod.get("issue")
-    if number is None:
-        return "RESEARCH"
-    issue = issues.get(number)
-    if not issue or "roadmap" not in label_names(issue):
-        return "RESEARCH"
-    current = status(issue, releases)
-    if current == "BUILDING":
-        return "UNDER DISSECTION"
-    if current == "TESTING":
-        return "FIELD TEST"
-    if current in {"PLANNED", "VERIFIED", "RELEASED"}:
-        # Epic verification says nothing about FULL replacement of this mod.
-        return "IN QUEUE" if current == "PLANNED" else "RESEARCH"
-    return "RESEARCH"
+def md_escape(s):
+    return str(s).replace("\\", "\\\\").replace("|", "\\|").replace("[", "\\[").replace("]", "\\]")
 
 
-def text_fit(d, value, max_width, face):
-    t = str(value)
-    while t and d.textbbox((0, 0), t, font=face)[2] > max_width:
-        t = t[:-1]
-    if t != str(value):
-        t = t.rstrip()[:-1] + "\u2026" if len(t) > 2 else "\u2026"
-    return t
-
-
-def symbol(d, x, y, kind, tint):
-    """Project-owned schematic pictograms; no redistributed third-party icons."""
-    box = (x, y, x + 93, y + 93)
-    d.rounded_rectangle(box, radius=11, fill="#142b20", outline=GOLD, width=3)
-    cx, cy = x + 46, y + 46
-    if kind in {"engine", "wrench", "year", "tractor"}:
-        d.ellipse((cx - 22, cy - 22, cx + 22, cy + 22), outline=tint, width=5)
-        d.ellipse((cx - 7, cy - 7, cx + 7, cy + 7), outline=GOLD, width=4)
-        for dx, dy in [(0, -31), (0, 31), (-31, 0), (31, 0)]:
-            d.line((cx + dx // 2, cy + dy // 2, cx + dx, cy + dy), fill=tint, width=5)
-        if kind == "year":
-            d.text((x + 11, y + 64), "20XX", font=font(13, True), fill=GOLD)
-    elif kind == "field":
-        for s in range(-2, 3):
-            d.line((cx + s * 13, cy - 29, cx + s * 17, cy + 27), fill=GOLD, width=3)
-        d.arc((cx - 31, cy - 32, cx + 31, cy + 32), 45, 270, fill=tint, width=4)
-    elif kind == "route":
-        d.line((cx - 27, cy + 23, cx - 7, cy - 22, cx + 13, cy + 3, cx + 30, cy - 23),
-               fill=tint, width=5, joint="curve")
-        for px, py in [(-27, 23), (-7, -22), (30, -23)]:
-            d.ellipse((cx + px - 5, cy + py - 5, cx + px + 5, cy + py + 5),
-                      fill=GOLD)
-    elif kind == "soil":
-        for k in range(3):
-            d.arc((cx - 28, cy + k * 13 - 11, cx + 29, cy + k * 13 + 11),
-                  0, 180, fill=GOLD, width=3)
-        d.line((cx, cy - 31, cx, cy - 2), fill=tint, width=4)
-        d.line((cx, cy - 17, cx - 13, cy - 29), fill=tint, width=3)
-        d.line((cx, cy - 20, cx + 13, cy - 31), fill=tint, width=3)
-    elif kind == "weather":
-        d.ellipse((cx - 18, cy - 20, cx + 9, cy + 5), outline=GOLD, width=4)
-        d.ellipse((cx - 3, cy - 9, cx + 25, cy + 15), outline=GOLD, width=4)
-        for dx in (-14, 5, 23):
-            d.line((cx + dx, cy + 20, cx + dx - 7, cy + 34), fill=tint, width=4)
-    elif kind == "calendar":
-        d.rectangle((cx - 31, cy - 28, cx + 31, cy + 31), outline=tint, width=4)
-        d.line((cx - 28, cy - 10, cx + 29, cy - 10), fill=GOLD, width=4)
-        d.text((cx - 21, cy - 3), "12", fill=GOLD, font=font(22, True))
-
-
-def background(canvas):
-    d = ImageDraw.Draw(canvas)
-    for y in range(941, H):
-        blend = (y - 941) / (H - 941)
-        d.line((0, y, W, y),
-               fill=(int(6 + 3 * blend), int(15 + 9 * blend), int(12 + 4 * blend)))
-    for x in range(28, W, 64):
-        d.line((x, 947, x, H), fill="#10251b", width=1)
-
-
-def fill_header(d, cards):
-    d.rounded_rectangle((34, 959, W - 34, 1117), radius=13,
-                        fill=PANEL, outline=BORDER, width=3)
-    d.text((56, 977), "ARS // LIVE ENGINEERING PULSE", font=font(27, True), fill=GREEN)
-    d.text((56, 1019), "GITHUB ISSUES + RELEASES  |  EVIDENCE-GATED",
-           font=font(15), fill=MUTED)
-    for idx, (label, value, color) in enumerate(cards):
-        x = (63, 586, 1091)[idx]
-        if idx:
-            d.line((x - 30, 1000, x - 30, 1098), fill=BORDER, width=2)
-        d.text((x, 1053), text_fit(d, label, 390, font(17)),
-               font=font(17), fill=MUTED)
-        d.ellipse((x, 1081, x + 13, 1094), fill=color)
-        d.text((x + 22, 1070), text_fit(d, value, 405, font(27, True)),
-               font=font(27, True), fill=color)
-
-
-def card(d, mod, idx, stage):
-    col, row = idx % 4, idx // 4
-    x, y = 40 + 401 * col, 1235 + 230 * row
-    w, h = 383, 213
-    d.rounded_rectangle((x, y, x + w, y + h), radius=11,
-                        fill="#0b1914", outline=GOLD, width=3)
-    d.rounded_rectangle((x + 8, y + 8, x + w - 8, y + h - 8),
-                        radius=8, outline="#4b6c50", width=1)
-    d.line((x + 14, y + 157, x + w - 14, y + 157), fill="#506247", width=1)
-    kind = mod.get("glyph", "tractor")
-    symbol(d, x + 21, y + 32, kind, GREEN)
-    nfont = font(19, True)
-    raw_name = mod["name"].replace("\n", " ").strip()
-    lines = textwrap.wrap(raw_name, width=21, break_long_words=True)
-    if len(lines) > 2:
-        lines = [lines[0], lines[1][:20] + "\u2026"]
-    for z, line in enumerate(lines[:2]):
-        d.text((x + 130, y + 38 + z * 28), text_fit(d, line, 240, nfont),
-               font=nfont, fill=CREAM)
-    d.text((x + 130, y + 107), text_fit(d, "by " + mod["author"], 228, font(15)),
-           font=font(15), fill=MUTED)
-    d.text((x + 20, y + 167), stage, font=font(20, True), fill=COLORS[stage])
-    d.text((x + w - 155, y + 174), ("FULLY REPLACED" if stage == "HONORED" else "NOT REPLACED"),
-           font=font(13), fill="#a9bcb0")
-
-
-def mk_index(mods, featured, issues, releases, proofs):
-    feat = {m["source"]: m for m in featured}
-    honored_count = sum(verified_replacement(m, issues, releases, proofs) for m in mods)
-    rows = [f"<!-- AUTO-GENERATED by tools/render_unified_hero.py. Do not edit. -->",
-            "# ARS assimilation research index", "",
-            "Every entry comes from the public [Community Inspirations & Thanks]"
-            "(COMMUNITY_INSPIRATIONS.md); its author and source are credited there. "
-            "The hero's **featured** entries are selected in "
-            "[assimilation-featured.json](data/assimilation-featured.json).",
-            "",
-            "**Status is a research or public roadmap activity indicator, not a "
-            "claim of copying, verified gameplay parity or complete replacement.** "
-            "Only a human-accepted, mod-specific pinned acceptance report paired with an actual public ZIP release can earn HONORED status.",
-            "",
-            f"**Source entries: {len(mods)} | Featured: {len(featured)} | "
-            f"Fully replaced: {honored_count} (evidence-gated)**", "",
-            "| Original mod | Original author | ARS research status | Related public issue |",
-            "|---|---|---|---|"]
+def mk_index(mods, issues, releases, proofs):
+    honored = [m for m in mods if stage_for(m, issues, releases, proofs) == "HONORED"]
+    lines = [
+        "<!-- Generated by tools/render_unified_hero.py. Do not edit manually. -->",
+        "# ARS — Hall of Assimilation / full credits", "",
+        "All names and original source links come from "
+        "[Community Inspirations & Thanks](COMMUNITY_INSPIRATIONS.md). "
+        "The public Hero is a small, automatically selected typographic excerpt, "
+        "not the entire archive.", "",
+        "**Only two Hall states:** Inspiration (acknowledged reference) and "
+        "Honored (complete independently implemented, tested and published replacement). "
+        "No partial feature or roadmap-epic status means an entire mod is replaced.", "",
+        f"**{len(mods)} documented inspirations · {len(honored)} honored**", "",
+        "| Original mod | Original author / team | Hall status |",
+        "|---|---|---|",
+    ]
     for mod in mods:
-        linked = feat.get(mod["source"])
-        stage = stage_for(linked or mod, issues, releases, proofs)
-        issue = f"[#{linked['issue']}](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/{linked['issue']})" if linked else "\u2014"
-        def esc(s):
-            return str(s).replace("|", "\\|").replace("[", "\\[").replace("]", "\\]")
-        rows.append(f"| [{esc(mod['name'])}]({mod['source']}) | "
-                    f"{esc(mod['author'])} | {stage} | {issue} |")
-    rows.extend(["", "### Status discipline", "",
-                 "- **RESEARCH:** credited source; no active assimilation work is claimed.",
-                 "- **IN QUEUE:** related public feature epic is planned.",
-                 "- **UNDER DISSECTION:** related public epic is building; "
-                 "does not prove this particular external mod was replaced.",
-                 "- **FIELD TEST:** related public epic is in testing; "
-                 "gameplay parity is not yet proven.",
-                 "- **HONORED:** reserved for future **separately evidenced, human-accepted, "
-                 "published full functional replacement**; not inferred from issue closure.",
-                 "", "The public [live roadmap](ROADMAP.md) has the exact epic statuses. "
-                 "The [Hall of Heroes](HALL_OF_HEROES.md) explains the tribute and "
-                 "original creators' rights. Icons on the unified hero are **original "
-                 "ARS schematic pictograms**; third-party mod icons will only be used "
-                 "where redistribution rights have been confirmed.", ""])
-    return "\n".join(rows)
+        flag = stage_for(mod, issues, releases, proofs)
+        lines.append(f"| [{md_escape(mod['name'])}]({mod['source']}) | "
+                     f"{md_escape(mod['author'])} | {flag} |")
+    lines += ["", "## How the Hall updates", "",
+              "- Names, creators, and links are read from the original credits page.",
+              "- The Hero's inspiration list is an automated excerpt of that index.",
+              "- Honored requires a dedicated [proof record](data/assimilation-proofs.json), "
+              "human-approved complete parity, a pinned acceptance report "
+              "and a published, downloadable ARS ZIP release.",
+              "- Public development focus comes from the existing "
+              "[GitHub roadmap](ROADMAP.md); internal working plans are never displayed.",
+              "- No original third-party mod icons or artwork are copied to this image.",
+              "", "Explore the [Hall of Heroes](HALL_OF_HEROES.md), "
+              "[live roadmap](ROADMAP.md) and [project home](../README.md).", ""]
+    return "\n".join(lines)
+
+
+def center(d, y, text, face, fill, left=0, right=W):
+    width = d.textbbox((0, 0), text, font=face)[2]
+    d.text(((left + right - width) // 2, y), text, font=face, fill=fill)
+
+
+def truncate(d, label, face, width):
+    original = str(label)
+    if d.textbbox((0, 0), original, font=face)[2] <= width:
+        return original
+    val = original
+    while val and d.textbbox((0, 0), val + "...", font=face)[2] > width:
+        val = val[:-1]
+    return val.rstrip() + "..."
+
+
+def border(d, rect, color=BORDER, width=2, radius=7):
+    d.rounded_rectangle(rect, radius=radius, outline=color, width=width)
+
+
+def picture(canvas):
+    """Reuse approved ARS concept tractor photograph; paint an immersive garage frame."""
+    if not SCENERY.is_file():
+        raise FileNotFoundError("Missing existing approved ARS artwork")
+    with Image.open(SCENERY) as img:
+        photo = img.convert("RGB")
+    if photo.size != (1672, 941):
+        raise ValueError(f"Unexpected photo master {photo.size}")
+    # Only use scenic upper-right section, never the mocked roadmap cards.
+    crop = photo.crop((710, 5, 1667, 450))
+    crop = crop.resize((1010, 455), Image.Resampling.LANCZOS)
+    canvas.paste(crop, (642, 22))
+    overlay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    od = ImageDraw.Draw(overlay)
+    # Workshop interior left: restrained steel framing and glow.
+    od.rectangle((0, 0, 760, 487), fill=(4, 15, 12, 240))
+    for x in (40, 122, 204, 286, 368, 450, 532, 614):
+        od.line((x, 3, x, 480), fill=(45, 85, 65, 60), width=1)
+    for y in (88, 177, 266, 355):
+        od.line((0, y, 690, y), fill=(39, 79, 61, 43), width=1)
+    # Tint the scene like the garage reference, preserve the tractor's visibility.
+    od.rectangle((642, 22, 1652, 480), fill=(2, 16, 10, 34))
+    # Gentle gradient where black workshop merges with the field scene.
+    for xx in range(643, 885, 3):
+        intensity = round(217 * (1 - (xx - 643) / 242))
+        od.rectangle((xx, 0, xx + 3, 484), fill=(4, 15, 11, intensity))
+    # Upper beam and machine shed architecture.
+    od.rectangle((0, 0, W, 24), fill=(4, 13, 11, 250))
+    od.rectangle((0, 471, W, 491), fill=(4, 14, 11, 250))
+    od.rectangle((1532, 22, 1562, 471), fill=(4, 18, 14, 165))
+    od.line((28, 39, 1634, 39), fill=(99, 231, 165, 110), width=2)
+    od.line((638, 28, 638, 473), fill=(79, 166, 113, 160), width=3)
+    od.line((1568, 29, 1568, 473), fill=(79, 166, 113, 160), width=2)
+    canvas.paste(overlay, (0, 0), overlay)
+
+
+PUBLIC_CATEGORIES = {
+    3: ("Vehicle Systems & Maintenance", "Wear  ·  Breakdowns  ·  Workshop"),
+    4: ("Unified ARS Interface", "One connected settings & navigation hub"),
+    5: ("Mod Compatibility", "Interoperability between gameplay systems"),
+    6: ("Farming Simulator 25 Integration", "Connected system integration"),
+    7: ("Physics, Fuel & Machinery", "Driving  ·  Fuel  ·  Equipment"),
+    8: ("Fields & Agronomy", "Soil  ·  Crop rotation  ·  Growth"),
+    9: ("Farm Economics", "Finance  ·  Land  ·  Markets"),
+    10: ("Production & Livestock", "Animals  ·  Storage  ·  Production"),
+    11: ("Forestry & Logistics", "Cargo  ·  Forest  ·  Transport"),
+    12: ("Field & Transport Automation", "Farming assistance  ·  Routing"),
+}
+
+
+def development_cards(issues, releases):
+    """Issue-driven selection of useful public product topics, never private code names.
+
+    A building/testing public roadmap epic takes priority, then 'now',
+    then 'next'. Internal implementation nicknames are never rendered.
+    """
+    roadmap = [x for x in issues if "roadmap" in label_names(x)]
+    def priority(item):
+        state = status(item, releases)
+        active = state in {"BUILDING", "TESTING"}
+        ph = phase(item)
+        return (0 if active else 1,
+                {"now": 0, "next": 1, "planned": 2, "future": 3}.get(ph, 4),
+                int(item["number"]))
+    ordered = sorted(roadmap, key=priority)
+    active = [x for x in ordered if status(x, releases) in {"BUILDING","TESTING"}]
+    current = (active or ordered or [None])[0]
+    future = [x for x in ordered if current is None or x["number"] != current["number"]]
+    next_items = [x for x in future if phase(x) in {"now","next"}]
+    if not next_items:
+        next_items = future
+
+    def friendly(item):
+        if item is None:
+            return ("Development roadmap", "Product details coming soon")
+        num = int(item["number"])
+        if num in PUBLIC_CATEGORIES:
+            return PUBLIC_CATEGORIES[num]
+        title = clean_title(item)
+        title = re.sub(r"(?i)option\s+[a-z]\s*[:\-]?\s*", "", title).strip()
+        return title[:100], "See public ARS roadmap"
+
+    main_title, main_detail = friendly(current)
+    next_title, _ = friendly(next_items[0] if next_items else None)
+    next_detail, _ = friendly(next_items[1] if len(next_items) > 1 else None)
+    if current is None:
+        main_title, main_detail = "Roadmap in preparation", "Future connected systems"
+    elif status(current, releases) not in {"BUILDING","TESTING"}:
+        main_detail = "Next development focus"
+    return (
+        ("CURRENT DEVELOPMENT", main_title, main_detail),
+        ("NEXT FOCUS", next_title,
+         next_detail if len(next_items) > 1 else "Further modules on the roadmap"),
+        ("EXPANDING INTO", "Physics  ·  Fuel  ·  Agronomy",
+         "Economy  ·  Logistics  ·  Automation"),
+    )
+
+
+def sketch(canvas, issues, releases):
+    d = ImageDraw.Draw(canvas)
+    picture(canvas)
+    d = ImageDraw.Draw(canvas)
+
+    # 01 | Cinematic garage pitch
+    d.text((62, 94), "ARS", font=font(163, True), fill=GREEN,
+           stroke_width=2, stroke_fill="#17412b")
+    d.line((64, 275, 572, 275), fill=GREEN, width=3)
+    d.text((65, 298), "ADVANCED REALMS SUITE", font=font(30, True), fill=CREAM)
+    d.text((66, 355), "MORE REALISM.", font=font(35, True), fill=CREAM)
+    d.text((66, 405), "LESS MOD JUGGLING.", font=font(29, True), fill=GREEN)
+    d.text((1133, 72), "CONNECTED SYSTEMS", font=font(18, True), fill=GREEN)
+
+    # 02 | Technical command center; public-facing product features only.
+    d.rounded_rectangle((27, 511, W-27, 717), radius=12,
+                        fill=PANEL, outline=BORDER, width=2)
+    center(d, 523, "ARS // LIVE DEVELOPMENT", font(29, True), GREEN)
+    d.line((49, 566, W - 49, 566), fill="#275a42", width=2)
+    divs = (563, 1113)
+    for x in divs:
+        d.line((x, 582, x, 698), fill="#2d6049", width=2)
+    columns = [(39, 565, *development_cards(issues, releases)[0]),
+               (569, 1115, *development_cards(issues, releases)[1]),
+               (1122, 1630, *development_cards(issues, releases)[2])]
+    for left, right, label, name, sub in columns:
+        center(d, 584, label, font(18, True), GREEN, left, right)
+        f = font(22, True)
+        center(d, 626, truncate(d, name, f, right-left-20), f, CREAM, left, right)
+        f = font(17)
+        center(d, 668, truncate(d, sub, f, right-left-17), f, SOFT, left, right)
+
+    # 03 | A worthy, completely centered Hall. No icons or individual mod cards.
+    d.rounded_rectangle((27, 734, W-27, H-23), radius=11,
+                        fill="#0b1410", outline="#8c774a", width=2)
+    d.line((53, 756, 396, 756), fill=GOLD, width=2)
+    d.line((W - 396, 756, W - 53, 756), fill=GOLD, width=2)
+    center(d, 754, "HALL OF ASSIMILATION", serif(45, True), GOLD)
+    center(d, 816, "Inspired by the modding pioneers. Honoring the legends.",
+           serif(21), CREAM)
+    d.line((230, 857, W-230, 857), fill="#75633e", width=2)
+
+
+def name_lines(d, names, limit=1420, max_lines=3):
+    """Greedy width-bound, center-ready text rows; cannot overflow the image."""
+    f = font(23)
+    lines, current = [], ""
+    for name in names:
+        candidate = (current + "   ·   " if current else "") + name
+        if d.textbbox((0, 0), candidate, font=f)[2] > limit and current:
+            lines.append(current)
+            current = name
+        else:
+            current = candidate
+        if len(lines) >= max_lines:
+            break
+    if current and len(lines) < max_lines:
+        lines.append(current)
+    consumed = sum(line.count("   ·   ") + 1 for line in lines)
+    if consumed < len(names) and lines:
+        suffix = f"  ·  +{len(names)-consumed} more"
+        while lines[-1] and d.textbbox((0, 0), lines[-1]+suffix, font=f)[2] > limit:
+            part = lines[-1].rsplit("   ·   ", 1)
+            if len(part) == 1:
+                break
+            lines[-1] = part[0]
+        lines[-1] += suffix
+    return lines
+
+
+def hall(canvas, mods, featured, issue_map, releases, proofs):
+    d = ImageDraw.Draw(canvas)
+    honored = [m for m in mods if stage_for(m, issue_map, releases, proofs) == "HONORED"]
+    honors = {m["source"] for m in honored}
+    # Prefer the curated order, then canonical credits; nothing hand-drawn per mod.
+    picked = featured + [m for m in mods if m["source"] not in
+                         {f["source"] for f in featured}]
+    inspiration = [m["name"] for m in picked if m["source"] not in honors]
+    featured_names = inspiration[:8]
+    center(d, 876, f"INSPIRATION  /  {len(mods)-len(honored)}",
+           font(22, True), GREEN)
+    for i, line in enumerate(name_lines(d, featured_names, max_lines=2)):
+        center(d, 922 + 43*i, line, font(26), CREAM)
+    remaining = len(inspiration) - len(featured_names)
+    if remaining:
+        center(d, 1006, f"+{remaining} MORE IN THE FULL TRIBUTE ARCHIVE",
+               font(18), SOFT)
+    d.line((250, 1034, W-250, 1034), fill="#655538", width=1)
+    center(d, 1047, f"HONORED  /  {len(honored)}", font(24, True), GOLD)
+    if honored:
+        names = [m["name"] for m in honored]
+        for i, line in enumerate(name_lines(d, names, max_lines=1)):
+            center(d, 1083 + i*30, line, serif(21), CREAM)
+    else:
+        center(d, 1087, "The legends are still working. No retirements yet.",
+               serif(23), "#e5c994")
+    center(d, 1130,
+           f"FULL TRIBUTE ARCHIVE: {len(mods)} ORIGINAL SOURCES  //  FEWER ZIPs. MORE CREDITS.",
+           font(17), SOFT)
 
 
 def render(issues, releases):
     mods = credited_mods(CREDITS.read_text(encoding="utf-8"))
     if not mods:
-        raise ValueError("No mod sources found in community credits")
+        raise ValueError("Missing source attributions")
+    featured = validate_config(json.loads(REGISTRY.read_text(encoding="utf-8")), mods)
+    issue_map = {int(i["number"]): i for i in issues}
     proofs = read_proofs({m["source"] for m in mods})
-    config = json.loads(REGISTRY.read_text(encoding="utf-8"))
-    featured = validate_config(config, mods)
-    issue_map = {int(x["number"]): x for x in issues}
-    if not ART.is_file():
-        raise FileNotFoundError("Render roadmap-live.png before unified hero")
-    base = Image.open(ART).convert("RGB")
-    if base.size != (W, 941):
-        raise ValueError(f"Expected 1672x941 live roadmap image, got {base.size}")
+
     canvas = Image.new("RGB", (W, H), BG)
-    canvas.paste(base, (0, 0))
-    background(canvas)
-    d = ImageDraw.Draw(canvas)
-    cards = snapshot(issues, latest_downloadable_release(releases), releases)
-    fill_header(d, cards)
-    d.line((42, 1151, W - 42, 1151), fill=BORDER, width=2)
-    d.text((43, 1130), "ARS // HALL OF ASSIMILATED HEROES", font=font(29, True), fill=GOLD)
-    d.text((43, 1173), "FRAMED TRIBUTES  /  LIVE RESEARCH & ROADMAP STATUS",
-           font=font(16), fill=GREEN)
-    d.text((1110, 1173), "FEWER ZIPs. MORE CREDITS.", font=font(15, True), fill=CREAM)
-    for i, mod in enumerate(featured):
-        card(d, mod, i, stage_for(mod, issue_map, releases, proofs))
-    d.line((38, 1697, W - 38, 1697), fill=BORDER, width=2)
-    d.text((42, 1714), "THE EXHIBITION IS OPEN. THE LEGENDS ARE STILL WORKING.",
-           font=font(23, True), fill=CREAM)
-    d.text((42, 1750),
-           f"ALL {len(mods)} CREDITED MOD REFERENCES: docs/ASSIMILATION_INDEX.md"
-           "   /   FULL REPLACEMENTS REQUIRE REVIEWED IN-GAME EVIDENCE",
-           font=font(17), fill=GREEN)
+    sketch(canvas, issues, releases)
+    hall(canvas, mods, featured, issue_map, releases, proofs)
+    data = io.BytesIO()
+    canvas.save(data, format="PNG", optimize=True)
+    payload = data.getvalue()
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    import io
-    output = io.BytesIO()
-    canvas.save(output, format="PNG", optimize=True)
-    payload = output.getvalue()
-    if not OUT.is_file() or OUT.read_bytes() != payload:
+    if not OUT.exists() or OUT.read_bytes() != payload:
         OUT.write_bytes(payload)
-    index = mk_index(mods, featured, issue_map, releases, proofs)
-    if not INDEX.is_file() or INDEX.read_text(encoding="utf-8") != index:
+    index = mk_index(mods, issue_map, releases, proofs)
+    if not INDEX.exists() or INDEX.read_text(encoding="utf-8") != index:
         INDEX.write_text(index, encoding="utf-8")
-    print(f"Rendered one live hero; {len(featured)} framed displays, "
-          f"{len(mods)} credited sources; no fake assimilation")
+    print(f"Rendered cinematic garage Hero + public feature pulse + two-state Hall; "
+          f"{len(mods)} credited sources, "
+          f"{sum(stage_for(m, issue_map, releases, proofs)=='HONORED' for m in mods)} honored")
 
 
 if __name__ == "__main__":
