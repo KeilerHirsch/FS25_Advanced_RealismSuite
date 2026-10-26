@@ -6,9 +6,9 @@
 
 **An expanding realism and immersion suite for Farming Simulator 25.**
 
-<a href="docs/ASSIMILATION_INDEX.md"><img src="docs/assets/ars-unified-live-hero.png" alt="Immersive ARS garage-style cinematic tractor pitch, public live feature development, and a centered two-state Hall of Assimilation with credited mod names" width="100%"></a>
+<img src="docs/assets/ars-static-hero.png" alt="ARS Advanced Realms Suite concept artwork: a green tractor in a sunset-lit workshop" width="100%">
 
-<sub>One automatically refreshed image: cinematic ARS workshop art, useful product development topics from the public roadmap and a centered typographic Hall of Assimilation. The featured mods are **research inspirations, not claimed as replaced**. Full credits and source links remain visible.</sub>
+<sub>Concept artwork — not an in-game screenshot.</sub>
 
 <sub>[Live roadmap &amp; acceptance gates](docs/ROADMAP.md) · [All original mods and assimilation statuses](docs/ASSIMILATION_INDEX.md) · [Enter the Hall of Heroes](docs/HALL_OF_HEROES.md) · [Original creators](docs/COMMUNITY_INSPIRATIONS.md)</sub>
 
