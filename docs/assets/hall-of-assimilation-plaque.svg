@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="258" viewBox="0 0 1160 258" role="img" aria-labelledby="title desc">
+<title id="title">Advanced Realms Suite - Hall of Assimilation</title>
+<desc id="desc">A restrained bronze-and-green gallery plaque celebrating independent Farming Simulator mod creators. Inspiration credits original pioneers; Honored is reserved for independently implemented, verified and released ARS successors.</desc>
+<defs>
+  <linearGradient id="back" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#101a15"/><stop offset=".55" stop-color="#090f0d"/><stop offset="1" stop-color="#172017"/></linearGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#695b3c"/><stop offset=".5" stop-color="#dbbb79"/><stop offset="1" stop-color="#695b3c"/></linearGradient>
+  <pattern id="lines" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M0 15.5H16" stroke="#648069" stroke-opacity=".10"/></pattern>
+</defs>
+<rect x="1" y="1" width="1158" height="256" rx="12" fill="url(#back)" stroke="#8a744d" stroke-width="2"/>
+<rect x="8" y="8" width="1144" height="242" rx="8" fill="url(#lines)" stroke="#4a4e35" stroke-width="1"/>
+<path d="M24 25h143M993 25h143M24 232h130M1006 232h130" stroke="url(#gold)" stroke-width="2"/>
+<text x="580" y="35" font-family="Consolas,DejaVu Sans Mono,monospace" font-size="15" letter-spacing="3.5" text-anchor="middle" fill="#9bddaa">ARS / COMMUNITY TRIBUTE</text>
+<text x="580" y="91" font-family="Georgia,Times New Roman,serif" font-size="45" letter-spacing="2.2" text-anchor="middle" fill="#f0ddb5">HALL OF ASSIMILATION</text>
+<text x="580" y="121" font-family="Arial,Helvetica,sans-serif" font-size="19" text-anchor="middle" fill="#d2dfd2">Inspired by the pioneers. Honoring the legends.</text>
+<path d="M96 141H1064" stroke="url(#gold)" stroke-width="1.4" opacity=".8"/>
+<path d="M580 155V220" stroke="#856d46" stroke-width="1" opacity=".75"/>
+<text x="300" y="171" font-family="Consolas,DejaVu Sans Mono,monospace" font-size="19" font-weight="700" letter-spacing="1.8" text-anchor="middle" fill="#9beeae">INSPIRATION</text>
+<text x="300" y="195" font-family="Arial,Helvetica,sans-serif" font-size="16" text-anchor="middle" fill="#d1d5cc">Original mods and their creators</text>
+<text x="860" y="171" font-family="Consolas,DejaVu Sans Mono,monospace" font-size="19" font-weight="700" letter-spacing="1.8" text-anchor="middle" fill="#e0bd81">HONORED</text>
+<text x="860" y="195" font-family="Arial,Helvetica,sans-serif" font-size="16" text-anchor="middle" fill="#d1d5cc">Verified, published ARS successors</text>
+<text x="580" y="233" font-family="Consolas,DejaVu Sans Mono,monospace" font-size="17" font-weight="700" letter-spacing="2.3" text-anchor="middle" fill="#d9bf8a">FEWER ZIPs. MORE CREDITS.</text>
+</svg>
