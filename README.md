@@ -34,7 +34,7 @@ ARS takes a different approach: **vehicle physics, driving, machinery wear, brea
 
 <sub>[Enter the Hall](docs/HALL_OF_HEROES.md) · [Original mods and creators](docs/COMMUNITY_INSPIRATIONS.md) · [Complete inspiration and status index](docs/ASSIMILATION_INDEX.md)</sub>
 
-<sub>Inspiration is acknowledgement, not a claim of copied code or a completed replacement. Honored requires an independently implemented, verified and published ARS successor.</sub>
+<sub>**No original mod has been fully replaced or assimilated by ARS as of 26 October 2026.** Courseplay and AutoDrive are long-term inspirations, not implemented replacements. The static plaque is a tribute, not a completion claim. [See the automatically updated Hall index for the current status.](docs/ASSIMILATION_INDEX.md)</sub>
 
 ### Discover ARS
 
