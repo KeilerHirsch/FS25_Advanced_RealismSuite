@@ -38,7 +38,9 @@ ARS takes a different approach: **vehicle physics, driving, machinery wear, brea
 
 ### Discover ARS
 
-[**Hall of Assimilated Heroes**](docs/HALL_OF_HEROES.md) · [**Community Inspirations & Thanks**](docs/COMMUNITY_INSPIRATIONS.md) · [**Explore the Wiki**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/wiki) · [**Connected Systems**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/wiki/Connected-Systems) · [**Join the Discussion**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/discussions) · [**Releases**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/releases)
+[**Hall of Assimilation**](docs/HALL_OF_HEROES.md) · [**Original Creators & Credits**](docs/COMMUNITY_INSPIRATIONS.md) · [**Explore the Wiki**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/wiki) · [**Connected Systems**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/wiki/Connected-Systems) · [**Join the Discussion**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/discussions) · [**Releases**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/releases)
+
+<sub>**Interested in ARS?** This is an active development project with no public release yet. [Follow the live roadmap](docs/ROADMAP.md) · [Ask questions or share ideas](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/discussions) · [Browse releases when available](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/releases). Please treat development activity and concept artwork as such, not as a downloadable finished mod.</sub>
 
 <sub>ARS is an independent community project under active development. Feature availability will expand through tested releases.</sub>
 
