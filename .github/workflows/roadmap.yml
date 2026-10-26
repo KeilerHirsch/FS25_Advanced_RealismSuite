@@ -8,6 +8,13 @@ on:
     types: [published, edited, deleted]
   pull_request:
     paths:
+      - tools/render_unified_hero.py
+      - tools/test_unified_hero.py
+      - docs/data/assimilation-featured.json
+      - docs/data/assimilation-proofs.json
+      - docs/COMMUNITY_INSPIRATIONS.md
+      - docs/ASSIMILATION_INDEX.md
+      - docs/assets/ars-unified-live-hero.png
       - README.md
       - tools/render_roadmap.py
       - tools/render_roadmap_hud.py
@@ -24,6 +31,13 @@ on:
   push:
     branches: [main]
     paths:
+      - tools/render_unified_hero.py
+      - tools/test_unified_hero.py
+      - docs/data/assimilation-featured.json
+      - docs/data/assimilation-proofs.json
+      - docs/COMMUNITY_INSPIRATIONS.md
+      - docs/ASSIMILATION_INDEX.md
+      - docs/assets/ars-unified-live-hero.png
       - README.md
       - tools/render_roadmap.py
       - tools/render_roadmap_hud.py
@@ -70,6 +84,7 @@ jobs:
         run: |
           python tools/test_roadmap_hud.py
           python tools/test_status_hud.py
+          python tools/test_unified_hero.py
           python tools/test_roadmap_workflow.py
       - name: Render preview without publishing
         env:
@@ -79,11 +94,12 @@ jobs:
           python tools/render_roadmap.py
           python tools/render_roadmap_hud.py
           python tools/render_status_hud.py
+          python tools/render_unified_hero.py
       - name: Reject stale or tampered generated files
         shell: bash
         run: |
           set -euo pipefail
-          git diff --exit-code -- docs/ROADMAP.md docs/assets/roadmap.svg docs/assets/roadmap-live.png docs/assets/status-live.svg
+          git diff --exit-code -- docs/ROADMAP.md docs/assets/roadmap.svg docs/assets/roadmap-live.png docs/assets/status-live.svg docs/ASSIMILATION_INDEX.md
 
   publish:
     if: github.event_name != 'pull_request'
@@ -107,6 +123,7 @@ jobs:
         run: |
           python tools/test_roadmap_hud.py
           python tools/test_status_hud.py
+          python tools/test_unified_hero.py
           python tools/test_roadmap_workflow.py
       - name: Generate live roadmap graphics and accessible text
         env:
@@ -116,11 +133,12 @@ jobs:
           python tools/render_roadmap.py
           python tools/render_roadmap_hud.py
           python tools/render_status_hud.py
+          python tools/render_unified_hero.py
       - name: Commit updated roadmap only when it changed
         shell: bash
         run: |
           set -euo pipefail
-          git add docs/assets/roadmap.svg docs/assets/roadmap-live.png docs/assets/status-live.svg docs/ROADMAP.md
+          git add docs/assets/roadmap.svg docs/assets/roadmap-live.png docs/assets/status-live.svg docs/ROADMAP.md docs/ASSIMILATION_INDEX.md docs/assets/ars-unified-live-hero.png
           if git diff --cached --quiet; then
             echo "Roadmap content unchanged"
             exit 0

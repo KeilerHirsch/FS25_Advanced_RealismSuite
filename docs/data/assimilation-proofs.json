@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "description": "A full-mod replacement requires an explicit per-original human-reviewed pinned acceptance report and a matching public release with a downloadable FS25 ZIP. Issue labels alone never prove replacement.",
+  "replacements": []
+}

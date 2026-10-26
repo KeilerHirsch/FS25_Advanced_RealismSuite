@@ -6,13 +6,11 @@
 
 **An expanding realism and immersion suite for Farming Simulator 25.**
 
-<a href="docs/ROADMAP.md"><img src="docs/assets/roadmap-live.png" alt="ARS cinematic roadmap with eight feature themes, live GitHub Issue status and evidence-based verified-share bars" width="100%"></a>
+<a href="docs/ASSIMILATION_INDEX.md"><img src="docs/assets/ars-unified-live-hero.png" alt="One live ARS cinematic roadmap, GitHub development pulse, and eight framed mod inspiration exhibits showing their evidence-constrained roadmap status" width="100%"></a>
 
-<a href="docs/ROADMAP.md"><img src="docs/assets/status-live.svg" alt="Live ARS project status: current development activity, in-game acceptance gate and tracked roadmap epics, calculated from GitHub Issues and published Releases" width="100%"></a>
+<sub>One automatically refreshed image: cinematic concept art, real public GitHub Issue/Release status and eight framed community tributes. The featured mods are **research inspirations, not claimed as replaced**. Full credits and source links remain visible.</sub>
 
-<sub>Cinematic concept artwork, not an in-game screenshot. The eight status indicators and verified-share bars are regenerated from public GitHub roadmap Issues. A bar shows the proportion of assigned epics explicitly **verified or released**, not guessed engineering completion. Some cross-cutting epics belong to more than one theme.</sub>
-
-<sub>[View all public roadmap issues](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues?q=is%3Aissue+label%3Aroadmap) · [Accessible text roadmap and live phase status](docs/ROADMAP.md) · [Original phase dashboard](docs/assets/roadmap.svg) · No invented deadlines or percentages.</sub>
+<sub>[Live roadmap &amp; acceptance gates](docs/ROADMAP.md) · [All original mods and assimilation statuses](docs/ASSIMILATION_INDEX.md) · [Enter the Hall of Heroes](docs/HALL_OF_HEROES.md) · [Original creators](docs/COMMUNITY_INSPIRATIONS.md)</sub>
 
 ## The Mission
 
@@ -26,19 +24,9 @@ ARS takes a different approach: **vehicle physics, driving, machinery wear, brea
 
 **One cohesive experience. Built to expand.**
 
-## Hall of Assimilated Heroes
-
-<a href="docs/HALL_OF_HEROES.md"><img src="docs/assets/hall-of-heroes.svg" alt="Framed ARS tribute museum honoring Advanced Damage System, Courseplay, AutoDrive and Soil Work Yield Bonus; all are research references, not replaced mods" width="100%"></a>
-
-**They built the legends. We build the connected ecosystem.**
-
-*Fewer ZIPs. More credits.* A deliberately over-the-top museum for the modding pioneers whose work inspired our research. **Original authors credited; no unverified claims of replacement.**
-
-[**Enter the Hall of Assimilated Heroes**](docs/HALL_OF_HEROES.md) · [**Meet the original creators**](docs/COMMUNITY_INSPIRATIONS.md)
-
 ### Discover ARS
 
-[**Community Inspirations & Thanks**](docs/COMMUNITY_INSPIRATIONS.md) · [**Explore the Wiki**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/wiki) · [**Connected Systems**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/wiki/Connected-Systems) · [**Join the Discussion**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/discussions) · [**Releases**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/releases)
+[**Hall of Assimilated Heroes**](docs/HALL_OF_HEROES.md) · [**Community Inspirations & Thanks**](docs/COMMUNITY_INSPIRATIONS.md) · [**Explore the Wiki**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/wiki) · [**Connected Systems**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/wiki/Connected-Systems) · [**Join the Discussion**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/discussions) · [**Releases**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/releases)
 
 <sub>ARS is an independent community project under active development. Feature availability will expand through tested releases.</sub>
 
