@@ -30,19 +30,15 @@ ARS takes a different approach: **vehicle physics, driving, machinery wear, brea
 
 ## Hall of Assimilation
 
-<a href="docs/HALL_OF_HEROES.md"><img src="docs/assets/hall-of-assimilation-plaque.svg" alt="Hall of Assimilation — a tribute to original Farming Simulator mod developers, with Inspiration and Honored galleries" width="100%"></a>
+<a href="docs/HALL_OF_HEROES.md"><img src="docs/assets/hall-of-assimilation-plaque.svg" alt="Hall of Assimilation — honoring the original Farming Simulator mod creators" width="100%"></a>
 
-<sub>[Enter the Hall](docs/HALL_OF_HEROES.md) · [Original mods and creators](docs/COMMUNITY_INSPIRATIONS.md) · [Complete inspiration and status index](docs/ASSIMILATION_INDEX.md)</sub>
+[Enter the Hall](docs/HALL_OF_HEROES.md) · [Original creators](docs/COMMUNITY_INSPIRATIONS.md) · [Hall index](docs/ASSIMILATION_INDEX.md)
 
-<sub>**No original mod has been fully replaced or assimilated by ARS as of 26 October 2026.** Courseplay and AutoDrive are long-term inspirations, not implemented replacements. The static plaque is a tribute, not a completion claim. [See the automatically updated Hall index for the current status.](docs/ASSIMILATION_INDEX.md)</sub>
+## Explore
 
-### Discover ARS
+[Roadmap](docs/ROADMAP.md) · [Wiki](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/wiki) · [Discussions](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/discussions) · [Releases](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/releases)
 
-[**Hall of Assimilation**](docs/HALL_OF_HEROES.md) · [**Original Creators & Credits**](docs/COMMUNITY_INSPIRATIONS.md) · [**Explore the Wiki**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/wiki) · [**Connected Systems**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/wiki/Connected-Systems) · [**Join the Discussion**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/discussions) · [**Releases**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/releases)
-
-<sub>**Interested in ARS?** This is an active development project with no public release yet. [Follow the live roadmap](docs/ROADMAP.md) · [Ask questions or share ideas](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/discussions) · [Browse releases when available](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/releases). Please treat development activity and concept artwork as such, not as a downloadable finished mod.</sub>
-
-<sub>ARS is an independent community project under active development. Feature availability will expand through tested releases.</sub>
+<sub>Work in progress.</sub>
 
 ---
 
