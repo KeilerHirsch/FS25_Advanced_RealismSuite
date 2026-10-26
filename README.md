@@ -26,6 +26,16 @@ ARS takes a different approach: **vehicle physics, driving, machinery wear, brea
 
 **One cohesive experience. Built to expand.**
 
+## Hall of Assimilated Heroes
+
+<a href="docs/HALL_OF_HEROES.md"><img src="docs/assets/hall-of-heroes.svg" alt="Framed ARS tribute museum honoring Advanced Damage System, Courseplay, AutoDrive and Soil Work Yield Bonus; all are research references, not replaced mods" width="100%"></a>
+
+**They built the legends. We build the connected ecosystem.**
+
+*Fewer ZIPs. More credits.* A deliberately over-the-top museum for the modding pioneers whose work inspired our research. **Original authors credited; no unverified claims of replacement.**
+
+[**Enter the Hall of Assimilated Heroes**](docs/HALL_OF_HEROES.md) · [**Meet the original creators**](docs/COMMUNITY_INSPIRATIONS.md)
+
 ### Discover ARS
 
 [**Community Inspirations & Thanks**](docs/COMMUNITY_INSPIRATIONS.md) · [**Explore the Wiki**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/wiki) · [**Connected Systems**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/wiki/Connected-Systems) · [**Join the Discussion**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/discussions) · [**Releases**](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/releases)
