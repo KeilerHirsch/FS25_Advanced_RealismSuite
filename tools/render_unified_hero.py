@@ -164,8 +164,8 @@ def mk_index(mods, issues, releases, proofs):
         "# ARS — Hall of Assimilation / full credits", "",
         "All names and original source links come from "
         "[Community Inspirations & Thanks](COMMUNITY_INSPIRATIONS.md). "
-        "The public Hero is a small, automatically selected typographic excerpt, "
-        "not the entire archive.", "",
+        "The approved README Hero artwork is static. This generated index carries "
+        "the current status of every credited original.", "",
         "**Only two Hall states:** Inspiration (acknowledged reference) and "
         "Honored (complete independently implemented, tested and published replacement). "
         "No partial feature or roadmap-epic status means an entire mod is replaced.", "",
@@ -179,13 +179,13 @@ def mk_index(mods, issues, releases, proofs):
                      f"{md_escape(mod['author'])} | {flag} |")
     lines += ["", "## How the Hall updates", "",
               "- Names, creators, and links are read from the original credits page.",
-              "- The Hero's inspiration list is an automated excerpt of that index.",
+              "- The README links here; static artwork does not claim completed replacements.",
               "- Honored requires a dedicated [proof record](data/assimilation-proofs.json), "
               "human-approved complete parity, a pinned acceptance report "
               "and a published, downloadable ARS ZIP release.",
               "- Public development focus comes from the existing "
               "[GitHub roadmap](ROADMAP.md); internal working plans are never displayed.",
-              "- No original third-party mod icons or artwork are copied to this image.",
+              "- No original third-party mod icons or artwork are added to this credit index.",
               "", "Explore the [Hall of Heroes](HALL_OF_HEROES.md), "
               "[live roadmap](ROADMAP.md) and [project home](../README.md).", ""]
     return "\n".join(lines)
