@@ -10,7 +10,11 @@
 
 <sub>Concept artwork — not an in-game screenshot.</sub>
 
-<sub>[Live roadmap &amp; acceptance gates](docs/ROADMAP.md) · [All original mods and assimilation statuses](docs/ASSIMILATION_INDEX.md) · [Enter the Hall of Heroes](docs/HALL_OF_HEROES.md) · [Original creators](docs/COMMUNITY_INSPIRATIONS.md)</sub>
+## Live Development
+
+<a href="docs/ROADMAP.md"><img src="docs/assets/status-live.svg" alt="Automatically updated ARS development status derived from public GitHub Issues and Releases" width="100%"></a>
+
+<sub>Automatically refreshed from public GitHub Issues and Releases — development activity does not mean a verified or released feature. [Full live roadmap](docs/ROADMAP.md) · [Current work on GitHub](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues?q=is%3Aissue+label%3Aroadmap) · [Releases](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/releases)</sub>
 
 ## The Mission
 
@@ -23,6 +27,14 @@ Great mods can do great things individually. But stacking enough of them can tur
 ARS takes a different approach: **vehicle physics, driving, machinery wear, breakdowns, repairs, fuel and immersive effects — designed as one connected ecosystem**, with systems that complement each other instead of competing for control.
 
 **One cohesive experience. Built to expand.**
+
+## Hall of Assimilation
+
+<a href="docs/HALL_OF_HEROES.md"><img src="docs/assets/hall-of-assimilation-plaque.svg" alt="Hall of Assimilation — a tribute to original Farming Simulator mod developers, with Inspiration and Honored galleries" width="100%"></a>
+
+<sub>[Enter the Hall](docs/HALL_OF_HEROES.md) · [Original mods and creators](docs/COMMUNITY_INSPIRATIONS.md) · [Complete inspiration and status index](docs/ASSIMILATION_INDEX.md)</sub>
+
+<sub>Inspiration is acknowledgement, not a claim of copied code or a completed replacement. Honored requires an independently implemented, verified and published ARS successor.</sub>
 
 ### Discover ARS
 
