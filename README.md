@@ -2,9 +2,9 @@
 
 # Advanced Realism Suite (ARS)
 
-### One suite. Connected systems. Real machinery.
+### More realism. All in one mod.
 
-**An expanding realism and immersion suite for Farming Simulator 25.**
+**One connected realism experience for Farming Simulator 25 — currently in development.**
 
 <img src="docs/assets/ars-static-hero.png" alt="Advanced Realism Suite concept artwork: mud-covered Fendt tractor and tanker outside an illuminated farm workshop at sunset, with ARS branding" width="100%">
 
@@ -18,7 +18,7 @@
 
 ## The Mission
 
-**More realism. Less mod juggling.**
+**One FS25 mod designed to bring vehicle realism, wear, damage and maintenance together.**
 
 A working farm is not a collection of isolated systems. Soil and load affect how machinery works. Operating hours, wear and failures lead to real decisions about diagnosis, repairs and cost.
 
@@ -26,7 +26,6 @@ A working farm is not a collection of isolated systems. Soil and load affect how
 
 The roadmap expands that foundation toward connected agronomy, farm economics, animals and logistics. **Planned systems remain plans until they are implemented and verified.**
 
-**The tractor should need maintenance. Your mod list shouldn't.**
 
 ## Hall of Assimilation
 
