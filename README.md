@@ -1,12 +1,16 @@
 <div align="center">
 
+**[English](README.md) · [Deutsch](README.de.md) · [Français](README.fr.md)**
+
 # Advanced Realism Suite (ARS)
+
+**Farming Simulator 25 | PC/Mac**
 
 ### More realism. All in one mod.
 
-**One connected realism experience for Farming Simulator 25 — currently in development.**
+**One mod. Connected systems. A more realistic farming experience.**
 
-<img src="docs/assets/ars-static-hero.png" alt="Advanced Realism Suite concept artwork: mud-covered Fendt tractor and tanker outside an illuminated farm workshop at sunset, with ARS branding" width="100%">
+<img src="docs/assets/ars-static-hero.png" alt="ARS concept artwork: Fendt tractor and illuminated agricultural workshop at sunset" width="100%">
 
 <sub>Concept artwork — not an in-game screenshot.</sub>
 
@@ -14,33 +18,34 @@
 
 <a href="docs/ROADMAP.md"><img src="docs/assets/status-live.svg" alt="Automatically updated ARS development status derived from public GitHub Issues and Releases" width="100%"></a>
 
-<sub>Automatically refreshed from public GitHub Issues and Releases — development activity does not mean a verified or released feature. [Full live roadmap](docs/ROADMAP.md) · [Current work on GitHub](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/issues?q=is%3Aissue+label%3Aroadmap) · [Releases](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/releases)</sub>
+<sub>Automatically updated from public GitHub Issues and Releases. [Full roadmap](docs/ROADMAP.md) · [GitHub activity](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/issues?q=is%3Aissue+label%3Aroadmap)</sub>
 
 ## The Mission
 
-**One FS25 mod designed to bring vehicle realism, wear, damage and maintenance together.**
+Advanced Realism Suite (ARS) is being developed to bring the different aspects of farming realism together in one unified mod for Farming Simulator 25.
 
-A working farm is not a collection of isolated systems. Soil and load affect how machinery works. Operating hours, wear and failures lead to real decisions about diagnosis, repairs and cost.
+Instead of using several separate mods with overlapping mechanics, ARS aims to connect vehicle physics, fuel consumption, dirt, exhaust effects, mechanical wear, damage, diagnostics and workshop repairs.
 
-**ARS is being built to connect these experiences in Farming Simulator 25:** vehicle and implement physics, fuel, dirt, exhaust, component condition and workshop service  — designed to work together instead of competing for control.
+**What happens in the field should matter in the workshop.**
 
-The roadmap expands that foundation toward connected agronomy, farm economics, animals and logistics. **Planned systems remain plans until they are implemented and verified.**
+Heavy loads, demanding terrain and operating hours should influence how machinery behaves, how it wears and what it costs to maintain.
 
+My long-term vision goes further: to gradually connect soil management, crop production, farm economics, livestock, forestry and logistics within the same system.
 
 ## Hall of Assimilation
 
-<a href="docs/HALL_OF_HEROES.md"><img src="docs/assets/hall-of-assimilation-plaque.svg" alt="Hall of Assimilation — honoring the original Farming Simulator mod creators" width="100%"></a>
+<a href="docs/HALL_OF_HEROES.md"><img src="docs/assets/hall-of-assimilation-plaque.svg" alt="Hall of Assimilation — honoring original Farming Simulator mod creators" width="100%"></a>
 
 [Enter the Hall](docs/HALL_OF_HEROES.md) · [Original creators](docs/COMMUNITY_INSPIRATIONS.md) · [Hall index](docs/ASSIMILATION_INDEX.md)
 
-## Explore
+## Explore ARS
 
-[Features](docs/FEATURES.md) · [Changelog](CHANGELOG.md) · [Roadmap](docs/ROADMAP.md) · [Wiki](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/wiki) · [Discussions](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/discussions) · [Releases](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/releases)
+[Features](docs/FEATURES.md) · [Live Development](#live-development) · [Roadmap](docs/ROADMAP.md) · [Community](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/discussions) · [Credits](docs/COMMUNITY_INSPIRATIONS.md)
 
-<sub>Work in progress.</sub>
+<sub>[Changelog](CHANGELOG.md) · [Wiki](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/wiki) · [Releases](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/releases)</sub>
 
 ---
 
-<sub>Not affiliated with or endorsed by GIANTS Software. Project-controlled software is licensed under [EUPL-1.2](LICENSE). [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md) · [Third-party notices](THIRD_PARTY_NOTICES.md) · [Support on Ko-fi](https://ko-fi.com/keilerhirsch)</sub>
+<sub>Not affiliated with or endorsed by GIANTS Software. ARS-owned software is licensed under [EUPL-1.2](LICENSE). [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md) · [Third-party notices](THIRD_PARTY_NOTICES.md) · [Support on Ko-fi](https://ko-fi.com/keilerhirsch)</sub>
 
 </div>
