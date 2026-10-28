@@ -1,6 +1,6 @@
 <div align="center">
 
-**[English](README.md) · [Deutsch](README.de.md) · [Français](README.fr.md)**
+**[Deutsch](README.md) · [English](README.en.md) · [Français](README.fr.md)**
 
 # Advanced Realism Suite (ARS)
 
