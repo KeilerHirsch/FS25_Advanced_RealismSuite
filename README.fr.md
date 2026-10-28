@@ -10,6 +10,11 @@
 
 **Un seul mod. Des systèmes interconnectés. Une agriculture plus réaliste.**
 
+**🚜 ARS Physics Beta v0.1.18.8 — Préversion disponible**
+[Voir la version](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/releases/tag/v0.1.18.8-physics-beta) · [Télécharger le ZIP](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/releases/download/v0.1.18.8-physics-beta/FS25_ARS_Physics_Beta_0_1_18_8.zip)
+
+<sub>Bêta expérimentale de la physique, pas la suite ARS complète.</sub>
+
 <img src="docs/assets/ars-static-hero.png" alt="Illustration conceptuelle d'ARS : tracteur Fendt devant un atelier agricole éclairé au coucher du soleil" width="100%">
 
 <sub>Illustration conceptuelle — ce n'est pas une capture d'écran du jeu.</sub>
