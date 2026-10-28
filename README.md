@@ -6,7 +6,7 @@
 
 **An expanding realism and immersion suite for Farming Simulator 25.**
 
-<img src="docs/assets/ars-static-hero.png" alt="ARS Advanced Realism Suite concept artwork: a green tractor in a sunset-lit workshop" width="100%">
+<img src="docs/assets/ars-static-hero.png" alt="Advanced Realism Suite concept artwork: mud-covered Fendt tractor and tanker outside an illuminated farm workshop at sunset, with ARS branding" width="100%">
 
 <sub>Concept artwork — not an in-game screenshot.</sub>
 
@@ -20,19 +20,13 @@
 
 **More realism. Less mod juggling.**
 
-Great mods can do great things individually. But stacking enough of them can turn a realistic farming setup into a second job: overlapping mechanics, competing vehicle systems and more troubleshooting than tractor driving.
+A working farm is not a collection of isolated systems. Soil and load affect how machinery works. Operating hours, wear and failures lead to real decisions about diagnosis, repairs and cost.
+
+**ARS is being built to connect these experiences in Farming Simulator 25:** vehicle and implement physics, fuel, dirt, exhaust, component condition and workshop service  — designed to work together instead of competing for control.
+
+The roadmap expands that foundation toward connected agronomy, farm economics, animals and logistics. **Planned systems remain plans until they are implemented and verified.**
 
 **The tractor should need maintenance. Your mod list shouldn't.**
-
-ARS takes a different approach: **vehicle physics, driving, machinery wear, breakdowns, repairs, fuel and immersive effects — designed as one connected ecosystem**, with systems that complement each other instead of competing for control.
-
-**One cohesive experience. Built to expand.**
-
-## Development & features
-
-ARS is under active development. Current local work covers native vehicle physics, dirt and exhaust effects, fuel behavior, component wear, diagnostics and paid workshop service. **Final in-game and multiplayer acceptance is pending; no public ARS ZIP is released.**
-
-[Feature status](docs/FEATURES.md) · [Development changelog](CHANGELOG.md) · [Release notes template](docs/RELEASE_NOTES_TEMPLATE.md)
 
 ## Hall of Assimilation
 
