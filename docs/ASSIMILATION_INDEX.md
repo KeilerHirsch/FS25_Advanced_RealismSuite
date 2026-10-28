@@ -5,7 +5,7 @@ All names and original source links come from [Community Inspirations & Thanks](
 
 **Only two Hall states:** Inspiration (acknowledged reference) and Honored (complete independently implemented, tested and published replacement). No partial feature or roadmap-epic status means an entire mod is replaced.
 
-**53 documented inspirations · 0 honored**
+**54 documented inspirations · 0 honored**
 
 | Original mod | Original author / team | Hall status |
 |---|---|---|
@@ -26,6 +26,7 @@ All names and original source links come from [Community Inspirations & Thanks](
 | [Out Of Fuel](https://www.farming-simulator.com/mod.php?mod_id=342105) | Sablerock | INSPIRATION |
 | [Manual Attach](https://www.farming-simulator.com/mod.php?mod_id=340627) | Wopster | INSPIRATION |
 | [Vehicle Years](https://www.farming-simulator.com/mod.php?mod_id=308890) | Thalley | INSPIRATION |
+| [Originalprojekt](https://gitlab.com/thalley/fs25_vehicle_years) | Thalley | INSPIRATION |
 | [Soil Compaction](https://www.farming-simulator.com/mod.php?mod_id=368629) | moji | INSPIRATION |
 | [Soil Work Yield Bonus](https://www.farming-simulator.com/mod.php?mod_id=367297) | moji | INSPIRATION |
 | [Reduced Organic Fertilizer Usage](https://www.farming-simulator.com/mod.php?mod_id=367543) | moji | INSPIRATION |
