@@ -1,26 +1,26 @@
 # Hall of Assimilation
 
-> **Inspired by the pioneers. Honoring the legends.**
+**Inspiriert von den Pionieren. Danke an die Entwickler.**
 
-ARS celebrates the mod creators whose work has helped shape Farming Simulator.
+Hier würdige ich Mod-Entwickler, deren Arbeit den Landwirtschafts-Simulator geprägt und ARS inspiriert hat.
 
-## Inspiration
+## Inspirationen
 
-A recognition of original mods and their authors, not a claim that their features are already available in ARS.
+Diese Projekte sind Vorbilder und Recherchequellen. **Die Nennung bedeutet nicht, dass ihre Funktionen bereits in ARS verfügbar sind.**
 
 - **[Advanced Damage System](https://github.com/id577/FS25_AdvancedDamageSystem)** — id577
-- **[Courseplay](https://github.com/Courseplay/Courseplay_FS25)** — Courseplay team
-- **[AutoDrive](https://github.com/Stephan-S/FS25_AutoDrive)** — Stephan-S and contributors
+- **[Courseplay](https://github.com/Courseplay/Courseplay_FS25)** — Courseplay-Team
+- **[AutoDrive](https://github.com/Stephan-S/FS25_AutoDrive)** — Stephan-S und Mitwirkende
 - **[Soil Work Yield Bonus](https://www.farming-simulator.com/mod.php?mod_id=367297)** — moji
 
-[Full creator credits](COMMUNITY_INSPIRATIONS.md) · [Hall index](ASSIMILATION_INDEX.md)
+[Alle Entwickler und Quellen](COMMUNITY_INSPIRATIONS.md) · [Hall-Übersicht](ASSIMILATION_INDEX.md)
 
-## Honored
+## Gewürdigt
 
-Recognition for functionality independently implemented, tested and released in ARS. The [Hall index](ASSIMILATION_INDEX.md) shows the current entries.
+Hier erscheinen Projekte erst dann als vollständig übernommen, wenn die entsprechenden Funktionen **eigenständig umgesetzt, im Spiel getestet und veröffentlicht** wurden. Den aktuellen Stand zeigt die [Hall-Übersicht](ASSIMILATION_INDEX.md).
 
-## Credits and rights
+## Urheberrechte
 
-Original projects remain the work of their respective creators. Acknowledgment does not imply endorsement, collaboration or permission to redistribute their code or assets.
+Die Originalprojekte bleiben Eigentum ihrer jeweiligen Entwickler. Eine Nennung bedeutet weder Zusammenarbeit noch Zustimmung oder die Erlaubnis, fremden Code und andere Inhalte zu übernehmen.
 
-[Third-party notices](../THIRD_PARTY_NOTICES.md)
+[Hinweise zu Drittanbietern](../THIRD_PARTY_NOTICES.md)

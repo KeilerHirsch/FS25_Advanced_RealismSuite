@@ -46,6 +46,6 @@ My long-term vision goes further: to gradually connect soil management, crop pro
 
 ---
 
-<sub>Not affiliated with or endorsed by GIANTS Software. ARS-owned software is licensed under [EUPL-1.2](LICENSE). [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md) · [Third-party notices](THIRD_PARTY_NOTICES.md) · [Support on Ko-fi](https://ko-fi.com/keilerhirsch)</sub>
+<sub>Developed by **KeilerHirsch** for Farming Simulator 25. License: [EUPL-1.2](LICENSE). [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md) · [Third-party notices](THIRD_PARTY_NOTICES.md) · [Support on Ko-fi](https://ko-fi.com/keilerhirsch)</sub>
 
 </div>

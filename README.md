@@ -46,6 +46,6 @@ Meine langfristige Vision geht darüber hinaus: Später sollen auch Bodenbearbei
 
 ---
 
-<sub>Nicht mit GIANTS Software verbunden oder von GIANTS Software unterstützt. Eigene ARS-Software steht unter der [EUPL-1.2](LICENSE). [Mitwirken](CONTRIBUTING.md) · [Sicherheit](SECURITY.md) · [Hinweise zu Drittanbietern](THIRD_PARTY_NOTICES.md) · [Unterstützen auf Ko-fi](https://ko-fi.com/keilerhirsch)</sub>
+<sub>Entwickelt von **KeilerHirsch** für den Landwirtschafts-Simulator 25. Lizenz: [EUPL-1.2](LICENSE). [Mitwirken](CONTRIBUTING.md) · [Sicherheit](SECURITY.md) · [Hinweise zu Drittanbietern](THIRD_PARTY_NOTICES.md) · [Unterstützen auf Ko-fi](https://ko-fi.com/keilerhirsch)</sub>
 
 </div>

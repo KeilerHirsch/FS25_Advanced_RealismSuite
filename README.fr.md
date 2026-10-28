@@ -46,6 +46,6 @@ Ma vision à long terme va plus loin : relier progressivement le travail du sol,
 
 ---
 
-<sub>Projet indépendant, sans affiliation ni soutien de GIANTS Software. Le logiciel propre à ARS est publié sous licence [EUPL-1.2](LICENSE). [Contribuer](CONTRIBUTING.md) · [Sécurité](SECURITY.md) · [Mentions concernant les tiers](THIRD_PARTY_NOTICES.md) · [Soutenir sur Ko-fi](https://ko-fi.com/keilerhirsch)</sub>
+<sub>Développé par **KeilerHirsch** pour Farming Simulator 25. Licence : [EUPL-1.2](LICENSE). [Contribuer](CONTRIBUTING.md) · [Sécurité](SECURITY.md) · [Mentions concernant les tiers](THIRD_PARTY_NOTICES.md) · [Soutenir sur Ko-fi](https://ko-fi.com/keilerhirsch)</sub>
 
 </div>

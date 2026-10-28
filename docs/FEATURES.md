@@ -1,22 +1,24 @@
-# Advanced Realism Suite — feature status
+# Advanced Realism Suite — Funktionsübersicht
 
-**Farming Simulator 25 / PC and Mac · Development preview · No public release**
+**Landwirtschafts-Simulator 25 · PC/Mac · In Entwicklung**
 
-The features below describe the **local development direction**, not a published or player-verified ZIP. Passing local tests is not the same as in-game acceptance.
+Die Tabelle zeigt, woran ich arbeite. **Nicht alle Funktionen sind bereits im Spiel bestätigt oder öffentlich verfügbar.**
 
-| System | Development scope | Verification |
+| System | Geplante bzw. in Entwicklung befindliche Funktionen | Prüfung |
 |---|---|---|
-| ARS Physics | Native soil/wetness-aware sink, rolling and implement resistance | In-game acceptance pending |
-| ARS Dirt | Native washable dirt scaled by terrain and moisture | Visual/gameplay acceptance pending |
-| ARS Exhaust | GIANTS-native diesel exhaust tied to load and condition | Visual/gameplay acceptance pending |
-| ARS RealFuel | Load/condition adjustments to native fuel consumers | In-game acceptance pending |
-| Vehicle condition | Wear, failures, inspection, diagnosis, service intervals and persistence | Game/save/MP acceptance pending |
-| Workshop and P-Shop | Unified navigation, quoted parts, paid service and engine tuning | UI/economy/MP acceptance pending |
-| Implements and harvesting | Supported hydraulic, harvesting, unloading and other equipment conditions | Coverage remains in development |
-| Used vehicles | Optional used-offer condition, repair pricing and owned resale calculations | Used-offer purchase and MP tests pending |
+| **ARS Physics** | Einsinken, Roll- und Gerätewiderstand abhängig von Boden und Feuchtigkeit | Spieltest offen |
+| **ARS Dirt** | Abwaschbare Verschmutzung abhängig von Untergrund und Feuchtigkeit | Grafik- und Spieltest offen |
+| **ARS Exhaust** | Motorauslastungs- und zustandsabhängige Abgase | Grafik- und Spieltest offen |
+| **ARS RealFuel** | Verbrauch abhängig von Last und Fahrzeugzustand | Spieltest offen |
+| **Fahrzeugzustand** | Verschleiß, Ausfälle, Inspektionen, Diagnose, Wartungsintervalle und Speicherung | Spielstand- und Multiplayer-Tests offen |
+| **Werkstatt und P-Shop** | Zentrale Bedienung, Ersatzteile, kostenpflichtige Reparaturen und Motortuning | Bedienung, Kosten und Multiplayer offen |
+| **Geräte und Erntetechnik** | Zustand von Hydraulik, Ernte-, Entlade- und weiteren Geräten | Funktionsumfang in Entwicklung |
+| **Gebrauchtfahrzeuge** | Zustand beim Kauf, Reparaturkosten und Wiederverkaufswerte | Kauf- und Multiplayer-Tests offen |
 
-**Main goal:** independently implement full ADS 0.10.0.8-beta functional parity using ARS-owned code/assets and native GIANTS APIs. Additional agronomy, livestock, banking, forestry and automation ideas are [roadmap candidates](ROADMAP.md), **not shipped modules**.
+**Aktuelles Hauptziel:** Den Funktionsumfang von ADS 0.10.0.8-beta eigenständig mit ARS-Code und nativen GIANTS-Schnittstellen nachbilden. Bodenbau, Tierhaltung, Bankwesen, Forstwirtschaft und Automatisierung sind spätere [Roadmap-Themen](ROADMAP.md), keine bereits veröffentlichten Module.
 
-**Availability:** No public ZIP is available yet. Multiplayer, dedicated server, save/reload, late join and mixed-mod acceptance remain open. The product/repository is `Advanced Realism Suite` / `FS25_Advanced_RealismSuite`. Local development deliberately retains historical GIANTS package/settings identity `FS25_Advanced_Realms_Suite` pending compatibility verification. This is not a second product.
+**Verfügbarkeit:** Noch kein öffentlicher Mod-Download. Spieltests, Multiplayer, Dedicated Server, Speichern/Laden und Mod-Kompatibilität müssen geprüft werden.
 
-[Changelog](../CHANGELOG.md) · [Release notes template](RELEASE_NOTES_TEMPLATE.md) · [Roadmap](ROADMAP.md) · [Creator credits](COMMUNITY_INSPIRATIONS.md)
+Der öffentliche Projektname lautet **Advanced Realism Suite**. Die bisherige interne Paketkennung `FS25_Advanced_Realms_Suite` bleibt aus Kompatibilitätsgründen vorerst unverändert.
+
+[Änderungsprotokoll](../CHANGELOG.md) · [Roadmap](ROADMAP.md) · [Danksagungen](COMMUNITY_INSPIRATIONS.md)
