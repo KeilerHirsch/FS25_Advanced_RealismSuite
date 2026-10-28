@@ -1,0 +1,2 @@
+ARSPhysics:installHooks()
+addModEventListener(ARS)
