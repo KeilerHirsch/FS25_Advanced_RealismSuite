@@ -34,7 +34,7 @@ Meine langfristige Vision geht darüber hinaus: Später sollen auch Bodenbearbei
 
 ## Hall of Assimilation
 
-<a href="docs/HALL_OF_HEROES.md"><img src="docs/assets/hall-of-assimilation-plaque.svg" alt="Hall of Assimilation — Würdigung der Entwickler, deren Mods ARS inspiriert haben" width="100%"></a>
+<a href="docs/HALL_OF_HEROES.md"><img src="docs/assets/hall-of-assimilation-banner.png" alt="Hall of Assimilation — Würdigung der Entwickler, deren Mods ARS inspiriert haben" width="100%"></a>
 
 [Hall besuchen](docs/HALL_OF_HEROES.md) · [Ursprüngliche Mod-Entwickler](docs/COMMUNITY_INSPIRATIONS.md) · [Hall-Übersicht](docs/ASSIMILATION_INDEX.md)
 

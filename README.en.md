@@ -34,7 +34,7 @@ My long-term vision goes further: to gradually connect soil management, crop pro
 
 ## Hall of Assimilation
 
-<a href="docs/HALL_OF_HEROES.md"><img src="docs/assets/hall-of-assimilation-plaque.svg" alt="Hall of Assimilation — honoring original Farming Simulator mod creators" width="100%"></a>
+<a href="docs/HALL_OF_HEROES.md"><img src="docs/assets/hall-of-assimilation-banner.png" alt="Hall of Assimilation — honoring original Farming Simulator mod creators" width="100%"></a>
 
 [Enter the Hall](docs/HALL_OF_HEROES.md) · [Original creators](docs/COMMUNITY_INSPIRATIONS.md) · [Hall index](docs/ASSIMILATION_INDEX.md)
 

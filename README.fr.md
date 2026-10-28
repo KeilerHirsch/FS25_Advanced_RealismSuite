@@ -34,7 +34,7 @@ Ma vision à long terme va plus loin : relier progressivement le travail du sol,
 
 ## Hall of Assimilation
 
-<a href="docs/HALL_OF_HEROES.md"><img src="docs/assets/hall-of-assimilation-plaque.svg" alt="Hall of Assimilation — hommage aux créateurs de mods ayant inspiré ARS" width="100%"></a>
+<a href="docs/HALL_OF_HEROES.md"><img src="docs/assets/hall-of-assimilation-banner.png" alt="Hall of Assimilation — hommage aux créateurs de mods ayant inspiré ARS" width="100%"></a>
 
 [Visiter le Hall](docs/HALL_OF_HEROES.md) · [Créateurs originaux](docs/COMMUNITY_INSPIRATIONS.md) · [Index du Hall](docs/ASSIMILATION_INDEX.md)
 
