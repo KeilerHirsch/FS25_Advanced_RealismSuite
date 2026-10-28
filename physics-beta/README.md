@@ -8,7 +8,7 @@ wheel load and tire setup, rolling resistance, implement draft and pulling perfo
 It is **not** the full Advanced Realism Suite.
 
 ## Installation
-Place the ZIP file from the matching GitHub pre-release in your FS25 mods folder,
+Place the ZIP file from the matching GitHub release in your FS25 mods folder,
 enable ARS Physics Beta in the savegame selection, and test on a **backup save**.
 Every version-coded ZIP uses a new FS25 mod ID; enable the new version explicitly.
 Before enabling it, disable every previous ARS Physics version for that savegame.

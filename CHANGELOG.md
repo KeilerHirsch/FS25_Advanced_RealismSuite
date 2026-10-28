@@ -1,6 +1,10 @@
 # Advanced Realism Suite — development changelog
 
-> **Unreleased — 28 October 2026.** No public ZIP has been published. This is a high-level snapshot of local development, **not patch notes for an available release**.
+> **Project status — 28 October 2026.** The standalone ARS Physics Beta is publicly available; the **full ARS suite remains unreleased**. Mainline development entries below describe work in progress, not shipped features.
+
+## Released: ARS Physics Beta v0.1.18.8 — 28 October 2026
+
+First standalone public module built on GIANTS-native vehicle physics. Includes terrain-dependent tire traction, wheel sinking influenced by soil, moisture, tires and load, rolling resistance and implement draft behavior. Self-hosted multiplayer gameplay was tested with the same physics in v0.1.18.7; dedicated servers and separate remote clients are not fully verified. Installation, compatibility and the exact package are documented in the [GitHub Releases section](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/releases). This is **not** the full ARS suite.
 
 ## Unreleased: local 0.1.18.1 development candidates
 
@@ -10,4 +14,4 @@
 
 **Still open:** Practical FS25 gameplay, UI, save/reload, multiplayer, dedicated-server and mixed-mod acceptance. Functional ADS 0.10.0.8-beta parity is still in progress. Automated build/test successes alone do not make features released.
 
-See [Detailed feature status](docs/FEATURES.md) and [Release notes template](docs/RELEASE_NOTES_TEMPLATE.md). A versioned shipped changelog and exact ZIP checksum will be published only with a separately approved release.
+See [Detailed feature status](docs/FEATURES.md), [Release notes template](docs/RELEASE_NOTES_TEMPLATE.md) and [GitHub Releases](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/releases). Exact download checksums are provided with each published release.

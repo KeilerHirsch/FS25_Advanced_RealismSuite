@@ -1,6 +1,6 @@
 # Release notes / patchnotes template
 
-**Template only. No ARS release is announced.** Complete from the final committed build, reviewed changes and actual operator gameplay acceptance before publishing a ZIP.
+**Template for future releases of the full ARS suite or its modules.** A standalone Physics Beta has been published; do not confuse that with general availability of the full ARS suite. Complete from the final committed build, reviewed changes and actual operator gameplay acceptance before publishing a ZIP.
 
 ## Advanced Realism Suite (ARS) — vX.Y.Z.W
 
