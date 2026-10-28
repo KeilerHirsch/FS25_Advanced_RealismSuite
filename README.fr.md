@@ -28,6 +28,8 @@ Plutôt que de multiplier les mods aux fonctionnalités parfois redondantes, ARS
 
 **Ce qui se passe dans les champs doit aussi avoir des conséquences à l'atelier.**
 
+**Le fondement technique :** ARS s'appuie sur la physique et les systèmes de véhicules natifs du moteur GIANTS et relie leurs données à ses propres fonctions de réalisme, sans réinventer la physique.
+
 Les charges lourdes, les terrains difficiles et les heures de fonctionnement doivent influencer le comportement des machines, leur usure ainsi que leurs coûts d'entretien et de réparation.
 
 Ma vision à long terme va plus loin : relier progressivement le travail du sol, les cultures, la gestion économique de l'exploitation, l'élevage, la sylviculture et la logistique au sein d'un même système.

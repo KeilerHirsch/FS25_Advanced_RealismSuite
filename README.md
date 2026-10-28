@@ -28,6 +28,8 @@ Statt mehrere einzelne Mods mit teilweise überschneidenden Funktionen einzusetz
 
 **Was auf dem Feld passiert, soll sich auch in der Werkstatt bemerkbar machen.**
 
+**Das technische Fundament:** ARS setzt auf die nativen Physik- und Fahrzeugsysteme der GIANTS Engine und verbindet deren Signale mit eigenen Realismusfunktionen – statt die Physik neu zu erfinden.
+
 Schwere Lasten, anspruchsvolles Gelände und Betriebsstunden sollen beeinflussen, wie sich Maschinen verhalten, wie sie verschleißen und welche Wartungs- und Reparaturkosten entstehen.
 
 Meine langfristige Vision geht darüber hinaus: Später sollen auch Bodenbearbeitung, Pflanzenbau, Betriebswirtschaft, Tierhaltung, Forstwirtschaft und Logistik miteinander verbunden werden.

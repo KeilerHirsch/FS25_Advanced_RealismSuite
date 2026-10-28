@@ -28,6 +28,8 @@ Instead of using several separate mods with overlapping mechanics, ARS aims to c
 
 **What happens in the field should matter in the workshop.**
 
+**The technical foundation:** ARS builds on the GIANTS Engine's native physics and vehicle systems, connecting their signals to its own realism features instead of reinventing the physics engine.
+
 Heavy loads, demanding terrain and operating hours should influence how machinery behaves, how it wears and what it costs to maintain.
 
 My long-term vision goes further: to gradually connect soil management, crop production, farm economics, livestock, forestry and logistics within the same system.
