@@ -1,6 +1,6 @@
 # ARS Physics Beta
 
-**Advanced Realism Suite — experimental single-player Farming Simulator 25 physics module.**
+**Advanced Realism Suite — experimental Farming Simulator 25 physics module.**
 
 This standalone beta modifies the native GIANTS driving-physics calculations:
 terrain-dependent tire grip, wheel sinking influenced by soil condition, wetness,
@@ -15,10 +15,11 @@ Before enabling it, disable every previous ARS Physics version for that savegame
 Keep exactly one ARS Physics package active to avoid applying physics changes twice.
 
 ## Validation scope
-This beta is single-player only; multiplayer is disabled in the package metadata.
-The operator accepted the driving physics in v0.1.18.7. This release preserves those
-physics calculations, with packaging, version and log-text corrections. No additional
-v0.1.18.8 in-game acceptance is claimed. Multiplayer and dedicated servers remain untested.
+This beta was tested in a self-hosted multiplayer game using v0.1.18.7.
+The game log confirms loading and initialization without ARS-specific Lua errors;
+the operator accepted the driving behavior. This release preserves those physics
+calculations with packaging, version and log-text corrections. No separate in-game
+acceptance of v0.1.18.8, remote-client or dedicated-server test is claimed.
 
 ## Compatibility
 Avoid enabling competing soil/tire-physics modifications simultaneously

@@ -8,20 +8,20 @@
 
 Experimentelle Erweiterung der nativen GIANTS-Fahrphysik: Reifenhaftung abhängig von Boden und Bereifung, Einsinken, Roll- und Gerätewiderstand sowie verbesserte Zugkraft unter Last. Getriebeübersetzung, PS-Anzeige und Geschwindigkeitslimits bleiben unverändert.
 
-Diese Beta enthält ausschließlich die Physikfunktionen für Einzelspieler, nicht die vollständige ARS. Multiplayer ist deaktiviert und ungeprüft. Vor Aktivierung alle älteren ARS-Physics-Versionen im Spielstand deaktivieren; genau ein ARS-Physics-Paket aktiv halten. Advanced Damage System (ADS) darf aktiv bleiben. Bitte keine konkurrierenden Reifen- oder Bodenphysik-Mods gleichzeitig verwenden. Testspielstand und Backup empfohlen.]]></de>
+Diese Beta enthält ausschließlich die Physikfunktionen, nicht die vollständige ARS. Selbst gehosteter Multiplayer wurde mit der gleichen Physik in v0.1.18.7 getestet; Dedicated Server und separate Clients sind nicht vollständig geprüft. Vor Aktivierung alle älteren ARS-Physics-Versionen im Spielstand deaktivieren; genau ein ARS-Physics-Paket aktiv halten. Advanced Damage System (ADS) darf aktiv bleiben. Bitte keine konkurrierenden Reifen- oder Bodenphysik-Mods gleichzeitig verwenden. Testspielstand und Backup empfohlen.]]></de>
 <en><![CDATA[Advanced Realism Suite (ARS) - Physics Beta
 
 Experimental native GIANTS vehicle-physics improvements: tire grip depending on terrain and tire setup, sinking, rolling and implement resistance, and improved pulling performance under load. Gear ratios, displayed horsepower and speed limits remain unchanged.
 
-This beta includes single-player physics features only, not the full ARS. Multiplayer is disabled and untested. Before enabling this version, disable all older ARS Physics versions for the savegame; keep exactly one ARS Physics package active. Advanced Damage System (ADS) can remain active. Avoid other mods that modify tire or soil physics. Use a test save and keep a backup.]]></en>
+This beta includes physics features only, not the full ARS. Self-hosted multiplayer was tested with the same physics in v0.1.18.7; dedicated servers and separate clients are not fully verified. Before enabling this version, disable all older ARS Physics versions for the savegame; keep exactly one ARS Physics package active. Advanced Damage System (ADS) can remain active. Avoid other mods that modify tire or soil physics. Use a test save and keep a backup.]]></en>
 <fr><![CDATA[Advanced Realism Suite (ARS) - Physics Beta
 
 Version expérimentale de la physique native GIANTS : adhérence selon le terrain et les pneus, enfoncement, résistance au roulement et aux outils, et une meilleure traction sous charge. Rapports de transmission, puissance affichée et limites de vitesse inchangés.
 
-Cette bêta comprend uniquement la physique en solo, pas la suite ARS complète. Le multijoueur est désactivé et non testé. Avant activation, désactiver toutes les anciennes versions d'ARS Physics pour la sauvegarde ; garder un seul paquet ARS Physics actif. Advanced Damage System (ADS) peut rester actif. Éviter les autres mods de physique des pneus ou du sol. Sauvegarde de test recommandée.]]></fr>
+Cette bêta comprend uniquement la physique, pas la suite ARS complète. Le multijoueur auto-hébergé a été testé avec la même physique en v0.1.18.7 ; serveurs dédiés et clients distants ne sont pas entièrement validés. Avant activation, désactiver toutes les anciennes versions d'ARS Physics pour la sauvegarde ; garder un seul paquet ARS Physics actif. Advanced Damage System (ADS) peut rester actif. Éviter les autres mods de physique des pneus ou du sol. Sauvegarde de test recommandée.]]></fr>
 </description>
 <iconFilename>icon_ARS.dds</iconFilename>
-<multiplayer supported="false"/>
+<multiplayer supported="true"/>
 <extraSourceFiles>
 <sourceFile filename="scripts/ARSCore.lua"/>
 <sourceFile filename="scripts/ARSPhysics.lua"/>
