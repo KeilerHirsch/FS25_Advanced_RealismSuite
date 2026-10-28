@@ -1,6 +1,6 @@
 # Contributor and agent guidance
 
-**Project:** Advanced Realms Suite (ARS), an independent Farming Simulator 25 realism and immersion mod.
+**Project:** Advanced Realism Suite (ARS), an independent Farming Simulator 25 realism and immersion mod.
 **Licence for project-controlled code:** EUPL-1.2.
 
 These guidelines apply to contributions and automated changes in this repository.

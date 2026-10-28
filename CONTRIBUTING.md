@@ -6,7 +6,7 @@ ARS is under active development. Focused bug reports, compatibility investigatio
 
 ## Before opening an issue
 
-Search existing [Issues](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues) and [Discussions](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/discussions). For bugs, share the ARS and FS25 versions, affected vehicle, other installed mods, game mode, reproduction steps, expected and actual behavior, and a **redacted** relevant log excerpt. Use a copied test save, not your only save.
+Search existing [Issues](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/issues) and [Discussions](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/discussions). For bugs, share the ARS and FS25 versions, affected vehicle, other installed mods, game mode, reproduction steps, expected and actual behavior, and a **redacted** relevant log excerpt. Use a copied test save, not your only save.
 
 ## Before opening a pull request
 

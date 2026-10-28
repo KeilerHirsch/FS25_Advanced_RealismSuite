@@ -1,6 +1,6 @@
 # Community Inspirations & Thanks
 
-*Advanced Realms Suite (ARS) — an independent mod for Farming Simulator 25.*
+*Advanced Realism Suite (ARS) — an independent mod for Farming Simulator 25.*
 
 Great mods have made Farming Simulator richer for years. ARS grew out of playing, comparing, testing and discussing that work — and out of wanting connected systems rather than a large stack of separate mods. **Thank you to the creators below** for the ideas, practical experience, community discussion and examples of problems worth solving.
 
@@ -92,6 +92,6 @@ These additional references feed **proposed future research groups**, especially
 
 Thanks also to the people reporting issues, asking for features, testing multiplayer and publishing tutorials and research — those experiences help identify real-world edge cases. Special thanks to **GIANTS Software** for the Farming Simulator platform and the GDN modding documentation.
 
-If your work inspired a feature and the credit is missing or inaccurate, please [open a discussion](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/discussions). We'll gladly correct it.
+If your work inspired a feature and the credit is missing or inaccurate, please [open a discussion](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/discussions). We'll gladly correct it.
 
 **ARS is independently developed. Credit is appreciation, not a claim of endorsement or permission to use another mod's code/assets.**

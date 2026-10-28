@@ -1,7 +1,7 @@
 <!-- Generated from GitHub Issues by tools/render_roadmap.py. Do not edit manually. -->
 # ARS public roadmap
 
-This page and the [visual dashboard](assets/roadmap.svg) are generated from [roadmap-labeled GitHub issues](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues?q=is%3Aissue+label%3Aroadmap). Internal research and planning topics are not shipped features.
+This page and the [visual dashboard](assets/roadmap.svg) are generated from [roadmap-labeled GitHub issues](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/issues?q=is%3Aissue+label%3Aroadmap). Internal research and planning topics are not shipped features.
 
 **Status contract:** Commits, PR merges and closed issues do not automatically mean verified or released. The verified status needs in-game acceptance evidence; released means a publicly shipped build. No release dates are promised.
 
@@ -9,31 +9,31 @@ This page and the [visual dashboard](assets/roadmap.svg) are generated from [roa
 
 | Public feature epic | Status |
 |---|---|
-| [#3 — Option C: Complete vehicle condition, workshop, parts and tuning](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/3) | BUILDING |
-| [#4 — Build a unified ARS navigation hub in the P-shop menu](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/4) | CLOSED / UNVERIFIED |
+| [#3 — Option C: Complete vehicle condition, workshop, parts and tuning](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/issues/3) | BUILDING |
+| [#4 — Build a unified ARS navigation hub in the P-shop menu](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/issues/4) | CLOSED / UNVERIFIED |
 
 ## Next — Release Foundations
 
 | Public feature epic | Status |
 |---|---|
-| [#5 — Compatibility Shield and domain-safe mod interoperability](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/5) | CLOSED / UNVERIFIED |
-| [#6 — In-game, multiplayer and ModHub-ready acceptance gate](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/6) | CLOSED / UNVERIFIED |
+| [#5 — Compatibility Shield and domain-safe mod interoperability](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/issues/5) | CLOSED / UNVERIFIED |
+| [#6 — In-game, multiplayer and ModHub-ready acceptance gate](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/issues/6) | CLOSED / UNVERIFIED |
 
 ## Planned — Connected Systems
 
 | Public feature epic | Status |
 |---|---|
-| [#7 — Connected machine physics, fuel and equipment realism](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/7) | CLOSED / UNVERIFIED |
-| [#8 — Agronomy: soil, regional calendars, crop rotation and health](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/8) | CLOSED / UNVERIFIED |
-| [#9 — Farm economics: accounting, credits, taxes and inspections](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/9) | CLOSED / UNVERIFIED |
+| [#7 — Connected machine physics, fuel and equipment realism](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/issues/7) | CLOSED / UNVERIFIED |
+| [#8 — Agronomy: soil, regional calendars, crop rotation and health](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/issues/8) | CLOSED / UNVERIFIED |
+| [#9 — Farm economics: accounting, credits, taxes and inspections](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/issues/9) | CLOSED / UNVERIFIED |
 
 ## Future — Long-Term Vision
 
 | Public feature epic | Status |
 |---|---|
-| [#10 — Animal husbandry, storage and production quality](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/10) | CLOSED / UNVERIFIED |
-| [#11 — Forestry, cargo logistics and agricultural markets](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/11) | CLOSED / UNVERIFIED |
-| [#12 — Field and transport automation inspired by CP and AD](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/12) | CLOSED / UNVERIFIED |
+| [#10 — Animal husbandry, storage and production quality](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/issues/10) | CLOSED / UNVERIFIED |
+| [#11 — Forestry, cargo logistics and agricultural markets](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/issues/11) | CLOSED / UNVERIFIED |
+| [#12 — Field and transport automation inspired by CP and AD](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/issues/12) | CLOSED / UNVERIFIED |
 
 ## How this stays current
 
@@ -42,4 +42,4 @@ This page and the [visual dashboard](assets/roadmap.svg) are generated from [roa
 - Roadmap Issue changes, GitHub Release events and periodic checks refresh the SVG phase dashboard, cinematic roadmap image, compact live-status HUD and this text page via GitHub Actions. PR runs verify only and never publish.
 - Detailed internal research remains separate; the public board tracks outcome-focused epics.
 
-[Public discussion](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/discussions/2) · [Project home](../README.md)
+[Public discussion](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/discussions/2) · [Project home](../README.md)

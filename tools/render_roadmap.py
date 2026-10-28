@@ -14,7 +14,7 @@ from xml.etree import ElementTree
 from xml.sax.saxutils import escape
 
 ROOT = Path(__file__).resolve().parent.parent
-REPO = os.getenv("GITHUB_REPOSITORY", "KeilerHirsch/FS25_Advanced_RealmsSuite")
+REPO = os.getenv("GITHUB_REPOSITORY", "KeilerHirsch/FS25_Advanced_RealismSuite")
 PHASES = (
     ("now", "NOW", "CURRENT ENGINEERING", "#4fdfb2"),
     ("next", "NEXT", "RELEASE FOUNDATIONS", "#81b8ff"),
@@ -42,7 +42,7 @@ def phase(issue):
 
 
 REPORT_URL = re.compile(
-    r"https://github\.com/KeilerHirsch/FS25_Advanced_RealmsSuite/"
+    r"https://github\.com/KeilerHirsch/FS25_Advanced_(?:RealismSuite|RealmsSuite)/"
     r"blob/[0-9a-f]{40}/docs/acceptance/"
     r"[A-Za-z0-9._/-]+\.md(?:#L[0-9]+(?:-L[0-9]+)?)?",
     re.I,
@@ -192,7 +192,7 @@ def render_svg(issues, releases=()):
         '<path d="M720 -20Q915 170 1160 45 M780 -30Q1050 180 1210 95" '
         'stroke="#3b837d" stroke-opacity=".24" stroke-width="2" fill="none"/>',
         rectangle(35, 32, 7, 29, "url(#accent)", 3),
-        text_el(55, 52, "ADVANCED REALMS SUITE  /  LIVE ROADMAP", 15, "#91e5c8", 700,
+        text_el(55, 52, "ADVANCED REALISM SUITE  /  LIVE ROADMAP", 15, "#91e5c8", 700,
                 'letter-spacing="1.8"'),
         text_el(35, 109, "ONE SUITE. CONNECTED SYSTEMS.", 37, "#f6fbfc", 800),
         text_el(36, 145, "GitHub Issues are the source of truth. No invented progress percentages.",
@@ -256,7 +256,7 @@ def render_md(issues, releases=()):
         "<!-- Generated from GitHub Issues by tools/render_roadmap.py. Do not edit manually. -->",
         "# ARS public roadmap", "",
         "This page and the [visual dashboard](assets/roadmap.svg) are generated from "
-        "[roadmap-labeled GitHub issues](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues?q=is%3Aissue+label%3Aroadmap). "
+        "[roadmap-labeled GitHub issues](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/issues?q=is%3Aissue+label%3Aroadmap). "
         "Internal research and planning topics are not shipped features.",
         "",
         "**Status contract:** Commits, PR merges and closed issues do not automatically "
@@ -289,7 +289,7 @@ def render_md(issues, releases=()):
         "phase dashboard, cinematic roadmap image, compact live-status HUD and "
         "this text page via GitHub Actions. PR runs verify only and never publish.",
         "- Detailed internal research remains separate; the public board tracks outcome-focused epics.",
-        "", "[Public discussion](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/discussions/2) · [Project home](../README.md)", "",
+        "", "[Public discussion](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/discussions/2) · [Project home](../README.md)", "",
     ]
     return "\n".join(lines)
 

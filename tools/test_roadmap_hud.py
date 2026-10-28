@@ -5,11 +5,11 @@ import unittest
 from render_roadmap import has_verification_evidence, render_md, markdown_link_label, status
 from render_roadmap_hud import THEMES, card_metrics
 
-ROOT = "https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite"
+ROOT = "https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite"
 REPORT = ROOT + "/blob/" + "a" * 40 + "/docs/acceptance/ars-first-test.md"
 RELEASE_URL = ROOT + "/releases/tag/v0.2.0"
 PUBLISHED = {"html_url": RELEASE_URL, "tag_name": "v0.2.0", "draft": False,
-             "assets": [{"name": "FS25_Advanced_RealmsSuite_v0.2.0.zip"}]}
+             "assets": [{"name": "FS25_Advanced_RealismSuite_v0.2.0.zip"}]}
 
 
 def issue(number, labels, state="open", evidence="", release=""):
@@ -37,7 +37,7 @@ class LiveHudMetricsTest(unittest.TestCase):
                 entry["title"] = title
                 entry["html_url"] = ROOT + "/issues/2"
                 rendered = render_md([entry])
-                self.assertIn("](https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite/issues/2)", rendered)
+                self.assertIn("](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/issues/2)", rendered)
                 self.assertIn(markdown_link_label(title), rendered)
                 self.assertNotIn("](https://evil.example/phish)", rendered)
                 self.assertNotIn("![t](https://evil.example/p.png)", rendered)

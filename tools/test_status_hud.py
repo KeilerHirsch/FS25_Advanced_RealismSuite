@@ -6,12 +6,12 @@ from xml.etree import ElementTree
 from render_status_hud import (render_svg, snapshot,
                                latest_downloadable_release)
 
-ROOT = "https://github.com/KeilerHirsch/FS25_Advanced_RealmsSuite"
+ROOT = "https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite"
 REPORT = ROOT + "/blob/" + "a" * 40 + "/docs/acceptance/ars-fs25-gameplay.md"
 RELEASE_URL = ROOT + "/releases/tag/v0.2.0"
 RELEASE = {"html_url": RELEASE_URL, "tag_name": "v0.2.0", "draft": False,
            "prerelease": True,
-           "assets": [{"name": "FS25_Advanced_RealmsSuite_v0.2.0.zip"}]}
+           "assets": [{"name": "FS25_Advanced_RealismSuite_v0.2.0.zip"}]}
 
 
 def issue(number, *tags, state="open", evidence="", release=""):
