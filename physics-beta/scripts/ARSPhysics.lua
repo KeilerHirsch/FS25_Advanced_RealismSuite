@@ -4,7 +4,7 @@
 -- Correct GIANTS vanilla physics inputs; no vehicle controls, HUD or maintenance.
 -- GDN FS25 script/engine v1.20: WheelPhysics, WheelsUtil, PowerConsumer.
 
-ARSPhysics = { VERSION = "0.1.18.10", hooksInstalled = false }
+ARSPhysics = { VERSION = "0.1.18.11", hooksInstalled = false }
 
 -- Relative to GIANTS vanilla = 1.00. No second physics engine.
 -- Tune by soil class in one place; only active surface is evaluated.
@@ -18,12 +18,12 @@ local PROFILES = {
     plowed     = { grip=1.020, sink=1.200, rolling=1.080, draft=1.055 },
     seedbed    = { grip=1.045, sink=1.145, rolling=1.045, draft=1.015 },
     soft       = { grip=0.975, sink=1.220, rolling=1.095, draft=1.045 },
-    snow       = { grip=1.000, sink=1.000, rolling=1.000, draft=1.000 }
+    snow       = { grip=1.000, sink=1.045, rolling=1.000, draft=1.000 }
 }
 
 local CFG = {
     gripMin=0.90, gripMax=1.14,
-    sinkMin=1.00, sinkMax=2.35, sinkGain=5.50,
+    sinkMin=1.00, sinkMax=2.90, sinkGain=7.00,
     rollingMin=0.97, rollingMax=1.22,
     draftMin=0.84, draftMax=1.17
 }
@@ -137,12 +137,13 @@ local function sinkFactor(wp, wet)
 
     local _, _, loadIndex = wheelLoad(wp)
     local wetness = clamp(wet or 0, 0, 1)
-    local load = clamp(1 + 0.07 * (loadIndex - 1), 0.93, 1.085)
-    local moisture = 1 + (surface == "firm" and 0.015 or 0.055) * wetness
+    local load = clamp(1 + 0.085 * (loadIndex - 1), 0.92, 1.11)
+    local moisture = 1 + (surface == "firm" and 0.025 or 0.070) * wetness
     -- Tracks spread ground pressure; do not count track contact as a wide tire.
     local track = isCrawler(wp) and 0.94 or 1
     -- Amplify ONLY ARSPhysics's additional sink relative to GIANTS vanilla.
-    -- Keep the original soil, wheel-load, weather and crawler weighting.
+    -- Preserve soil, wheel-load, weather and crawler weighting; increase
+    -- deformable-ground response without modifying native roads or hard ground.
     -- This avoids doubling the absolute GIANTS sink distance on every surface.
     local weighted = p.sink * load * moisture * track
     local extra = math.max(0, weighted - 1)
