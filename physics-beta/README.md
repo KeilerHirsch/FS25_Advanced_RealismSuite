@@ -51,5 +51,5 @@ uncategorized surfaces, an ARS sinking multiplier is applied only where the
 GIANTS WheelPhysics.MAX_SINK base value is positive. Asphalt stays 1.00x,
 and GIANTS still owns sinking interpolation and ground geometry.
 
-This last sink-only adjustment is awaiting in-game acceptance. Keep only one
+RC2 increases sinking profiles on all non-road terrains, particularly plowed ground; sink target cap changes to 4.35x while slope/rolling/draft/grip/native torque remain unchanged. The candidate may still encounter GIANTS engine-level sink geometry limits. This last sink-only adjustment is awaiting in-game acceptance. Keep only one
 Physics Beta ZIP active at a time. Savegame backups are recommended.

@@ -9,21 +9,21 @@ ARSPhysics = { VERSION = "0.1.18.9", hooksInstalled = false }
 -- Relative to GIANTS vanilla = 1.00. No second physics engine.
 -- Tune by soil class in one place; only active surface is evaluated.
 local PROFILES = {
-    other      = { grip=1.000, sink=1.025, rolling=1.000, draft=1.000 },
+    other      = { grip=1.000, sink=1.045, rolling=1.000, draft=1.000 },
     road       = { grip=1.000, sink=1.000, rolling=1.000, draft=1.000 },
-    hard       = { grip=1.000, sink=1.025, rolling=1.000, draft=1.000 },
-    firm       = { grip=1.015, sink=1.045, rolling=1.020, draft=1.000 },
-    field      = { grip=1.030, sink=1.095, rolling=1.035, draft=1.000 },
-    cultivated = { grip=1.045, sink=1.160, rolling=1.055, draft=1.025 },
-    plowed     = { grip=1.020, sink=1.200, rolling=1.080, draft=1.055 },
-    seedbed    = { grip=1.045, sink=1.145, rolling=1.045, draft=1.015 },
-    soft       = { grip=0.975, sink=1.220, rolling=1.095, draft=1.045 },
-    snow       = { grip=1.000, sink=1.060, rolling=1.000, draft=1.000 }
+    hard       = { grip=1.000, sink=1.045, rolling=1.000, draft=1.000 },
+    firm       = { grip=1.015, sink=1.075, rolling=1.020, draft=1.000 },
+    field      = { grip=1.030, sink=1.145, rolling=1.035, draft=1.000 },
+    cultivated = { grip=1.045, sink=1.220, rolling=1.055, draft=1.025 },
+    plowed     = { grip=1.020, sink=1.370, rolling=1.080, draft=1.055 },
+    seedbed    = { grip=1.045, sink=1.205, rolling=1.045, draft=1.015 },
+    soft       = { grip=0.975, sink=1.290, rolling=1.095, draft=1.045 },
+    snow       = { grip=1.000, sink=1.085, rolling=1.000, draft=1.000 }
 }
 
 local CFG = {
     gripMin=0.90, gripMax=1.14,
-    sinkMin=1.00, sinkMax=3.15, sinkGain=8.20,
+    sinkMin=1.00, sinkMax=4.35, sinkGain=8.20,
     rollingMin=0.97, rollingMax=1.22,
     draftMin=0.84, draftMax=1.17
 }
