@@ -89,7 +89,7 @@ assert(full>light and full<=1.01201,"Road load effect should be <=1.2%")
 assert(math.abs(full-trailer)<0.000001,"Unexpected trailer-class bias")
 assert(math.abs(full-implement)<0.000001,"Unsupported implement-class bias")
 assert(wet>trailer and wet<=1.01601,"Wetness road effect out of bounds")
-assert(math.abs(wet-trailer-0.004)<0.000001,"Wetness factor unexpected")
+assert(math.abs(wet-trailer-0.003)<0.000001,"Wetness factor unexpected")
 print("PASS: road/hard load, trailer, fill mass, wetness and cap")
 -- More visible deformation across all compressible surfaces; preserve
 -- no artificial sink on paved roads and preserve the vanilla target.
@@ -174,14 +174,14 @@ end
 local road,writesRoad=visualWheel(WheelsUtil.GROUND_ROAD,30,1,1)
 assert(road.displacementScale==1 and #writesRoad==0,"Road must remain vanilla")
 local plowed,writesPlowed=visualWheel(WheelsUtil.GROUND_HARD_TERRAIN,10,1,0)
-assert(plowed.displacementScale > 1 and plowed.displacementScale < 1.5)
+assert(plowed.displacementScale > 1 and plowed.displacementScale < 2.0)
 assert(#writesPlowed==1,"Native setter not called for terrain")
 local originalScale=plowed.displacementScale
 WheelsUtil.getGroundType=function() return WheelsUtil.GROUND_ROAD end
 WheelPhysics.serverUpdate(plowed,16,1,0)
 assert(plowed.displacementScale==1,"Road must restore original terrain displacement")
 local softHeavy,writesHeavy=visualWheel(WheelsUtil.GROUND_SOFT_TERRAIN,30,1,1)
-assert(softHeavy.displacementScale<=1.5 and softHeavy.displacementScale>originalScale)
+assert(softHeavy.displacementScale<=2.5 and softHeavy.displacementScale>originalScale)
 assert(#writesHeavy==1,"Expected native setter update on loaded soft terrain")
 local softCrawler,writesCrawler=visualWheel(WheelsUtil.GROUND_SOFT_TERRAIN,30,2,1)
 assert(softCrawler.displacementScale<softHeavy.displacementScale,"Crawler must reduce deformation")
@@ -189,7 +189,7 @@ assert(softCrawler.displacementScale<softHeavy.displacementScale,"Crawler must r
 local plowedVisual,writesField=visualWheel(WheelsUtil.GROUND_HARD_TERRAIN,10,1,0)
 plowedVisual.densityType=FieldGroundType.PLOWED
 WheelPhysics.serverUpdate(plowedVisual,16,1,0)
-assert(plowedVisual.displacementScale==1.5,"Plowed field should reach visual +50% at neutral wheel load")
+assert(plowedVisual.displacementScale==2.25,"Plowed field should reach visual 2.25x at neutral wheel load")
 local otherField,writesOther=visualWheel(WheelsUtil.GROUND_HARD_TERRAIN,10,1,0)
 otherField.densityType=FieldGroundType.GRASS
 WheelPhysics.serverUpdate(otherField,16,1,0)
@@ -201,5 +201,49 @@ assert(missing.displacementScale==1,"Unsupported native wheel sink must be skipp
 Platform.gameplay.wheelTerrainDisplacement=false
 WheelPhysics.serverUpdate(softHeavy,16,1,1)
 assert(softHeavy.displacementScale==1,"Disabled native gameplay terrain deformation must restore")
-print("PASS: 1.0-1.5x GIANTS terrain visuals, road restore, load, crawler, native guards")
+print("PASS: 1.0-2.5x GIANTS terrain visuals, road restore, load, crawler, native guards")
+-- Verify the actual extraSinkSupported gate is enabled BEFORE vanilla
+-- serverUpdate. This missing GIANTS flag was the original invisible-sink gap.
+local nativeSeen={}
+WheelPhysics.serverUpdate=function(wp,dt,index,wet)
+    nativeSeen[#nativeSeen+1]={supported=wp.extraSinkSupported,
+        max=wp.extraSinkMaxValue}
+end
+ARSPhysics.hooksInstalled=false
+ARSPhysics:installHooks()
+Platform.gameplay.wheelTerrainDisplacement=true
+WheelsUtil.getGroundType=function() return WheelsUtil.GROUND_HARD_TERRAIN end
+local eVehicle={isServer=true,isAddedToPhysics=true,
+    spec_wheels={wheels={{},{},{},{}}},
+    getTotalMass=function() return 20 end}
+local extraWheel={vehicle=eVehicle,wheel={node=10},wheelShape=12,
+    radius=1,extraSinkSupported=false,extraSinkMaxValue=0.2,
+    densityType=FieldGroundType.PLOWED,displacementScale=1,
+    displacementAllowed=true,supportsWheelSink=true,
+    tireType=1,wheelShapeWidth=0.6}
+extraWheel.setDisplacementAllowed=function(self) end
+WheelPhysics.serverUpdate(extraWheel,16,1,0)
+assert(nativeSeen[#nativeSeen].supported==true,"Native GIANTS sink gate not enabled")
+assert(nativeSeen[#nativeSeen].max>=0.15 and nativeSeen[#nativeSeen].max<=0.20,
+    "Plowed native sink cap missing or unsafe")
+assert(extraWheel.displacementScale>=2.2 and extraWheel.displacementScale<=2.5,
+    "Plowed native visual terrain factor too weak")
+WheelsUtil.getGroundType=function() return WheelsUtil.GROUND_ROAD end
+extraWheel.densityType=FieldGroundType.NONE
+WheelPhysics.serverUpdate(extraWheel,16,1,0)
+assert(nativeSeen[#nativeSeen].max==0,"Native road must not be additionally sunken")
+assert(extraWheel.displacementScale==1,"Road visual must be vanilla")
+local oldEnabled=ARS.isEnabled
+ARS.isEnabled=function() return false end
+WheelPhysics.serverUpdate(extraWheel,16,1,0)
+assert(nativeSeen[#nativeSeen].supported==false and
+    nativeSeen[#nativeSeen].max==0.2,
+    "Disabling ARS must restore native extra sink support and cap")
+ARS.isEnabled=oldEnabled
+ARSPhysics.restore()
+assert(extraWheel.extraSinkSupported==false and extraWheel.extraSinkMaxValue==0.2,
+    "Map unload must restore native sink values")
+assert(extraWheel.displacementScale==1,"Map unload must restore visual scale")
+assert(VehicleMotor.getTorqueAndSpeedValues==motorFn,"Native torque changed")
+print("PASS: native GIANTS extra-sink gate, bounded plowed depth, road, restore")
 print("PASS: Physics 0.1.18.9 profile smoke and untouched native torque")

@@ -161,10 +161,10 @@ end
 
 -- GIANTS native wheel terrain displacement: this drives physical terrain
 -- deformation / visible wheel ruts, NOT the visual wheel transform or motor.
--- 1.50 = at most +50% of the stock terrain displacement input.
+-- 2.50 = at most +150% of the stock terrain displacement input.
 local VISUAL_DISPLACEMENT = {
-    other=0.10, road=0.00, hard=0.08, firm=0.16, field=0.25,
-    cultivated=0.40, plowed=0.50, seedbed=0.35, soft=0.50, snow=0.22
+    other=0.12, road=0.00, hard=0.08, firm=0.30, field=0.65,
+    cultivated=0.90, plowed=1.25, seedbed=0.83, soft=1.20, snow=0.40
 }
 
 local function visualDisplacementFactor(wp, wet)
@@ -176,12 +176,55 @@ local function visualDisplacementFactor(wp, wet)
     local load = clamp(1 + 0.18 * (loadIndex - 1), 0.82, 1.18)
     local moisture = 1 + 0.20 * clamp(wet or 0, 0, 1)
     local track = isCrawler(wp) and 0.88 or 1
-    return 1 + clamp(strength * load * moisture, 0, 0.50) * track
+    return 1 + clamp(strength * load * moisture, 0, 1.50) * track
 end
 
 -- Restore the original scale when ARS is disabled or the wheel reaches
 -- non-deformable ground. This is per wheel, with no global GIANTS constants.
 local originalDisplacement = setmetatable({}, {__mode="k"})
+-- GIANTS native extra sink (WheelPhysics.updateSink), separate from ruts.
+-- Vanilla extraSinkSupported defaults false. Preserve every original
+-- wheel's setting for rollback without altering wheel mesh or engine torque.
+local originalExtraSink = setmetatable({}, {__mode="k"})
+local EXTRA_SINK_METERS = {
+    other=0.00, road=0.00, hard=0.00, firm=0.035, field=0.070,
+    cultivated=0.115, plowed=0.160, seedbed=0.100, soft=0.175, snow=0.065
+}
+local function nativeExtraSinkCap(wp, wet)
+    if wp.hasWaterContact then return 0 end
+    local surface = groundState(wp)
+    local depth = EXTRA_SINK_METERS[surface] or 0
+    if depth <= 0 or type(wp.radius) ~= "number" or wp.radius <= 0 then return 0 end
+    local _, _, loadIndex = wheelLoad(wp)
+    local load = clamp(1 + 0.22 * (loadIndex - 1), 0.83, 1.20)
+    local moisture = 1 + 0.18 * clamp(wet or 0, 0, 1)
+    local track = isCrawler(wp) and 0.82 or 1
+    -- Bounded physical sink target (not guaranteed centimetres in game).
+    return clamp(depth * load * moisture * track,
+        0, math.min(wp.radius * 0.20, 0.20))
+end
+
+local function prepareNativeSink(wp, wet)
+    if wp.vehicle == nil or not wp.vehicle.isServer
+        or not wp.vehicle.isAddedToPhysics
+        or type(wp.extraSinkMaxValue) ~= "number" then return end
+    local original = originalExtraSink[wp]
+    if original == nil then
+        original = {supported=wp.extraSinkSupported, max=wp.extraSinkMaxValue}
+        originalExtraSink[wp] = original
+    end
+    local nativeTerrain = Platform ~= nil and Platform.gameplay ~= nil
+        and Platform.gameplay.wheelTerrainDisplacement == true
+        and wp.supportsWheelSink ~= false
+    if ARS:isEnabled("physics") and nativeTerrain then
+        -- 0-m cap on road: GIANTS updateSink smoothly restores the wheel.
+        wp.extraSinkSupported = true
+        wp.extraSinkMaxValue = nativeExtraSinkCap(wp, wet)
+    else
+        wp.extraSinkSupported = original.supported
+        wp.extraSinkMaxValue = original.max
+    end
+end
 local function rollingFactor(wp)
     local surface = groundState(wp)
     local p = PROFILES[surface] or PROFILES.other
@@ -192,8 +235,8 @@ local function rollingFactor(wp)
         local _, _, loadIndex = wheelLoad(wp)
         local loadExtra = clamp((loadIndex - 0.75) / 1.45, 0, 1)
         -- GIANTS already handles primary wet tire friction; this only adds a
-        -- tiny rolling penalty on damp pavement, with a strict 1.6% cap.
-        return 1 + 0.012 * loadExtra + 0.004 * currentWetness()
+        -- tiny rolling penalty on damp pavement, with a strict 1.2% cap.
+        return 1 + 0.009 * loadExtra + 0.003 * currentWetness()
     end
     if p.rolling == 1 then return 1 end
     local _, _, loadIndex = wheelLoad(wp)
@@ -201,8 +244,10 @@ local function rollingFactor(wp)
     -- Keep soil and wheel-load responses; avoid an extra trailer-class tax.
     local load = 1 + 0.032 * (loadIndex - 1)
     local track = isCrawler(wp) and -0.018 or 0
-    return clamp(p.rolling * load + track,
+    -- Reduce only ARS' extra rolling drag by 20% to keep heavy rigs usable.
+    local extra = clamp(p.rolling * load + track,
         CFG.rollingMin, CFG.rollingMax)
+    return 1 + 0.80 * (extra - 1)
 end
 
 
@@ -264,7 +309,7 @@ local function draftFactor(tool)
     -- PowerConsumer callback derives resistance from mass, speed and dt.
     -- Keep that limit as the baseline. ARS applies only an existing positive
     -- soil draft increment; it does not guess force from tool class or speed.
-    return clamp(math.max(1, p.draft), 1, CFG.draftMax)
+    return 1 + 0.80 * (clamp(math.max(1, p.draft), 1, CFG.draftMax) - 1)
 end
 
 -- Optional developer-console tuning; no HUD, no user config, no persistence.
@@ -333,10 +378,11 @@ function ARSPhysics:installHooks()
         end
     end
 
-    -- After GIANTS has refreshed its native contact classification, update
-    -- only its wheel terrain-displacement input (1.00x .. 1.50x).
+    -- Enable GIANTS extra-sink before serverUpdate. Then update the native
+    -- terrain-displacement scale (1.00x .. 2.50x) after wheel contact.
     local vanillaServerUpdate = WheelPhysics.serverUpdate
     WheelPhysics.serverUpdate = function(wp, dt, currentUpdateIndex, wet)
+        prepareNativeSink(wp, wet)
         vanillaServerUpdate(wp, dt, currentUpdateIndex, wet)
 
         if wp.vehicle == nil or not wp.vehicle.isServer
@@ -441,4 +487,18 @@ function ARSPhysics.restoreWheel(wp)
 end
 function ARSPhysics.restore()
     for wp in pairs(ARSPhysics.touched) do ARSPhysics.restoreWheel(wp) end
+    for wp, state in pairs(originalExtraSink) do
+        wp.extraSinkSupported = state.supported
+        wp.extraSinkMaxValue = state.max
+        originalExtraSink[wp] = nil
+    end
+    for wp, base in pairs(originalDisplacement) do
+        wp.displacementScale = base
+        if wp.vehicle ~= nil and wp.vehicle.isServer and wp.vehicle.isAddedToPhysics
+            and wp.wheelShape ~= nil and wp.wheelShape ~= 0
+            and type(wp.setDisplacementAllowed) == "function" then
+            wp:setDisplacementAllowed(wp.displacementAllowed)
+        end
+        originalDisplacement[wp] = nil
+    end
 end
