@@ -35,5 +35,21 @@ a blanket compatibility guarantee for all versions or mod combinations.
 Author: KeilerHirsch. License: EUPL-1.2 (see LICENSE).
 Based on GIANTS' native game interfaces, not copied source from other FS25 mods.
 
-## Physics tuning development candidate 0.1.18.11
-This development candidate keeps the native GIANTS motor torque curve unchanged (1.00x), removes the extra trailer-class rolling tax, and retunes soil sinking with a 2.35x sink-target cap. Operator feedback on the 0.1.18.9 tuning was positive. This candidate additionally applies a tiny 0-1.6% rolling-damping adjustment on road/hard ground according to actual per-wheel load and current ground wetness. Normal GIANTS mass, fill weights, slope forces, and wet tire friction remain authoritative. Following this road refinement, v0.1.18.11 strengthens GIANTS-native sinking on deformable surfaces, including snow when the native ground sink target exists. Wheel load and wetness matter more; crawler spread still reduces sink. Paved/hard roads do not acquire artificial sinking. The new settings are untested in-game; the published release is still 0.1.18.8.
+## Physics Beta v0.1.18.9 release candidate (not published)
+
+The previous public release is v0.1.18.8. This is the next patch version
+(v0.1.18.9), regardless of the higher local DEV iteration numbers used during
+tuning. There is no GitHub push or release for this candidate yet.
+
+Built directly on the native GIANTS physics routines. The stock motor torque
+curve remains unchanged (1.00x); rolling, traction, and implement draft follow
+the operator-approved prior calibration. Road/hard rolling damping continues
+to respond *very slightly* to wheel load and wetness (no trailer-class tax).
+The only physics change since local DEV 0.1.18.11 is an additional boost to
+native sinking targets across non-road terrain profiles. Even on hard or
+uncategorized surfaces, an ARS sinking multiplier is applied only where the
+GIANTS WheelPhysics.MAX_SINK base value is positive. Asphalt stays 1.00x,
+and GIANTS still owns sinking interpolation and ground geometry.
+
+This last sink-only adjustment is awaiting in-game acceptance. Keep only one
+Physics Beta ZIP active at a time. Savegame backups are recommended.

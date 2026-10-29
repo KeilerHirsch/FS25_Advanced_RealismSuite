@@ -4,26 +4,26 @@
 -- Correct GIANTS vanilla physics inputs; no vehicle controls, HUD or maintenance.
 -- GDN FS25 script/engine v1.20: WheelPhysics, WheelsUtil, PowerConsumer.
 
-ARSPhysics = { VERSION = "0.1.18.11", hooksInstalled = false }
+ARSPhysics = { VERSION = "0.1.18.9", hooksInstalled = false }
 
 -- Relative to GIANTS vanilla = 1.00. No second physics engine.
 -- Tune by soil class in one place; only active surface is evaluated.
 local PROFILES = {
-    other      = { grip=1.000, sink=1.000, rolling=1.000, draft=1.000 },
+    other      = { grip=1.000, sink=1.025, rolling=1.000, draft=1.000 },
     road       = { grip=1.000, sink=1.000, rolling=1.000, draft=1.000 },
-    hard       = { grip=1.000, sink=1.000, rolling=1.000, draft=1.000 },
+    hard       = { grip=1.000, sink=1.025, rolling=1.000, draft=1.000 },
     firm       = { grip=1.015, sink=1.045, rolling=1.020, draft=1.000 },
     field      = { grip=1.030, sink=1.095, rolling=1.035, draft=1.000 },
     cultivated = { grip=1.045, sink=1.160, rolling=1.055, draft=1.025 },
     plowed     = { grip=1.020, sink=1.200, rolling=1.080, draft=1.055 },
     seedbed    = { grip=1.045, sink=1.145, rolling=1.045, draft=1.015 },
     soft       = { grip=0.975, sink=1.220, rolling=1.095, draft=1.045 },
-    snow       = { grip=1.000, sink=1.045, rolling=1.000, draft=1.000 }
+    snow       = { grip=1.000, sink=1.060, rolling=1.000, draft=1.000 }
 }
 
 local CFG = {
     gripMin=0.90, gripMax=1.14,
-    sinkMin=1.00, sinkMax=2.90, sinkGain=7.00,
+    sinkMin=1.00, sinkMax=3.15, sinkGain=8.20,
     rollingMin=0.97, rollingMax=1.22,
     draftMin=0.84, draftMax=1.17
 }
@@ -143,7 +143,7 @@ local function sinkFactor(wp, wet)
     local track = isCrawler(wp) and 0.94 or 1
     -- Amplify ONLY ARSPhysics's additional sink relative to GIANTS vanilla.
     -- Preserve soil, wheel-load, weather and crawler weighting; increase
-    -- deformable-ground response without modifying native roads or hard ground.
+    -- ground response while preserving native asphalt and zero-sink surfaces.
     -- This avoids doubling the absolute GIANTS sink distance on every surface.
     local weighted = p.sink * load * moisture * track
     local extra = math.max(0, weighted - 1)
