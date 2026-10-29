@@ -8,12 +8,12 @@ dofile("physics-beta/scripts/ARSPhysics.lua")
 assert(ARSPhysics.VERSION=="0.1.18.9")
 for _,entry in ipairs({
     {"road",1.00,1.00,1.00,1.00},
-    {"field",1.030,1.145,1.035,1.00},
-    {"cultivated",1.045,1.220,1.055,1.025},
-    {"plowed",1.020,1.370,1.080,1.055},
-    {"seedbed",1.045,1.205,1.045,1.015},
-    {"soft",0.975,1.290,1.095,1.045},
-    {"snow",1.00,1.085,1.00,1.00}
+    {"field",1.030,1.095,1.035,1.00},
+    {"cultivated",1.045,1.160,1.055,1.025},
+    {"plowed",1.020,1.200,1.080,1.055},
+    {"seedbed",1.045,1.145,1.045,1.015},
+    {"soft",0.975,1.220,1.095,1.045},
+    {"snow",1.00,1.060,1.00,1.00}
 }) do
    local actual = ARSPhysics:consoleCurve(entry[1])
    for i=2,5 do assert(actual:find(string.format("%.3f",entry[i]),1,true),entry[1]..":"..actual) end
@@ -123,14 +123,14 @@ local normal=measureSink(1,10,0,false,false)
 local heavy=measureSink(1,30,0,false,false)
 local wet=measureSink(1,10,1,false,false)
 local crawled=measureSink(1,10,0,true,false)
-assert(normal>2.75 and normal<=4.35,"Soil sink not boosted enough")
+assert(normal>2.25 and normal<=3.15,"Soil sink not boosted enough")
 assert(heavy>normal,"Extra load should produce extra sink")
 assert(wet>normal,"Wet soil should produce extra sink")
 assert(crawled<normal,"Crawler distribution should reduce sink")
 local plowed=measureSink(2,10,0,false,false)
-assert(plowed>4.00 and plowed<=4.35,"Plowed sink should be substantially deeper")
-assert(plowed>normal+1.0,"Plowed should be distinctly softer than cultivated")
-assert(measureSink(2,30,1,false,false)<=4.35,"Heavy wet plowed sink must cap")
+assert(plowed>2.50 and plowed<=3.15,"Plowed sink should be consistent with RC1")
+assert(plowed>normal,"Plowed should sink more than cultivated")
+assert(measureSink(2,30,1,false,false)<=3.15,"Heavy wet plowed sink must cap")
 assert(measureSink(4,10,0,false,false)>1,"Firm field sink boost missing")
 assert(measureSink(1,10,0,false,true)>1,"Snow surface sink boost missing")
 assert(measureSink(0,10,0,false,false)==1,"Road should not artificially sink")
@@ -138,7 +138,7 @@ assert(measureSink(0,30,1,false,false)==1,"Loaded wet road should not artificial
 -- Hard and uncategorized terrain receive an ARS boost only when GIANTS
 -- provides a positive base MAX_SINK (the native zero target remains zero).
 WheelsUtil.getGroundType=function() return WheelsUtil.GROUND_HARD_TERRAIN end
-assert(measureSink(0,10,0,false,false)>1.3,"Hard ground native positive sink not boosted")
+assert(measureSink(0,10,0,false,false)>1.1,"Hard ground native positive sink not boosted")
 WheelsUtil.getGroundType=function() return 999 end
 assert(measureSink(0,10,0,false,false)>1,"Other ground native positive sink not boosted")
 WheelsUtil.MAX_SINK = nil
@@ -147,4 +147,59 @@ local v={isServer=true,isAddedToPhysics=true}
 WheelPhysics.updateSink({vehicle=v,densityType=0},16,0)
 assert(WheelPhysics.MAX_SINK[0]==0,"Native zero-sink ground was modified")
 print("PASS: global deformable ground sink, load, wetness, crawler, snow, road guard, restoration")
+-- Native visual ground displacement, distinct from physical sink:
+-- reuse the real serverUpdate hook and assert native setter call path.
+local nativeCalls = {}
+WheelPhysics.serverUpdate = function(wp,dt,index,wet)
+    nativeCalls[#nativeCalls+1]={"server",dt}
+end
+ARSPhysics.hooksInstalled=false
+ARSPhysics:installHooks()
+Platform={gameplay={wheelTerrainDisplacement=true}}
+WheelsUtil.getGroundType=function() return WheelsUtil.GROUND_ROAD end
+local function visualWheel(groundCode,mass,tireType,wet)
+    WheelsUtil.getGroundType=function() return groundCode end
+    local v={isServer=true,isAddedToPhysics=true,
+        spec_wheels={wheels={{},{},{},{}}},getTotalMass=function() return mass end}
+    local wp={vehicle=v,wheel={node=10},wheelShape=12,displacementScale=1,
+        supportsWheelSink=true,displacementAllowed=true, densityType=0,
+        tireType=tireType, wheelShapeWidth=0.6, hasGroundContact=true}
+    local written={}
+    wp.setDisplacementAllowed=function(self,allowed)
+        written[#written+1]=self.displacementScale
+    end
+    WheelPhysics.serverUpdate(wp,16,1,wet)
+    return wp,written
+end
+local road,writesRoad=visualWheel(WheelsUtil.GROUND_ROAD,30,1,1)
+assert(road.displacementScale==1 and #writesRoad==0,"Road must remain vanilla")
+local plowed,writesPlowed=visualWheel(WheelsUtil.GROUND_HARD_TERRAIN,10,1,0)
+assert(plowed.displacementScale > 1 and plowed.displacementScale < 1.5)
+assert(#writesPlowed==1,"Native setter not called for terrain")
+local originalScale=plowed.displacementScale
+WheelsUtil.getGroundType=function() return WheelsUtil.GROUND_ROAD end
+WheelPhysics.serverUpdate(plowed,16,1,0)
+assert(plowed.displacementScale==1,"Road must restore original terrain displacement")
+local softHeavy,writesHeavy=visualWheel(WheelsUtil.GROUND_SOFT_TERRAIN,30,1,1)
+assert(softHeavy.displacementScale<=1.5 and softHeavy.displacementScale>originalScale)
+assert(#writesHeavy==1,"Expected native setter update on loaded soft terrain")
+local softCrawler,writesCrawler=visualWheel(WheelsUtil.GROUND_SOFT_TERRAIN,30,2,1)
+assert(softCrawler.displacementScale<softHeavy.displacementScale,"Crawler must reduce deformation")
+-- Field cultivation actually comes from native densityType, not guessed terrain.
+local plowedVisual,writesField=visualWheel(WheelsUtil.GROUND_HARD_TERRAIN,10,1,0)
+plowedVisual.densityType=FieldGroundType.PLOWED
+WheelPhysics.serverUpdate(plowedVisual,16,1,0)
+assert(plowedVisual.displacementScale==1.5,"Plowed field should reach visual +50% at neutral wheel load")
+local otherField,writesOther=visualWheel(WheelsUtil.GROUND_HARD_TERRAIN,10,1,0)
+otherField.densityType=FieldGroundType.GRASS
+WheelPhysics.serverUpdate(otherField,16,1,0)
+assert(otherField.displacementScale<plowedVisual.displacementScale,"Cultivation state must affect terrain displacement")
+local missing,writesMissing=visualWheel(WheelsUtil.GROUND_SOFT_TERRAIN,30,1,1)
+missing.supportsWheelSink=false
+WheelPhysics.serverUpdate(missing,16,1,1)
+assert(missing.displacementScale==1,"Unsupported native wheel sink must be skipped")
+Platform.gameplay.wheelTerrainDisplacement=false
+WheelPhysics.serverUpdate(softHeavy,16,1,1)
+assert(softHeavy.displacementScale==1,"Disabled native gameplay terrain deformation must restore")
+print("PASS: 1.0-1.5x GIANTS terrain visuals, road restore, load, crawler, native guards")
 print("PASS: Physics 0.1.18.9 profile smoke and untouched native torque")

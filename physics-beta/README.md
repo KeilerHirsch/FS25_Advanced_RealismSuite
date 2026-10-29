@@ -35,21 +35,32 @@ a blanket compatibility guarantee for all versions or mod combinations.
 Author: KeilerHirsch. License: EUPL-1.2 (see LICENSE).
 Based on GIANTS' native game interfaces, not copied source from other FS25 mods.
 
-## Physics Beta v0.1.18.9 release candidate (not published)
+## Physics Beta v0.1.18.9 RC3 / native terrain visual test
 
-The previous public release is v0.1.18.8. This is the next patch version
-(v0.1.18.9), regardless of the higher local DEV iteration numbers used during
-tuning. There is no GitHub push or release for this candidate yet.
+**Built directly on native GIANTS physics.** No separate physics engine,
+visual wheel teleportation, or artificial motor torque boost. Public version
+remains 0.1.18.9 (the next patch after published 0.1.18.8).
 
-Built directly on the native GIANTS physics routines. The stock motor torque
-curve remains unchanged (1.00x); rolling, traction, and implement draft follow
-the operator-approved prior calibration. Road/hard rolling damping continues
-to respond *very slightly* to wheel load and wetness (no trailer-class tax).
-The only physics change since local DEV 0.1.18.11 is an additional boost to
-native sinking targets across non-road terrain profiles. Even on hard or
-uncategorized surfaces, an ARS sinking multiplier is applied only where the
-GIANTS WheelPhysics.MAX_SINK base value is positive. Asphalt stays 1.00x,
-and GIANTS still owns sinking interpolation and ground geometry.
+Operator-driven rollback: restore all soil, sinking, road, grip, rolling,
+draft and motor values from the previously liked RC1. The heavy-load
+overheating observed on RC2 is not yet established as ARS-caused and is
+not claimed fixed.
 
-RC2 increases sinking profiles on all non-road terrains, particularly plowed ground; sink target cap changes to 4.35x while slope/rolling/draft/grip/native torque remain unchanged. The candidate may still encounter GIANTS engine-level sink geometry limits. This last sink-only adjustment is awaiting in-game acceptance. Keep only one
-Physics Beta ZIP active at a time. Savegame backups are recommended.
+Only new behavior: on server wheels that permit GIANTS wheel terrain
+displacement, use GIANTS' own WheelPhysics.displacementScale and
+setDisplacementAllowed() to drive native terrain deformation/ruts at a
+factor between 1.00x and 1.50x of the existing vehicle wheel baseline.
+Relative gain varies with native soil / cultivation state, contact wheel
+load (including fill mass when GIANTS exposes it), tire footprint,
+crawler type and ground wetness. Road remains 1.00x and the original
+displacement scale is restored when terrain stops deforming or the
+physics module is disabled. The game engine still owns geometry,
+ground contact, wheel visuals and persistence. 1.50x is a native
+displacement input, NOT a guarantee of 50% more visible centimeters
+or additional physical wheel sink. No terrain editing APIs or data
+persistence are added.
+
+**Testing status:** isolated Lua smoke tests and packaging tests only.
+The in-game visual result and multiplayer behavior need operator
+confirmation before publication. Do not activate concurrently with
+other mods that overwrite GIANTS wheel terrain displacement.

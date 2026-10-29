@@ -9,21 +9,21 @@ ARSPhysics = { VERSION = "0.1.18.9", hooksInstalled = false }
 -- Relative to GIANTS vanilla = 1.00. No second physics engine.
 -- Tune by soil class in one place; only active surface is evaluated.
 local PROFILES = {
-    other      = { grip=1.000, sink=1.045, rolling=1.000, draft=1.000 },
+    other      = { grip=1.000, sink=1.025, rolling=1.000, draft=1.000 },
     road       = { grip=1.000, sink=1.000, rolling=1.000, draft=1.000 },
-    hard       = { grip=1.000, sink=1.045, rolling=1.000, draft=1.000 },
-    firm       = { grip=1.015, sink=1.075, rolling=1.020, draft=1.000 },
-    field      = { grip=1.030, sink=1.145, rolling=1.035, draft=1.000 },
-    cultivated = { grip=1.045, sink=1.220, rolling=1.055, draft=1.025 },
-    plowed     = { grip=1.020, sink=1.370, rolling=1.080, draft=1.055 },
-    seedbed    = { grip=1.045, sink=1.205, rolling=1.045, draft=1.015 },
-    soft       = { grip=0.975, sink=1.290, rolling=1.095, draft=1.045 },
-    snow       = { grip=1.000, sink=1.085, rolling=1.000, draft=1.000 }
+    hard       = { grip=1.000, sink=1.025, rolling=1.000, draft=1.000 },
+    firm       = { grip=1.015, sink=1.045, rolling=1.020, draft=1.000 },
+    field      = { grip=1.030, sink=1.095, rolling=1.035, draft=1.000 },
+    cultivated = { grip=1.045, sink=1.160, rolling=1.055, draft=1.025 },
+    plowed     = { grip=1.020, sink=1.200, rolling=1.080, draft=1.055 },
+    seedbed    = { grip=1.045, sink=1.145, rolling=1.045, draft=1.015 },
+    soft       = { grip=0.975, sink=1.220, rolling=1.095, draft=1.045 },
+    snow       = { grip=1.000, sink=1.060, rolling=1.000, draft=1.000 }
 }
 
 local CFG = {
     gripMin=0.90, gripMax=1.14,
-    sinkMin=1.00, sinkMax=4.35, sinkGain=8.20,
+    sinkMin=1.00, sinkMax=3.15, sinkGain=8.20,
     rollingMin=0.97, rollingMax=1.22,
     draftMin=0.84, draftMax=1.17
 }
@@ -159,6 +159,29 @@ local function currentWetness()
     return 0
 end
 
+-- GIANTS native wheel terrain displacement: this drives physical terrain
+-- deformation / visible wheel ruts, NOT the visual wheel transform or motor.
+-- 1.50 = at most +50% of the stock terrain displacement input.
+local VISUAL_DISPLACEMENT = {
+    other=0.10, road=0.00, hard=0.08, firm=0.16, field=0.25,
+    cultivated=0.40, plowed=0.50, seedbed=0.35, soft=0.50, snow=0.22
+}
+
+local function visualDisplacementFactor(wp, wet)
+    local surface = groundState(wp)
+    if surface == "road" or wp.hasWaterContact then return 1 end
+    local strength = VISUAL_DISPLACEMENT[surface] or 0
+    if strength <= 0 then return 1 end
+    local _, _, loadIndex = wheelLoad(wp)
+    local load = clamp(1 + 0.18 * (loadIndex - 1), 0.82, 1.18)
+    local moisture = 1 + 0.20 * clamp(wet or 0, 0, 1)
+    local track = isCrawler(wp) and 0.88 or 1
+    return 1 + clamp(strength * load * moisture, 0, 0.50) * track
+end
+
+-- Restore the original scale when ARS is disabled or the wheel reaches
+-- non-deformable ground. This is per wheel, with no global GIANTS constants.
+local originalDisplacement = setmetatable({}, {__mode="k"})
 local function rollingFactor(wp)
     local surface = groundState(wp)
     local p = PROFILES[surface] or PROFILES.other
@@ -310,6 +333,41 @@ function ARSPhysics:installHooks()
         end
     end
 
+    -- After GIANTS has refreshed its native contact classification, update
+    -- only its wheel terrain-displacement input (1.00x .. 1.50x).
+    local vanillaServerUpdate = WheelPhysics.serverUpdate
+    WheelPhysics.serverUpdate = function(wp, dt, currentUpdateIndex, wet)
+        vanillaServerUpdate(wp, dt, currentUpdateIndex, wet)
+
+        if wp.vehicle == nil or not wp.vehicle.isServer
+            or not wp.vehicle.isAddedToPhysics
+            or wp.wheel == nil or type(wp.wheelShape) ~= "number"
+            or wp.wheelShape == 0
+            or type(wp.displacementScale) ~= "number"
+            or type(wp.setDisplacementAllowed) ~= "function" then return end
+
+        local base = originalDisplacement[wp]
+        if base == nil then
+            base = wp.displacementScale
+            originalDisplacement[wp] = base
+        end
+
+        local nativeEnabled = Platform ~= nil and Platform.gameplay ~= nil
+            and Platform.gameplay.wheelTerrainDisplacement == true
+            and wp.supportsWheelSink ~= false and wp.displacementAllowed ~= false
+        local factor = 1
+        if nativeEnabled and ARS:isEnabled("physics") then
+            factor = visualDisplacementFactor(wp, wet)
+        end
+        local target = base * factor
+        -- Noise from contact loads must not trigger a native wheel update
+        -- every frame. Restore 1.00x immediately when leaving deformable soil.
+        if math.abs(wp.displacementScale - target) >= 0.025
+            or (factor == 1 and wp.displacementScale ~= base) then
+            wp.displacementScale = target
+            wp:setDisplacementAllowed(wp.displacementAllowed)
+        end
+    end
     local vanillaSink = WheelPhysics.updateSink
     WheelPhysics.updateSink = function(wp, dt, wet)
         if not ARS:isEnabled("physics") then return vanillaSink(wp, dt, wet) end
@@ -364,7 +422,7 @@ function ARSPhysics:installHooks()
 
     self.hooksInstalled = true
     ARS.available.physics = true
-    print("[ARS Physics] Grip, sink, rolling and tool resistance installed; native motor torque unchanged")
+    print("[ARS Physics] Grip, sink, native wheel-displacement visuals, rolling and tool resistance installed; motor torque unchanged")
 end
 
 -- Shared read-only classification; no second set of soil constants.
