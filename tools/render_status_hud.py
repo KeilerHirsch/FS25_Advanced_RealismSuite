@@ -29,7 +29,7 @@ def snapshot(issues, release=None, releases=None):
         releases = [release] if release else []
     documented = [x for x in issues if "roadmap" in label_names(x)]
     by_number = {int(x["number"]): x for x in documented}
-    focus, gate = by_number.get(3), by_number.get(6)
+    focus = by_number.get(3)
     activity = sum(bool(label_names(x) & {"status:building", "status:testing"})
                    for x in documented)
 
@@ -45,24 +45,9 @@ def snapshot(issues, release=None, releases=None):
         public = ("DEVELOPMENT", f"#3  /  {stage}",
                   "#4df1ad" if stage == "BUILDING" else "#e5cf8b")
 
-    if gate is None:
-        acceptance = ("IN-GAME GATE", "UNTRACKED", "#f1bb74")
-    else:
-        state = status(gate, releases)
-        if state in {"VERIFIED", "RELEASED"}:
-            acceptance = ("IN-GAME GATE", "ISSUE #6 VERIFIED", "#4df1ad")
-        elif state == "TESTING":
-            acceptance = ("IN-GAME GATE", "ISSUE #6 IN TEST", "#e5cf8b")
-        elif state == "EVIDENCE REQUIRED":
-            acceptance = ("IN-GAME GATE", "#6 NEEDS EVIDENCE", "#f1bb74")
-        elif state == "STATUS CONFLICT":
-            acceptance = ("IN-GAME GATE", "#6 STATUS CONFLICT", "#f1bb74")
-        else:
-            acceptance = ("IN-GAME GATE", "ISSUE #6 OPEN", "#e5cf8b")
-
     roadmap = ("ROADMAP EPICS",
                f"{activity:02d} ACTIVE  /  {len(documented):02d} TOTAL", "#a3f8d2")
-    return (public, acceptance, roadmap)
+    return (public, roadmap)
 
 
 def svg_text(x, y, content, size, color, weight=600, tracking="0.4"):
@@ -78,9 +63,8 @@ def render_svg(issues, release=None, releases=None):
         '<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="144" '
         'viewBox="0 0 1160 144" role="img" aria-labelledby="statusTitle statusDesc">',
         '<title id="statusTitle">ARS live development pulse</title>',
-        '<desc id="statusDesc">Public development stage, in-game acceptance gate '
-        'and active roadmap epics, generated from GitHub Issues and Releases. '
-        'Not proof of gameplay readiness.</desc>',
+        '<desc id="statusDesc">Latest release and active roadmap epics, '
+        'generated from GitHub Issues and Releases.</desc>',
         '<defs><linearGradient id="dark" x2="1" y2=".25">'
         '<stop stop-color="#06120e"/><stop offset=".6" stop-color="#091f19"/>'
         '<stop offset="1" stop-color="#06140f"/></linearGradient>'
@@ -96,9 +80,9 @@ def render_svg(issues, release=None, releases=None):
         svg_text(890, 30, "GITHUB-SOURCED STATUS", 12, "#7cae98", 500, "0.7"),
     ]
     for i, (label, value, color) in enumerate(cards):
-        x = (34, 418, 803)[i]
+        x = (34, 620)[i]
         if i:
-            out.append(f'<path d="M{x-19} 49V124" stroke="#337d58" opacity=".65"/>')
+            out.append(f'<path d="M580 49V124" stroke="#337d58" opacity=".65"/>')
         out.append(svg_text(x, 69, label, 14, "#7db69e", 600, "1.1"))
         out.append(f'<circle cx="{x+6}" cy="98" r="6" fill="{color}"/>')
         out.append(svg_text(x+25, 106, value, 24, color, 700, "0.3"))
