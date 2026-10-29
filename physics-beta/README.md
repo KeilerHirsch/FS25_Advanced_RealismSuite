@@ -35,5 +35,5 @@ a blanket compatibility guarantee for all versions or mod combinations.
 Author: KeilerHirsch. License: EUPL-1.2 (see LICENSE).
 Based on GIANTS' native game interfaces, not copied source from other FS25 mods.
 
-## Physics tuning development candidate 0.1.18.9
-This unshipped candidate keeps the GIANTS motor torque curve at 1.00x with no motor hook, removes the additional trailer-class rolling tax, and retunes visible soil sinking with a 2.35x sink-target cap. The normal GIANTS mass, fill load, slopes, and tire traction still apply. These settings are not yet field-tested; the existing public beta remains 0.1.18.8.
+## Physics tuning development candidate 0.1.18.10
+This development candidate keeps the native GIANTS motor torque curve unchanged (1.00x), removes the extra trailer-class rolling tax, and retunes soil sinking with a 2.35x sink-target cap. Operator feedback on the 0.1.18.9 tuning was positive. This candidate additionally applies a tiny 0-1.6% rolling-damping adjustment on road/hard ground according to actual per-wheel load and current ground wetness. Normal GIANTS mass, fill weights, slope forces, and wet tire friction remain authoritative. This 0.1.18.10 road refinement has not yet been field-tested; the published release is still 0.1.18.8.

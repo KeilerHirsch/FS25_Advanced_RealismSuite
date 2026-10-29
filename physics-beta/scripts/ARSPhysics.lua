@@ -4,7 +4,7 @@
 -- Correct GIANTS vanilla physics inputs; no vehicle controls, HUD or maintenance.
 -- GDN FS25 script/engine v1.20: WheelPhysics, WheelsUtil, PowerConsumer.
 
-ARSPhysics = { VERSION = "0.1.18.9", hooksInstalled = false }
+ARSPhysics = { VERSION = "0.1.18.10", hooksInstalled = false }
 
 -- Relative to GIANTS vanilla = 1.00. No second physics engine.
 -- Tune by soil class in one place; only active surface is evaluated.
@@ -149,9 +149,28 @@ local function sinkFactor(wp, wet)
     return clamp(1 + CFG.sinkGain * extra, CFG.sinkMin, CFG.sinkMax)
 end
 
+local function currentWetness()
+    local weather = g_currentMission ~= nil and g_currentMission.environment
+        and g_currentMission.environment.weather
+    if weather ~= nil and weather.getGroundWetness ~= nil then
+        return clamp(weather:getGroundWetness() or 0, 0, 1)
+    end
+    return 0
+end
+
 local function rollingFactor(wp)
     local surface = groundState(wp)
     local p = PROFILES[surface] or PROFILES.other
+    if surface == "road" or surface == "hard" then
+        -- Subtle paved-ground response, never additional mass or an engine buff.
+        -- Per-wheel contact load (or vehicle-only mass fallback) includes fill
+        -- weight for any wheeled vehicle/implement, including trailers.
+        local _, _, loadIndex = wheelLoad(wp)
+        local loadExtra = clamp((loadIndex - 0.75) / 1.45, 0, 1)
+        -- GIANTS already handles primary wet tire friction; this only adds a
+        -- tiny rolling penalty on damp pavement, with a strict 1.6% cap.
+        return 1 + 0.012 * loadExtra + 0.004 * currentWetness()
+    end
     if p.rolling == 1 then return 1 end
     local _, _, loadIndex = wheelLoad(wp)
     -- GIANTS already includes trailer and cargo mass in the wheel physics.
@@ -162,14 +181,6 @@ local function rollingFactor(wp)
         CFG.rollingMin, CFG.rollingMax)
 end
 
-local function currentWetness()
-    local weather = g_currentMission ~= nil and g_currentMission.environment
-        and g_currentMission.environment.weather
-    if weather ~= nil and weather.getGroundWetness ~= nil then
-        return clamp(weather:getGroundWetness() or 0, 0, 1)
-    end
-    return 0
-end
 
 -- Works with the actual ground under the working implement when available.
 local function implementGround(tool)
