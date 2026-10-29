@@ -73,8 +73,13 @@ class LiveStatusTest(unittest.TestCase):
         self.assertTrue(ElementTree.fromstring(svg).tag.endswith("svg"))
         self.assertIn("v1.0&lt;x&amp;y&gt;", svg)
         self.assertNotIn("IN-GAME GATE", svg)
-        self.assertEqual(svg.count('stroke="#337d58"'), 1)
-        self.assertIn('x="620"', svg)
+        self.assertIn("ARS // LIVE DEVELOPMENT", svg)
+        self.assertIn("ROADMAP EPICS", svg)
+        self.assertIn("PRE-RELEASE", svg)
+        self.assertIn("01 ACTIVE", svg)
+        self.assertIn("/ 03 TOTAL", svg)
+        self.assertEqual(svg.count('y="61"'), 5)
+        self.assertIn("GITHUB-SOURCED", svg)
 
     def test_deterministic(self):
         self.assertEqual(render_svg(self.issues), render_svg(self.issues))

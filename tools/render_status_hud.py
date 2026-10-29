@@ -58,39 +58,53 @@ def svg_text(x, y, content, size, color, weight=600, tracking="0.4"):
 
 
 def render_svg(issues, release=None, releases=None):
-    cards = snapshot(issues, release, releases)
-    out = [
-        '<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="144" '
-        'viewBox="0 0 1160 144" role="img" aria-labelledby="statusTitle statusDesc">',
-        '<title id="statusTitle">ARS live development pulse</title>',
+    """Minimal terminal badges: one release, one roadmap count."""
+    release_card, roadmap_card = snapshot(issues, release, releases)
+    release_label, release_value, release_color = release_card
+    roadmap_label, roadmap_value, _ = roadmap_card
+
+    # Keep the roadmap information in two compact, readable chips.
+    active, total = roadmap_value.split("  /  ", 1)
+    parts = [
+        '<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="120" '
+        'viewBox="0 0 1160 120" role="img" '
+        'aria-labelledby="statusTitle statusDesc">',
+        '<title id="statusTitle">ARS live development</title>',
         '<desc id="statusDesc">Latest release and active roadmap epics, '
-        'generated from GitHub Issues and Releases.</desc>',
-        '<defs><linearGradient id="dark" x2="1" y2=".25">'
-        '<stop stop-color="#06120e"/><stop offset=".6" stop-color="#091f19"/>'
-        '<stop offset="1" stop-color="#06140f"/></linearGradient>'
-        '<pattern id="scan" width="8" height="8" patternUnits="userSpaceOnUse">'
-        '<path d="M0 7.5H8" stroke="#225a43" stroke-opacity=".15"/></pattern></defs>',
-        '<rect width="1158" height="142" x="1" y="1" rx="10" '
-        'fill="url(#dark)" stroke="#278c60" stroke-width="1.3"/>',
-        '<rect width="1156" height="140" x="2" y="2" rx="9" fill="url(#scan)"/>',
-        '<path d="M13 32V14H30 M1130 14h17v18 M13 113v17h17 '
-        'M1130 130h17v-17" fill="none" stroke="#47d99a" stroke-width="2"/>',
-        '<circle cx="37" cy="25" r="4" fill="#4dffac"/>',
-        svg_text(52, 30, "ARS  //  LIVE SYSTEM PULSE", 16, "#7ae6af", 700, "1.3"),
-        svg_text(890, 30, "GITHUB-SOURCED STATUS", 12, "#7cae98", 500, "0.7"),
+        'updated from GitHub Issues and Releases.</desc>',
+        '<rect x="1" y="1" width="1158" height="118" rx="8" '
+        'fill="#06110e" stroke="#22865d" stroke-width="1.4"/>',
+        '<path d="M18 43H1142" stroke="#174f3b" stroke-width="1"/>',
+        '<rect x="26" y="18" width="11" height="11" fill="#37efaa"/>',
+        svg_text(51, 29, "ARS // LIVE DEVELOPMENT", 17, "#42efaa", 700, "1"),
+        svg_text(861, 29, "GITHUB-SOURCED  /  AUTO-UPDATED",
+                 11, "#7db5a0", 500, "0.6"),
+        # Small terminal hatch detail, intentionally subordinate to the data.
+        '<path d="M365 21l8 -8m1 8l8 -8m1 8l8 -8m1 8l8 -8" '
+        'stroke="#235b4a" stroke-width="2" opacity=".6"/>',
     ]
-    for i, (label, value, color) in enumerate(cards):
-        x = (34, 620)[i]
-        if i:
-            out.append(f'<path d="M580 49V124" stroke="#337d58" opacity=".65"/>')
-        out.append(svg_text(x, 69, label, 14, "#7db69e", 600, "1.1"))
-        out.append(f'<circle cx="{x+6}" cy="98" r="6" fill="{color}"/>')
-        out.append(svg_text(x+25, 106, value, 24, color, 700, "0.3"))
-    out.append("</svg>\n")
-    result = "\n".join(out)
+
+    def frame(x, width, color="#397e68", fill="#071711"):
+        parts.append(f'<rect x="{x}" y="61" width="{width}" height="42" '
+                     f'rx="4" fill="{fill}" stroke="{color}" stroke-width="1"/>')
+
+    frame(30, 151)
+    # The release value has a reserved 390px region, including long beta tags.
+    frame(190, 398, release_color, "#081b13")
+    frame(626, 177)
+    frame(813, 163, "#b89542", "#191807")
+    frame(987, 143)
+    parts.extend([
+        svg_text(48, 88, release_label, 16, "#99cbbb", 600, "0.5"),
+        svg_text(205, 89, release_value, 19, release_color, 700, "0.1"),
+        svg_text(644, 88, roadmap_label, 16, "#99cbbb", 600, "0.3"),
+        svg_text(829, 89, active, 18, "#efc86f", 700, "0.2"),
+        svg_text(999, 89, "/ " + total, 16, "#e0f0e9", 600, "0.1"),
+        "</svg>\n",
+    ])
+    result = "\n".join(parts)
     ElementTree.fromstring(result)
     return result
-
 
 def main():
     issues = fetch_issues()
