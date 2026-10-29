@@ -4,7 +4,7 @@
 -- Correct GIANTS vanilla physics inputs; no vehicle controls, HUD or maintenance.
 -- GDN FS25 script/engine v1.20: WheelPhysics, WheelsUtil, PowerConsumer.
 
-ARSPhysics = { VERSION = "0.1.18.8", hooksInstalled = false }
+ARSPhysics = { VERSION = "0.1.18.9", hooksInstalled = false }
 
 -- Relative to GIANTS vanilla = 1.00. No second physics engine.
 -- Tune by soil class in one place; only active surface is evaluated.
@@ -12,18 +12,18 @@ local PROFILES = {
     other      = { grip=1.000, sink=1.000, rolling=1.000, draft=1.000 },
     road       = { grip=1.000, sink=1.000, rolling=1.000, draft=1.000 },
     hard       = { grip=1.000, sink=1.000, rolling=1.000, draft=1.000 },
-    firm       = { grip=1.015, sink=1.035, rolling=1.020, draft=1.000 },
-    field      = { grip=1.025, sink=1.070, rolling=1.035, draft=1.000 },
-    cultivated = { grip=1.050, sink=1.120, rolling=1.060, draft=0.960 },
-    plowed     = { grip=1.015, sink=1.160, rolling=1.090, draft=1.055 },
-    seedbed    = { grip=1.045, sink=1.100, rolling=1.050, draft=0.955 },
-    soft       = { grip=0.985, sink=1.180, rolling=1.105, draft=1.045 },
+    firm       = { grip=1.015, sink=1.045, rolling=1.020, draft=1.000 },
+    field      = { grip=1.030, sink=1.095, rolling=1.035, draft=1.000 },
+    cultivated = { grip=1.045, sink=1.160, rolling=1.055, draft=1.025 },
+    plowed     = { grip=1.020, sink=1.200, rolling=1.080, draft=1.055 },
+    seedbed    = { grip=1.045, sink=1.145, rolling=1.045, draft=1.015 },
+    soft       = { grip=0.975, sink=1.220, rolling=1.095, draft=1.045 },
     snow       = { grip=1.000, sink=1.000, rolling=1.000, draft=1.000 }
 }
 
 local CFG = {
-    gripMin=0.90, gripMax=1.14, motorTorqueMultiplier=1.03,
-    sinkMin=1.00, sinkMax=2.60, sinkGain=5.50,
+    gripMin=0.90, gripMax=1.14,
+    sinkMin=1.00, sinkMax=2.35, sinkGain=5.50,
     rollingMin=0.97, rollingMax=1.22,
     draftMin=0.84, draftMax=1.17
 }
@@ -154,14 +154,11 @@ local function rollingFactor(wp)
     local p = PROFILES[surface] or PROFILES.other
     if p.rolling == 1 then return 1 end
     local _, _, loadIndex = wheelLoad(wp)
-    local vehicle = wp.vehicle
-    local isTrailer = vehicle ~= nil
-        and (vehicle.spec_trailer ~= nil
-            or (vehicle.spec_fillUnit ~= nil and vehicle.spec_motorized == nil))
+    -- GIANTS already includes trailer and cargo mass in the wheel physics.
+    -- Keep soil and wheel-load responses; avoid an extra trailer-class tax.
     local load = 1 + 0.032 * (loadIndex - 1)
-    local trailer = isTrailer and 0.015 or 0
     local track = isCrawler(wp) and -0.018 or 0
-    return clamp(p.rolling * load + trailer + track,
+    return clamp(p.rolling * load + track,
         CFG.rollingMin, CFG.rollingMax)
 end
 
@@ -351,37 +348,11 @@ function ARSPhysics:installHooks()
         end, vanillaConsumer, tool, dt, ...)
     end
 
-    -- GIANTS feeds these samples to the native engine simulation via
-    -- Motorized:updateMotorProperties and setMotorProperties.
-    -- More power under load without changing gears, speed caps or store HP.
-    if type(VehicleMotor) == "table"
-        and type(VehicleMotor.getTorqueAndSpeedValues) == "function" then
-        local originalTorqueSamples = VehicleMotor.getTorqueAndSpeedValues
-        VehicleMotor.getTorqueAndSpeedValues = function(motor, ...)
-            local torques, rotationSpeeds = originalTorqueSamples(motor, ...)
-            if not ARS:isEnabled("physics") or motor == nil
-                or type(motor.vehicle) ~= "table"
-                or motor.vehicle.spec_motorized == nil
-                or type(torques) ~= "table" then
-                return torques, rotationSpeeds
-            end
-            local samples = {}
-            for i=1, #torques do
-                local torque = torques[i]
-                samples[i] = type(torque) == "number"
-                    and torque * CFG.motorTorqueMultiplier or torque
-            end
-            return samples, rotationSpeeds
-        end
-        self.drivetrainHookInstalled = true
-    else
-        self.drivetrainHookInstalled = false
-        print("[ARS Physics] Native motor torque samples unavailable")
-    end
+    -- Native GIANTS torque curve remains unchanged (1.00x); no motor hook.
 
     self.hooksInstalled = true
     ARS.available.physics = true
-    print("[ARS Physics] Grip, sink, rolling, tools and native motor torque curve installed")
+    print("[ARS Physics] Grip, sink, rolling and tool resistance installed; native motor torque unchanged")
 end
 
 -- Shared read-only classification; no second set of soil constants.
