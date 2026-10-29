@@ -123,14 +123,14 @@ local normal=measureSink(1,10,0,false,false)
 local heavy=measureSink(1,30,0,false,false)
 local wet=measureSink(1,10,1,false,false)
 local crawled=measureSink(1,10,0,true,false)
-assert(normal>2.25 and normal<=3.15,"Soil sink not boosted enough")
+assert(normal>1.35 and normal<=1.45,"Cultivated sink +40% baseline regression")
 assert(heavy>normal,"Extra load should produce extra sink")
 assert(wet>normal,"Wet soil should produce extra sink")
 assert(crawled<normal,"Crawler distribution should reduce sink")
 local plowed=measureSink(2,10,0,false,false)
-assert(plowed>2.50 and plowed<=3.15,"Plowed sink should be consistent with RC1")
+assert(plowed>1.49 and plowed<1.51,"Plowed dry reference should be +50% vanilla")
 assert(plowed>normal,"Plowed should sink more than cultivated")
-assert(measureSink(2,30,1,false,false)<=3.15,"Heavy wet plowed sink must cap")
+assert(measureSink(2,30,1,false,false)<=1.95,"Heavy wet plowed sink must cap")
 assert(measureSink(4,10,0,false,false)>1,"Firm field sink boost missing")
 assert(measureSink(1,10,0,false,true)>1,"Snow surface sink boost missing")
 assert(measureSink(0,10,0,false,false)==1,"Road should not artificially sink")
@@ -138,7 +138,7 @@ assert(measureSink(0,30,1,false,false)==1,"Loaded wet road should not artificial
 -- Hard and uncategorized terrain receive an ARS boost only when GIANTS
 -- provides a positive base MAX_SINK (the native zero target remains zero).
 WheelsUtil.getGroundType=function() return WheelsUtil.GROUND_HARD_TERRAIN end
-assert(measureSink(0,10,0,false,false)>1.1,"Hard ground native positive sink not boosted")
+assert(measureSink(0,10,0,false,false)>1.05,"Hard ground native positive sink not boosted")
 WheelsUtil.getGroundType=function() return 999 end
 assert(measureSink(0,10,0,false,false)>1,"Other ground native positive sink not boosted")
 WheelsUtil.MAX_SINK = nil
@@ -146,7 +146,7 @@ WheelPhysics.MAX_SINK[0]=0
 local v={isServer=true,isAddedToPhysics=true}
 WheelPhysics.updateSink({vehicle=v,densityType=0},16,0)
 assert(WheelPhysics.MAX_SINK[0]==0,"Native zero-sink ground was modified")
-print("PASS: global deformable ground sink, load, wetness, crawler, snow, road guard, restoration")
+print("PASS: native target ~1.50x on plowed; soil/load/wet/crawler, zero road, globals restored")
 -- Native visual ground displacement, distinct from physical sink:
 -- reuse the real serverUpdate hook and assert native setter call path.
 local nativeCalls = {}
@@ -201,11 +201,16 @@ assert(missing.displacementScale==1,"Unsupported native wheel sink must be skipp
 Platform.gameplay.wheelTerrainDisplacement=false
 WheelPhysics.serverUpdate(softHeavy,16,1,1)
 assert(softHeavy.displacementScale==1,"Disabled native gameplay terrain deformation must restore")
-print("PASS: 1.0-2.5x GIANTS terrain visuals, road restore, load, crawler, native guards")
+print("PASS: GIANTS terrain ruts, collision guard, road restore, load/crawler")
 -- Verify the actual extraSinkSupported gate is enabled BEFORE vanilla
 -- serverUpdate. This missing GIANTS flag was the original invisible-sink gap.
 local nativeSeen={}
 WheelPhysics.serverUpdate=function(wp,dt,index,wet)
+    -- Mock real GIANTS: gate already enabled before vanilla serverUpdate,
+    -- but contact-aware extraSinkMaxValue is set INSIDE the updateSink hook.
+    if wp.extraSinkSupported then
+        WheelPhysics.updateSink(wp,dt,wet)
+    end
     nativeSeen[#nativeSeen+1]={supported=wp.extraSinkSupported,
         max=wp.extraSinkMaxValue}
 end
@@ -246,4 +251,4 @@ assert(extraWheel.extraSinkSupported==false and extraWheel.extraSinkMaxValue==0.
 assert(extraWheel.displacementScale==1,"Map unload must restore visual scale")
 assert(VehicleMotor.getTorqueAndSpeedValues==motorFn,"Native torque changed")
 print("PASS: native GIANTS extra-sink gate, bounded plowed depth, road, restore")
-print("PASS: Physics 0.1.18.9 profile smoke and untouched native torque")
+print("PASS: RC5 native 50-percent plowed sink baseline and untouched motor torque")
