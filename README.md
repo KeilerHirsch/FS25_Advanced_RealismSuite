@@ -16,7 +16,7 @@
 
 ## Live-Entwicklung
 
-<a href="docs/ROADMAP.md"><img src="docs/assets/status-live.svg" alt="Automatische ARS-Entwicklungsanzeige aus GitHub-Issues und Releases" width="100%"></a>
+<a href="docs/ROADMAP.md"><img src="docs/assets/status-live.svg?refresh=20261030" alt="Automatische ARS-Entwicklungsanzeige aus GitHub-Issues und Releases" width="100%"></a>
 
 <sub>Automatisch anhand öffentlicher GitHub-Issues und Releases aktualisiert. [Vollständige Roadmap](docs/ROADMAP.md) · [Aktivitäten auf GitHub](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/issues?q=is%3Aissue+label%3Aroadmap)</sub>
 
