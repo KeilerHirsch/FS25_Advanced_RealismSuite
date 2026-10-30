@@ -2,6 +2,10 @@
 
 > **Project status — 28 October 2026.** The standalone ARS Physics Beta is publicly available; the **full ARS suite remains unreleased**. Mainline development entries below describe work in progress, not shipped features.
 
+## Prepared: ARS Physics Beta v0.1.18.9 — 30 October 2026
+
+Native wheel sinking and ruts now respond more visibly to plowed soil, tyre width, wheel load, moisture and crawler setups. Narrow tyres can approach their physical rim-horn limit; wide tyres sink less. Improved native contact timing, terrain-collision guards and wheel-state restoration; engine torque unchanged. RC6 visuals and handling accepted in FS25, Lua 5.1 regression tests passed; no new MP/dedicated-server or ADS guarantee. [Short release notes](docs/RELEASE_NOTES_PHYSICS_0_1_18_9.md). This entry is **prepared**, not yet published.
+
 ## Released: ARS Physics Beta v0.1.18.8 — 28 October 2026
 
 First standalone public module built on GIANTS-native vehicle physics. Includes terrain-dependent tire traction, wheel sinking influenced by soil, moisture, tires and load, rolling resistance and implement draft behavior. Self-hosted multiplayer gameplay was tested with the same physics in v0.1.18.7; dedicated servers and separate remote clients are not fully verified. Installation, compatibility and the exact package are documented in the [GitHub Releases section](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/releases). This is **not** the full ARS suite.

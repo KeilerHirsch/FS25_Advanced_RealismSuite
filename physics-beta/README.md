@@ -1,69 +1,27 @@
-# ARS Physics Beta
+# ARS Physics Beta — v0.1.18.9
 
-**Advanced Realism Suite — experimental Farming Simulator 25 physics module.**
+**Advanced Realism Suite (ARS)** — an independent Farming Simulator 25 physics preview.
+**More realism. Less mod juggling.** Built directly on native GIANTS physics, not a second physics engine.
 
-This standalone beta modifies the native GIANTS driving-physics calculations:
-terrain-dependent tire grip, wheel sinking influenced by soil condition, wetness,
-wheel load and tire setup, rolling resistance, implement draft and pulling performance.
-It is **not** the full Advanced Realism Suite.
+## Features
+- **Native wheel sinking:** Deeper wheel penetration on loose/plowed ground, capped by physical wheel and rim geometry.
+- **Native terrain deformation:** Stronger, soil-specific wheel ruts.
+- **Real tyre/load response:** Narrow/wide tyres, vehicle weight, moisture, cultivation state and crawler tracks affect sinking.
+- **Balanced driving:** Terrain-dependent grip, rolling resistance and working-tool draft. Original GIANTS engine torque, gearbox and horsepower remain unchanged.
+- **Stability:** Original wheel-state restoration, terrain-collision guards, native contact timing and efficient wheel-load lookups.
 
 ## Installation
-Place the ZIP file from the matching GitHub release in your FS25 mods folder,
-enable ARS Physics Beta in the savegame selection, and test on a **backup save**.
-Every version-coded ZIP uses a new FS25 mod ID; enable the new version explicitly.
-Before enabling it, disable every previous ARS Physics version for that savegame.
-Keep exactly one ARS Physics package active to avoid applying physics changes twice.
+1. Download **FS25_ARS_Physics_Beta_0_1_18_9.zip** from the matching GitHub release.
+2. Put the ZIP in your `FarmingSimulator2025/mods` folder and explicitly enable the new version in your savegame.
+3. **Disable all older ARS Physics versions** before loading the save; only one should be active.
+4. Back up your save before updating.
 
-## Validation scope
-This beta was tested in a self-hosted multiplayer game using v0.1.18.7.
-The game log confirms loading and initialization without ARS-specific Lua errors;
-the operator accepted the driving behavior. This release preserves those physics
-calculations with packaging, version and log-text corrections. No separate in-game
-acceptance of v0.1.18.8, remote-client or dedicated-server test is claimed.
+## Compatibility and test scope
+Tested on dry plowed terrain with narrow tractor tyres and loaded trailer tyres; the developer accepted the RC6 driving behavior and visual sinking. Automated Lua 5.1 tests pass. A previous Physics Beta (v0.1.18.7) was used in self-hosted multiplayer; **dedicated server and independent remote-client behavior are not yet validated for v0.1.18.9**.
 
-## Compatibility
-Avoid enabling competing soil/tire-physics modifications simultaneously
-(e.g. Soil Compaction, Longer Lasting Mud or Dirty Tire Tracks).
-Advanced Damage System (ADS) may remain enabled for testing; this is not
-a blanket compatibility guarantee for all versions or mod combinations.
+ADS may remain enabled for testing, but overheating and other mod interactions are not guaranteed. Avoid competing tyre/soil physics modifications while comparing results. This beta does **not** include the complete ARS suite or a new mud/dirt visual effects system.
 
-## Feedback
-- Discussion: https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/discussions/2
-- Bug reports: https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/issues
+## Feedback and rights
+[Discussion](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/discussions/2) · [Bug reports](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/issues) · [Release notes](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/blob/main/docs/RELEASE_NOTES_PHYSICS_0_1_18_9.md)
 
-## Rights
-Author: KeilerHirsch. License: EUPL-1.2 (see LICENSE).
-Based on GIANTS' native game interfaces, not copied source from other FS25 mods.
-
-## Physics Beta 0.1.18.9 RC4 – deeper native visuals, lighter driving
-
-**Built directly on native GIANTS physics.** This is a local test
-candidate only. The last public Physics release remains 0.1.18.8.
-
-Based on RC1's preferred vehicle handling. RC4 reduces only ARS'
-additional rolling resistance on soil by 20% and on road to a
-maximum of 1.2% (formerly 1.6%), and its active field-tool
-draft increment by 20%. It does not manipulate native motor
-torque or ADS heat. Heavy loads, steep hills and 38-degree heat
-remain native/ADS effects; avoiding overheating is not guaranteed.
-
-Visual deformable ground input: GIANTS WheelPhysics.displacementScale
-scales up to 2.50x, with explicit profiles for plowed, cultivated,
-seedbed, field, soft soil, firm ground, snow and non-deformable road.
-Factors take wheel load, wheel width, wetness and crawler tracks
-into account. Results depend on each map's native ground deformation.
-
-Visible wheel sinking: native WheelPhysics.extraSinkSupported is
-enabled when terrain deformation is supported, allowing GIANTS'
-own updateSink to affect deltaY/real wheel pose. A per-wheel
-extraSinkMaxValue target varies by surface/wheel load/width/
-crawler/wetness: plowed ground normally up to ~0.16 m,
-soft ground ~0.175 m, with a 0.20 m and 20%-of-radius safety cap.
-Road target is zero. GIANTS MAX_SINK and interpolation still limit
-the final result, so these are ceilings, not measured sink depths.
-
-No manual wheel-mesh translation, no custom terrain height writes,
-no new GUI/settings, no persistent rut journal. Prior per-wheel
-native values are restored if ARS is disabled or unloaded.
-Only one ARS Physics beta ZIP should be active. Backup test saves;
-in-game results, log compatibility and multiplayer are unverified.
+**Author:** KeilerHirsch · **License:** EUPL-1.2 (see LICENSE). Project-controlled code is original, using GIANTS engine interfaces.
