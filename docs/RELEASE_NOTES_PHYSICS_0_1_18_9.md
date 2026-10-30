@@ -20,7 +20,7 @@ Standalone Farming Simulator 25 physics beta built directly on native GIANTS veh
 ### Operator acceptance and test scope
 The operator tested the physics in Farming Simulator 25 on dry, freshly plowed soil, including narrow tractor tyres and wide, loaded Samson trailer tyres. The operator reported visually convincing sinking and balanced handling, confirmed the plowed-field-to-pavement stopping transition had been checked, and authorized publication. This is qualitative user acceptance; no measured sinking depth or repeatable telemetry is claimed.
 
-Multiplayer support has not been verified for v0.1.18.9 and is declared unsupported in `modDesc.xml`. The earlier self-hosted multiplayer test covered v0.1.18.7 and does not establish support for this build. Dedicated servers and separate remote clients are also unverified. Local Lua 5.1 regression tests pass. ADS thermal behavior and other mod interactions are not guaranteed.
+The GIANTS multiplayer declaration remains enabled (`<multiplayer supported="true"/>`). Self-hosted multiplayer was tested with the same core physics in v0.1.18.7; that historical test does not verify all v0.1.18.9 changes. Dedicated servers and separate remote clients were not tested for this build. This incomplete multiplayer coverage is an accepted beta limitation. Local Lua 5.1 regression tests pass. ADS thermal behavior and other mod interactions are not guaranteed.
 
 ### Installation
 Replace the previous ARS Physics Beta ZIP and enable only one ARS Physics version per savegame. Back up the savegame first. Avoid other mods that rewrite tyre or soil physics.
@@ -37,7 +37,7 @@ Replace the previous ARS Physics Beta ZIP and enable only one ARS Physics versio
 ### Nutzerabnahme und Testumfang
 Der Operator testete die Physik in Farming Simulator 25 auf trockenem, frisch gepflügtem Boden, darunter schmale Traktorreifen sowie breite, beladene Samson-Anhängerreifen. Er beschrieb das Einsinken als optisch überzeugend und das Fahrverhalten als ausgewogen, bestätigte den bereits geprüften Übergang vom Pflugacker auf den befestigten Weg samt Anhalten und erteilte die Freigabe zur Veröffentlichung. Das ist eine qualitative Nutzerabnahme; es werden keine gemessene Einsinktiefe oder reproduzierbare Telemetrie behauptet.
 
-Multiplayer-Unterstützung ist für v0.1.18.9 nicht verifiziert und in `modDesc.xml` als nicht unterstützt deklariert. Der frühere Test im selbst gehosteten Multiplayer bezog sich auf v0.1.18.7 und belegt diese Version nicht. Dedicated Server und getrennte Remote-Clients sind ebenfalls unverifiziert. Lokale Lua-5.1-Regressionstests sind bestanden. ADS-Temperaturverhalten und Wechselwirkungen mit anderen Mods sind nicht garantiert.
+Die GIANTS-Multiplayerdeklaration bleibt aktiviert (`<multiplayer supported="true"/>`). Selbst gehosteter Multiplayer wurde mit derselben Kernphysik in v0.1.18.7 getestet; dieser frühere Test verifiziert nicht alle Änderungen von v0.1.18.9. Dedicated Server und getrennte Remote-Clients wurden für diesen Build nicht getestet. Diese unvollständige MP-Abdeckung ist eine akzeptierte Beta-Einschränkung. Lokale Lua-5.1-Regressionstests sind bestanden. ADS-Temperaturverhalten und Wechselwirkungen mit anderen Mods sind nicht garantiert.
 
 ### Installation
 Die bisherige ARS-Physics-Beta-ZIP ersetzen und pro Spielstand nur eine ARS-Physics-Version aktivieren. Vorher den Spielstand sichern. Keine anderen Mods parallel nutzen, die Reifen- oder Bodenphysik verändern.
@@ -47,4 +47,4 @@ Die bisherige ARS-Physics-Beta-ZIP ersetzen und pro Spielstand nur eine ARS-Phys
 - **Version:** 0.1.18.9
 - **Download:** [FS25_ARS_Physics_Beta_0_1_18_9.zip](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/releases/download/v0.1.18.9-physics-beta/FS25_ARS_Physics_Beta_0_1_18_9.zip)
 - **Release page:** [ARS Physics Beta v0.1.18.9](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/releases/tag/v0.1.18.9-physics-beta)
-- **SHA-256:** 9DE83F7327ADCD5BE4B6BD256135D3E7F8041A520A654DD2D27216CB9EA259A4
+- **SHA-256:** AB724DD8998F05AE064B6874FC8911DB91C2020167EC9728052642988CA14A6E
