@@ -40,7 +40,7 @@ Der Operator testete die Physik in FS25 auf trockenem, frisch gepflügtem Boden,
 Die GIANTS-Multiplayerdeklaration bleibt aktiviert (`supported="true"`). Selbst gehosteter Multiplayer wurde mit derselben Kernphysik in v0.1.18.7 getestet; dieser frühere Test verifiziert nicht alle Änderungen von v0.1.18.10. Dedicated Server und getrennte Remote-Clients wurden für diesen Build nicht getestet. Diese unvollständige MP-Abdeckung ist eine akzeptierte Beta-Einschränkung. ADS-Temperaturverhalten und Wechselwirkungen mit anderen Mods sind nicht garantiert.
 
 ### Installation
-Die [ZIP-Version 0.1.18.9](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/releases/download/v0.1.18.10-physics-beta/FS25_Advanced_RealismSuite.zip) in den Ordner `FarmingSimulator2025/mods` legen und im Spielstand aktivieren. Alle älteren ARS-Physics-Versionen vorher deaktivieren; nur eine Version aktiv lassen. Spielstand sichern und keine anderen Reifen-/Bodenphysik-Mods parallel nutzen.
+Die [ZIP-Version 0.1.18.10](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/releases/download/v0.1.18.10-physics-beta/FS25_Advanced_RealismSuite.zip) in den Ordner `FarmingSimulator2025/mods` legen und im Spielstand aktivieren. Alle älteren ARS-Physics-Versionen vorher deaktivieren; nur eine Version aktiv lassen. Spielstand sichern und keine anderen Reifen-/Bodenphysik-Mods parallel nutzen.
 
 ## Links
 
