@@ -5,12 +5,12 @@ PowerConsumer = {onUpdate=function() end}
 local motorFn = function() return {42},{1} end
 VehicleMotor = {getTorqueAndSpeedValues=motorFn}
 dofile("physics-beta/scripts/ARSPhysics.lua")
-assert(ARSPhysics.VERSION=="0.1.18.9")
+assert(ARSPhysics.VERSION=="0.1.18.10")
 for _,entry in ipairs({
     {"road",1.00,1.00,1.00,1.00},
     {"field",1.030,1.095,1.035,1.00},
     {"cultivated",1.045,1.160,1.055,1.025},
-    {"plowed",1.020,1.200,1.080,1.055},
+    {"plowed",1.020,1.200,1.015,1.055},
     {"seedbed",1.045,1.145,1.045,1.015},
     {"soft",0.975,1.220,1.095,1.045},
     {"snow",1.00,1.060,1.00,1.00}
