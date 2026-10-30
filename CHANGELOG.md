@@ -2,9 +2,9 @@
 
 > **Project status — 28 October 2026.** The standalone ARS Physics Beta is publicly available; the **full ARS suite remains unreleased**. Mainline development entries below describe work in progress, not shipped features.
 
-## Prepared: ARS Physics Beta v0.1.18.9 — 30 October 2026
+## ARS Physics Beta v0.1.18.9 — 30 October 2026
 
-Native wheel sinking and ruts now respond more visibly to plowed soil, tyre width, wheel load, moisture and crawler setups. Narrow tyres can approach their physical rim-horn limit; wide tyres sink less. Improved native contact timing, terrain-collision guards and wheel-state restoration; engine torque unchanged. The operator shared qualitative in-game screenshots of RC6 on dry plowed soil and positive driving feedback; no measured depth or repeatable telemetry was captured. Local Lua 5.1 smoke tests passed; MP/dedicated-server and ADS behavior remain unverified. [Short release notes](docs/RELEASE_NOTES_PHYSICS_0_1_18_9.md). This entry is **prepared**, not yet published.
+Native wheel sinking and ruts respond to plowed soil, tyre width, wheel load, moisture and crawler setups. Narrow tyres can approach their physical rim-horn limit; wide tyres sink less. This release corrects stopped-wheel return and prevents originally unsupported wheels from receiving extra native sinking at water contact. Native engine torque and gearbox remain unchanged. The operator's FS25 feedback is qualitative user acceptance; no measured depth or repeatable telemetry is claimed. Lua 5.1 regression tests pass. GIANTS multiplayer support remains declared; self-hosted multiplayer was tested with the same physics in v0.1.18.7, while dedicated-server and separate remote-client behavior for v0.1.18.9 remain unverified. ADS behavior is not guaranteed. See the [release notes](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/blob/v0.1.18.9-physics-beta/docs/RELEASE_NOTES_PHYSICS_0_1_18_9.md) and [GitHub release](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/releases/tag/v0.1.18.9-physics-beta).
 
 ## Released: ARS Physics Beta v0.1.18.8 — 28 October 2026
 

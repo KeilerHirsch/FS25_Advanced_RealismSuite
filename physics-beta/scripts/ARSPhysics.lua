@@ -300,6 +300,7 @@ local function prepareNativeSinkGate(wp, dt)
     local nativeTerrain = Platform ~= nil and Platform.gameplay ~= nil
         and Platform.gameplay.wheelTerrainDisplacement == true
         and wp.supportsWheelSink ~= false
+        and wp.hasWaterContact ~= true
     if ARS:isEnabled("physics") and nativeTerrain then
         -- Vanilla checks the gate before updateSink. Calculate actual target
         -- inside updateSink, AFTER updateContact, not one stale tick earlier.
@@ -510,6 +511,16 @@ function ARSPhysics:installHooks()
         -- Engine updateContact already ran for its scheduled wheel slot.
         -- Water obeys its own GIANTS limit rather than a forced 0-m cap.
         local original = originalExtraSink[wp]
+        if wp.hasWaterContact == true and original ~= nil
+            and original.supported == false then
+            -- updateContact may discover water after serverUpdate prepared
+            -- the temporary ARS gate. Preserve the original disabled setting
+            -- and keep GIANTS' water sink from running for this wheel.
+            wp.extraSinkSupported = false
+            wp.extraSinkMaxValue = original.max
+            relaxNativeSink(wp, dt, false)
+            return
+        end
         local cap = nativeExtraSinkCap(wp, wet)
         if cap == 0 and not (original ~= nil and original.supported) and wp.contact ~= nil and WheelContactType ~= nil
             and wp.contact ~= WheelContactType.NONE

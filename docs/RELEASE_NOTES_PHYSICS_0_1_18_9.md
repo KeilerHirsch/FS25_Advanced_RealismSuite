@@ -1,44 +1,50 @@
 # ARS Physics Beta — v0.1.18.9
 
 **More realism. All in one mod.**
-Standalone physics preview for Farming Simulator 25 — built directly on native GIANTS physics.
 
-## What's new
+
+
+**Mehr Realismus. Alles in einer Mod.**
+
+Standalone Farming Simulator 25 physics beta built directly on native GIANTS vehicle physics. This release is the physics module only, not the complete ARS suite.
+
+## English
+
+### What's new
 - **Deep, visible wheel sinking:** Freshly plowed and soft soil lets loaded tyres sink naturally toward the rim, without moving the wheel mesh independently.
 - **Ground deformation:** Stronger native ruts with separate behavior for plowed, cultivated, seedbed, firm and wet ground. Paved roads stay largely unaffected.
 - **Tyre-aware physics:** Wheel load, tyre width, moisture and crawler tracks influence sinking. Narrow tyres can sink deeper than wide tyres under comparable load.
-- **Refined handling:** Noticeable off-road resistance and traction without exaggerated extra engine load. Native engine torque and gearbox remain unchanged.
-- **Stability improvements:** Better native wheel-contact timing, terrain-collision guards, state restoration and fewer repeated wheel-load calculations.
+- **Refined handling:** More noticeable off-road resistance and traction without exaggerated extra engine load. Native engine torque and gearbox remain unchanged.
+- **Stability:** Corrected native stopped-wheel return and water-contact gating. Wheels that did not originally support native extra sinking no longer receive water sinking from ARS; GIANTS water behavior remains available to wheels that already supported it.
 
-**Installation:** Replace the previous ARS Physics Beta ZIP; enable only **one** ARS Physics version per savegame. Back up your savegame. Avoid other mods that rewrite tyre/soil physics.
+### Operator acceptance and test scope
+The operator tested the physics in Farming Simulator 25 on dry, freshly plowed soil, including narrow tractor tyres and wide, loaded Samson trailer tyres. The operator reported visually convincing sinking and balanced handling, confirmed the plowed-field-to-pavement stopping transition had been checked, and authorized publication. This is qualitative user acceptance; no measured sinking depth or repeatable telemetry is claimed.
 
-**Beta status:** Qualitative in-game screenshots and driving feedback on dry plowed soil; no instrumented sinking-depth test. Local Lua 5.1 smoke tests pass. Dedicated-server and independent multiplayer-client compatibility are not yet verified. ADS thermal behavior is not guaranteed.
+The GIANTS multiplayer declaration remains enabled (`<multiplayer supported="true"/>`). Self-hosted multiplayer was tested with the same physics in v0.1.18.7. Dedicated-server and separate remote-client behavior have not been verified for v0.1.18.9. Local Lua 5.1 regression tests pass. ADS thermal behavior and other mod interactions are not guaranteed.
 
-**This is the standalone Physics Beta, not the complete Advanced Realism Suite.**
-
-[Feedback](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/discussions/2) · [Report a bug](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/issues)
-
----
+### Installation
+Replace the previous ARS Physics Beta ZIP and enable only one ARS Physics version per savegame. Back up the savegame first. Avoid other mods that rewrite tyre or soil physics.
 
 ## Deutsch
 
-**Mehr Realismus. Alles in einer Mod.** Eigenständige Physics Beta für LS25 – direkt auf der nativen GIANTS-Physik aufgebaut.
-
 ### Neuerungen
 - **Deutlich tieferes Einsinken:** Schwere Räder tauchen auf lockerem Pflugacker sichtbar ein – bei passenden Reifen bis nahe ans Felgenhorn.
-- **Natürlichere Fahrspuren:** Native Bodenverformung, abgestimmt auf Bearbeitung, Feuchtigkeit und Radlast.
-- **Bereifung zählt:** Schmale Reifen, Breitreifen und Raupen reagieren unterschiedlich; auch Zuladung und Reifenbreite fließen ein.
-- **Besser abgestimmtes Fahrgefühl:** Mehr spürbare Bodenphysik ohne unnötige Änderungen an Motordrehmoment oder Getriebe.
-- **Technische Verbesserungen:** GIANTS-Radlast, Kontaktaktualisierung, Kollisionsprüfung und saubere Rückstellung.
+- **Natürlichere Fahrspuren:** Native Bodenverformung mit eigenem Verhalten für Pflugacker, bearbeiteten Boden, Saatbett, festen Untergrund und Feuchtigkeit. Befestigte Wege bleiben weitgehend unbeeinflusst.
+- **Bereifung zählt:** Radlast, Reifenbreite, Feuchtigkeit und Raupenlaufwerke beeinflussen das Einsinken. Schmale Reifen sinken bei vergleichbarer Last stärker ein als breite.
+- **Ausgewogenes Fahrgefühl:** Mehr spürbarer Widerstand und Traktion abseits befestigter Wege ohne überhöhte zusätzliche Motorlast. Motordrehmoment und Getriebe bleiben unverändert.
+- **Stabilität:** Rückstellung stehender Räder und die Wasser-Kontaktprüfung für natives Einsinken wurden korrigiert. ARS lässt ursprünglich nicht sinkfähige Räder bei Wasserkontakt nicht zusätzlich einsinken; das native GIANTS-Verhalten bleibt für bereits dafür konfigurierte Räder erhalten.
 
-**Installation:** Alte ARS-Physics-Version deaktivieren, nur **eine** ZIP aktivieren. Spielstand vorher sichern. Andere Reifen-/Bodenphysik-Mods möglichst nicht parallel nutzen.
+### Nutzerabnahme und Testumfang
+Der Operator testete die Physik in Farming Simulator 25 auf trockenem, frisch gepflügtem Boden, darunter schmale Traktorreifen sowie breite, beladene Samson-Anhängerreifen. Er beschrieb das Einsinken als optisch überzeugend und das Fahrverhalten als ausgewogen, bestätigte den bereits geprüften Übergang vom Pflugacker auf den befestigten Weg samt Anhalten und erteilte die Freigabe zur Veröffentlichung. Das ist eine qualitative Nutzerabnahme; es werden keine gemessene Einsinktiefe oder reproduzierbare Telemetrie behauptet.
 
-**Beta-Hinweis:** Screenshots und Fahrfeedback vom Operator auf trockenem Pflugacker; keine instrumentierte Einsinktiefenmessung. Lokale Lua-Tests bestanden. Dedicated Server und getrennte MP-Clients noch nicht nachgewiesen; ADS-Temperaturverhalten nicht garantiert.
+Die GIANTS-Multiplayerdeklaration bleibt aktiviert (`<multiplayer supported="true"/>`). Selbst gehosteter Multiplayer wurde mit derselben Physik in v0.1.18.7 getestet. Dedicated Server und getrennte Remote-Clients wurden für v0.1.18.9 nicht verifiziert. Lokale Lua-5.1-Regressionstests sind bestanden. ADS-Temperaturverhalten und Wechselwirkungen mit anderen Mods sind nicht garantiert.
 
-**Nicht die vollständige ARS-Suite.**
+### Installation
+Die bisherige ARS-Physics-Beta-ZIP ersetzen und pro Spielstand nur eine ARS-Physics-Version aktivieren. Vorher den Spielstand sichern. Keine anderen Mods parallel nutzen, die Reifen- oder Bodenphysik verändern.
 
+## Release
 
-### Test evidence and operator sign-off (2026-10-30)
-The operator reviewed RC6 in Farming Simulator 25 on dry, freshly plowed soil, including narrow tractor tyres and wide loaded Samson trailer tyres, and reported visually convincing wheel sinking and balanced handling. After being asked to check the plowed-field-to-pavement stopping transition, the operator explicitly replied that this test had already been performed and authorized publication. These are operator statements, not instrumented logs, controlled measurements or an independent verification of the exact packaged SHA-256. The final package also contains the small native stopped-wheel return correction, verified by a targeted Lua 5.1 regression matching GIANTS updateSink's assignment behavior. No remote multiplayer/dedicated server or ADS thermal guarantee is made. This is an experimental beta release.
-**Release package:** FS25_ARS_Physics_Beta_0_1_18_9.zip
-**SHA-256:** EB908EB261A5BC59024BD6E5FBDFE2DCA44BC827D5B29B3778AD1C1BC04F8D16
+- **Version:** 0.1.18.9
+- **Download:** [FS25_ARS_Physics_Beta_0_1_18_9.zip](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/releases/download/v0.1.18.9-physics-beta/FS25_ARS_Physics_Beta_0_1_18_9.zip)
+- **Release page:** [ARS Physics Beta v0.1.18.9](https://github.com/KeilerHirsch/FS25_Advanced_RealismSuite/releases/tag/v0.1.18.9-physics-beta)
+- **SHA-256:** 19EC1C7431BC8F49C60318D90DA1493AF7161936595E24154D1F7686F3D80E36
