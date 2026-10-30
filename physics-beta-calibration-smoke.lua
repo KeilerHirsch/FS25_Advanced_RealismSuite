@@ -251,8 +251,8 @@ assert(extraWheel.extraSinkSupported==false and extraWheel.extraSinkMaxValue==0.
 assert(extraWheel.displacementScale==1,"Map unload must restore visual scale")
 assert(VehicleMotor.getTorqueAndSpeedValues==motorFn,"Native torque changed")
 print("PASS: native GIANTS extra-sink gate, bounded plowed depth, road, restore")
-print("PASS: RC6 rim-horn targeted physical native sink and untouched motor torque")
--- RC6 per-wheel rim and load tests: no changes to motor/rolling/draft paths.
+print("PASS: rim-horn targeted physical native sink and untouched motor torque")
+-- Per-wheel rim and load regressions preserve motor, rolling, and draft paths.
 -- The native updateSink mock records the temporarily raised limit.
 local function rimCase(width,rimDiameter,crawler,load)
     local v={isServer=true,isAddedToPhysics=true,
