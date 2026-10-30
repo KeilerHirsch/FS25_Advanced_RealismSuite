@@ -37,5 +37,8 @@ Standalone physics preview for Farming Simulator 25 — built directly on native
 
 **Nicht die vollständige ARS-Suite.**
 
+
+### Test evidence and operator sign-off (2026-10-30)
+The operator reviewed RC6 in Farming Simulator 25 on dry, freshly plowed soil, including narrow tractor tyres and wide loaded Samson trailer tyres, and reported visually convincing wheel sinking and balanced handling. After being asked to check the plowed-field-to-pavement stopping transition, the operator explicitly replied that this test had already been performed and authorized publication. These are operator statements, not instrumented logs, controlled measurements or an independent verification of the exact packaged SHA-256. The final package also contains the small native stopped-wheel return correction, verified by a targeted Lua 5.1 regression matching GIANTS updateSink's assignment behavior. No remote multiplayer/dedicated server or ADS thermal guarantee is made. This is an experimental beta release.
 **Release package:** FS25_ARS_Physics_Beta_0_1_18_9.zip
 **SHA-256:** EB908EB261A5BC59024BD6E5FBDFE2DCA44BC827D5B29B3778AD1C1BC04F8D16
