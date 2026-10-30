@@ -229,8 +229,8 @@ local extraWheel={vehicle=eVehicle,wheel={node=10},wheelShape=12,
 extraWheel.setDisplacementAllowed=function(self) end
 WheelPhysics.serverUpdate(extraWheel,16,1,0)
 assert(nativeSeen[#nativeSeen].supported==true,"Native GIANTS sink gate not enabled")
-assert(nativeSeen[#nativeSeen].max>=0.15 and nativeSeen[#nativeSeen].max<=0.20,
-    "Plowed native sink cap missing or unsafe")
+assert(nativeSeen[#nativeSeen].max>=0.24 and nativeSeen[#nativeSeen].max<=0.34,
+    "Plowed native cap not recalibrated for rim-line goal")
 assert(extraWheel.displacementScale>=2.2 and extraWheel.displacementScale<=2.5,
     "Plowed native visual terrain factor too weak")
 WheelsUtil.getGroundType=function() return WheelsUtil.GROUND_ROAD end
@@ -251,4 +251,45 @@ assert(extraWheel.extraSinkSupported==false and extraWheel.extraSinkMaxValue==0.
 assert(extraWheel.displacementScale==1,"Map unload must restore visual scale")
 assert(VehicleMotor.getTorqueAndSpeedValues==motorFn,"Native torque changed")
 print("PASS: native GIANTS extra-sink gate, bounded plowed depth, road, restore")
-print("PASS: RC5 native 50-percent plowed sink baseline and untouched motor torque")
+print("PASS: RC6 rim-horn targeted physical native sink and untouched motor torque")
+-- RC6 per-wheel rim and load tests: no changes to motor/rolling/draft paths.
+-- The native updateSink mock records the temporarily raised limit.
+local function rimCase(width,rimDiameter,crawler,load)
+    local v={isServer=true,isAddedToPhysics=true,
+        spec_wheels={wheels={{},{},{},{}}},
+        getTotalMass=function() return 10 end}
+    local w={node=10,visualWheels=rimDiameter and {{rimDiameter=rimDiameter}} or {}}
+    local wp={vehicle=v,wheel=w,wheelShape=12,
+        radius=0.92,radiusOriginal=0.92,
+        extraSinkSupported=false,extraSinkMaxValue=0.184,
+        densityType=FieldGroundType.PLOWED,displacementScale=1,
+        displacementAllowed=true,supportsWheelSink=true,
+        wheelShapeWidth=width,tireType=crawler and 2 or 1}
+    wp.setDisplacementAllowed=function() end
+    wp.wheelShapeCreated=true
+    wp.getTireLoad=function() return load end
+    local original=WheelPhysics.MAX_SINK[FieldGroundType.PLOWED]
+    -- GIANTS simulation: original mock records actual temporary MAX_SINK.
+    WheelPhysics.serverUpdate(wp,16,1,0)
+    assert(sinkSeen[#sinkSeen] >= wp.extraSinkMaxValue - 0.0001,
+        "Temporary native MAX_SINK must actually reach rim target")
+    assert(WheelPhysics.MAX_SINK[FieldGroundType.PLOWED]==original,
+        "Class-global MAX_SINK must be restored after every wheel")
+    return wp
+end
+WheelsUtil.getGroundType=function() return WheelsUtil.GROUND_HARD_TERRAIN end
+g_updateLoopIndex=615
+local narrow=rimCase(0.38,1.18,false,6)
+local wide=rimCase(1.15,1.18,false,6)
+local crawler=rimCase(0.38,1.18,true,6)
+local limit=(0.92-1.18/2)*0.90
+assert(math.abs(narrow.extraSinkMaxValue-limit)<0.001,
+    "Narrow tyre should approach, but not cross, physical rim horn")
+assert(wide.extraSinkMaxValue<narrow.extraSinkMaxValue,
+    "Wide tyres need lower physical sink target")
+assert(crawler.extraSinkMaxValue<narrow.extraSinkMaxValue,
+    "Crawler sink needs further reduction")
+local fallback=rimCase(0.38,nil,false,6)
+assert(fallback.extraSinkMaxValue<=0.92*0.34+0.0001,
+    "No-rim-data fallback must stay conservative")
+print("PASS: rim geometry, narrow/wide/crawler and fallback guards")

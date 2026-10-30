@@ -214,22 +214,62 @@ local originalDisplacement = setmetatable({}, {__mode="k"})
 -- wheel's setting for rollback without altering wheel mesh or engine torque.
 local originalExtraSink = setmetatable({}, {__mode="k"})
 local EXTRA_SINK_METERS = {
-    other=0.00, road=0.00, hard=0.00, firm=0.035, field=0.070,
-    cultivated=0.115, plowed=0.160, seedbed=0.100, soft=0.175, snow=0.065
+    other=0.00, road=0.00, hard=0.00, firm=0.035, field=0.105,
+    cultivated=0.190, plowed=0.310, seedbed=0.170, soft=0.335, snow=0.065
 }
+-- Rim-horn target for narrow tyres on dry plowed fields. Based on actual
+-- outerRim widthAndDiam when available (GIANTS WheelVisual.rimDiameter).
+-- Keep room below the rim, do not allow extreme half-metre sink jumps.
+local RIM_SINK_LIMIT = {fraction=0.90, maxRadius=0.42, maxMetres=0.38}
+local sidewallCache = setmetatable({}, {__mode="k"})
+local function rimSidewall(wp)
+    local cached = sidewallCache[wp]
+    if cached ~= nil then return cached or nil end
+    local radius = wp.radiusOriginal or wp.radius
+    local visuals = wp.wheel and wp.wheel.visualWheels
+    local sidewall
+    if type(radius) == "number" and radius > 0 and type(visuals) == "table" then
+        for _, visual in ipairs(visuals) do
+            local diameter = visual.rimDiameter
+            if type(diameter) == "number" and diameter > radius * 0.35
+                and diameter < radius * 1.85 then
+                local candidate = radius - diameter * 0.5
+                if candidate >= radius * 0.10 and candidate <= radius * 0.70 then
+                    sidewall = sidewall and math.min(sidewall, candidate) or candidate
+                end
+            end
+        end
+    end
+    sidewallCache[wp] = sidewall or false
+    return sidewall
+end
 local function nativeExtraSinkCap(wp, wet)
     -- Keep vanilla water sink independent of ARS soil settings.
     if wp.hasWaterContact then return nil end
     local surface = groundState(wp)
     local depth = EXTRA_SINK_METERS[surface] or 0
-    if depth <= 0 or type(wp.radius) ~= "number" or wp.radius <= 0 then return 0 end
-    local _, _, loadIndex = wheelLoad(wp)
-    local load = clamp(1 + 0.22 * (loadIndex - 1), 0.83, 1.20)
-    local moisture = 1 + 0.18 * clamp(wet or 0, 0, 1)
-    local track = isCrawler(wp) and 0.82 or 1
-    -- Bounded physical sink target (not guaranteed centimetres in game).
-    return clamp(depth * load * moisture * track,
-        0, math.min(wp.radius * 0.20, 0.20))
+    local radius = wp.radiusOriginal or wp.radius
+    if depth <= 0 or type(radius) ~= "number" or radius <= 0 then return 0 end
+    local width, _, loadIndex = wheelLoad(wp)
+    local load = clamp(1 + 0.18 * (loadIndex - 1), 0.78, 1.20)
+    local moisture = 1 + 0.16 * clamp(wet or 0, 0, 1)
+    -- Narrow maintenance tyres cut deeper than wide tyres/dual setups.
+    -- Shared WheelShape width already accounts for the full tyre assembly.
+    local contact = clamp(1 + 0.55 * (0.6 - width) / 0.6, 0.55, 1.30)
+    local track = isCrawler(wp) and 0.68 or 1
+    local requested = depth * load * moisture * contact * track
+    local geometryCap = math.min(radius * RIM_SINK_LIMIT.maxRadius,
+        RIM_SINK_LIMIT.maxMetres)
+    local sidewall = rimSidewall(wp)
+    if sidewall ~= nil then
+        geometryCap = math.min(geometryCap, sidewall * RIM_SINK_LIMIT.fraction)
+    else
+        -- Conservative radius-based fallback for wheels without rim metadata.
+        geometryCap = math.min(geometryCap, radius * 0.34)
+    end
+    -- An axle with a crawler is not modelled as a narrow row-crop tyre.
+    if isCrawler(wp) then geometryCap = math.min(geometryCap, radius * 0.20) end
+    return clamp(requested, 0, geometryCap)
 end
 
 local function relaxNativeSink(wp, dt, immediate)
@@ -493,9 +533,18 @@ function ARSPhysics:installHooks()
         end
         local mult = sinkFactor(wp, wet)
         if mult <= 1 then return vanillaSink(wp, dt, wet) end
-        -- Temporarily scale only an existing positive GIANTS entry.
-        -- Never persist class-global physics changes or invent nil entries.
-        list[key] = raw * mult
+        -- Native updateSink takes min(MAX_SINK, extraSinkMaxValue). Raising
+        -- only the cap does nothing when the stock per-density limit is lower.
+        -- Temporarily open this EXISTING positive entry only for this wheel,
+        -- allowing a dry narrow tyre to approach its real rim horn.
+        -- Keep original native interpolation, contact checks, wheel geometry,
+        -- and network path unchanged. Restore the global entry afterwards.
+        local desired = wp.extraSinkMaxValue
+        local boosted = raw * mult
+        if type(desired) == "number" and desired > 0 then
+            boosted = math.max(boosted, desired)
+        end
+        list[key] = boosted
         return ARS.callWithRestore(function()
             list[key] = raw
         end, vanillaSink, wp, dt, wet)
