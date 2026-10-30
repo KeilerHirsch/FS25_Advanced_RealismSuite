@@ -12,8 +12,8 @@
 <rect x="626" y="61" width="177" height="42" rx="4" fill="#071711" stroke="#397e68" stroke-width="1"/>
 <rect x="813" y="61" width="163" height="42" rx="4" fill="#191807" stroke="#b89542" stroke-width="1"/>
 <rect x="987" y="61" width="143" height="42" rx="4" fill="#071711" stroke="#397e68" stroke-width="1"/>
-<text x="48" y="88" fill="#99cbbb" font-size="16" font-family="Consolas,DejaVu Sans Mono,monospace" font-weight="600" letter-spacing="0.5">PRE-RELEASE</text>
-<text x="205" y="89" fill="#4df1ad" font-size="19" font-family="Consolas,DejaVu Sans Mono,monospace" font-weight="700" letter-spacing="0.1">v0.1.18.9-physics-beta</text>
+<text x="48" y="88" fill="#99cbbb" font-size="16" font-family="Consolas,DejaVu Sans Mono,monospace" font-weight="600" letter-spacing="0.5">RELEASE</text>
+<text x="205" y="89" fill="#4df1ad" font-size="19" font-family="Consolas,DejaVu Sans Mono,monospace" font-weight="700" letter-spacing="0.1">v0.1.18.10-physics-beta</text>
 <text x="644" y="88" fill="#99cbbb" font-size="16" font-family="Consolas,DejaVu Sans Mono,monospace" font-weight="600" letter-spacing="0.3">ROADMAP EPICS</text>
 <text x="829" y="89" fill="#efc86f" font-size="18" font-family="Consolas,DejaVu Sans Mono,monospace" font-weight="700" letter-spacing="0.2">01 ACTIVE</text>
 <text x="999" y="89" fill="#e0f0e9" font-size="16" font-family="Consolas,DejaVu Sans Mono,monospace" font-weight="600" letter-spacing="0.1">/ 10 TOTAL</text>
