@@ -1,6 +1,6 @@
 # ARS Physics Beta — v0.1.18.9
 
-**More realism. Less mod juggling.**
+**More realism. All in one mod.**
 Standalone physics preview for Farming Simulator 25 — built directly on native GIANTS physics.
 
 ## What's new
@@ -22,7 +22,7 @@ Standalone physics preview for Farming Simulator 25 — built directly on native
 
 ## Deutsch
 
-**Mehr Realismus. Weniger Mod-Chaos.** Eigenständige Physics Beta für LS25 – direkt auf der nativen GIANTS-Physik aufgebaut.
+**Mehr Realismus. Alles in einer Mod.** Eigenständige Physics Beta für LS25 – direkt auf der nativen GIANTS-Physik aufgebaut.
 
 ### Neuerungen
 - **Deutlich tieferes Einsinken:** Schwere Räder tauchen auf lockerem Pflugacker sichtbar ein – bei passenden Reifen bis nahe ans Felgenhorn.
@@ -38,4 +38,4 @@ Standalone physics preview for Farming Simulator 25 — built directly on native
 **Nicht die vollständige ARS-Suite.**
 
 **Release package:** FS25_ARS_Physics_Beta_0_1_18_9.zip
-**SHA-256:** 6A138CBA404B89FDC33B6DA3283235D84B082BAD9A46287D286E38C98C88CB42
+**SHA-256:** EB908EB261A5BC59024BD6E5FBDFE2DCA44BC827D5B29B3778AD1C1BC04F8D16

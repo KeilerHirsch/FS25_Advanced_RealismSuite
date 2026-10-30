@@ -1,7 +1,7 @@
 # ARS Physics Beta — v0.1.18.9
 
 **Advanced Realism Suite (ARS)** — an independent Farming Simulator 25 physics preview.
-**More realism. Less mod juggling.** Built directly on native GIANTS physics, not a second physics engine.
+**More realism. All in one mod.** Built directly on native GIANTS physics, not a second physics engine.
 
 ## Features
 - **Native wheel sinking:** Deeper wheel penetration on loose/plowed ground, capped by physical wheel and rim geometry.
