@@ -279,7 +279,9 @@ local function relaxNativeSink(wp, dt, immediate)
         or wp.sink <= 0 then return end
     local rate = immediate and wp.sink or 0.16 * clamp(dt or 0, 0, 100) / 1000
     local nextSink = math.max(0, wp.sink - rate)
-    wp.sinkTarget = 0
+    -- GIANTS updateSink assigns sink directly to sinkTarget even while parked.
+    -- Preserve the gradual target or the native update snaps the wheel upward.
+    wp.sinkTarget = nextSink
     if math.abs(nextSink - wp.sink) > 0.00001 then
         wp.sink = nextSink
         wp.deltaY = wp.deltaYOriginal + nextSink

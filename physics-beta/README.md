@@ -17,7 +17,7 @@
 4. Back up your save before updating.
 
 ## Compatibility and test scope
-Tested on dry plowed terrain with narrow tractor tyres and loaded trailer tyres; the developer accepted the RC6 driving behavior and visual sinking. Automated Lua 5.1 tests pass. A previous Physics Beta (v0.1.18.7) was used in self-hosted multiplayer; **dedicated server and independent remote-client behavior are not yet validated for v0.1.18.9**.
+The operator supplied screenshots of dry plowed terrain with narrow tractor tyres and loaded trailer tyres, plus qualitative driving feedback; this is not a measured in-game benchmark. Local Lua 5.1 smoke tests pass. A previous Physics Beta (v0.1.18.7) was used in self-hosted multiplayer; **dedicated server and independent remote-client behavior are not yet validated for v0.1.18.9**.
 
 ADS may remain enabled for testing, but overheating and other mod interactions are not guaranteed. Avoid competing tyre/soil physics modifications while comparing results. This beta does **not** include the complete ARS suite or a new mud/dirt visual effects system.
 

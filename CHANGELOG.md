@@ -4,7 +4,7 @@
 
 ## Prepared: ARS Physics Beta v0.1.18.9 — 30 October 2026
 
-Native wheel sinking and ruts now respond more visibly to plowed soil, tyre width, wheel load, moisture and crawler setups. Narrow tyres can approach their physical rim-horn limit; wide tyres sink less. Improved native contact timing, terrain-collision guards and wheel-state restoration; engine torque unchanged. RC6 visuals and handling accepted in FS25, Lua 5.1 regression tests passed; no new MP/dedicated-server or ADS guarantee. [Short release notes](docs/RELEASE_NOTES_PHYSICS_0_1_18_9.md). This entry is **prepared**, not yet published.
+Native wheel sinking and ruts now respond more visibly to plowed soil, tyre width, wheel load, moisture and crawler setups. Narrow tyres can approach their physical rim-horn limit; wide tyres sink less. Improved native contact timing, terrain-collision guards and wheel-state restoration; engine torque unchanged. The operator shared qualitative in-game screenshots of RC6 on dry plowed soil and positive driving feedback; no measured depth or repeatable telemetry was captured. Local Lua 5.1 smoke tests passed; MP/dedicated-server and ADS behavior remain unverified. [Short release notes](docs/RELEASE_NOTES_PHYSICS_0_1_18_9.md). This entry is **prepared**, not yet published.
 
 ## Released: ARS Physics Beta v0.1.18.8 — 28 October 2026
 

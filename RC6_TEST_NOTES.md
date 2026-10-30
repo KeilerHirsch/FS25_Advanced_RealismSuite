@@ -22,3 +22,9 @@ Dry, freshly plowed ground: narrow maintenance tyres may sink visibly to just be
 
 ## Validation and operational limits
 Lua 5.1 syntax, RC5 regression suite and RC6 rim, width, crawler, conservative-fallback and native global-restore assertions must pass before packaging. Review mod ZIP root structure, SHA256 and make exactly one ARS Physics ZIP active. Close game before swap. Back up RC5. Runtime LS25 play, dedicated multiplayer and ADS temperature remain untested in RC6. No external third-party code copied.
+
+## Post-build in-game feedback (30 October 2026)
+
+After RC6 was installed, the operator shared Farming Simulator 25 screenshots from a dry, freshly plowed field: narrow maintenance tyres on a tractor and wide Samson trailer tyres with approximately 7,000 litres of manure. The operator described the resulting native wheel sinking as visibly improved and realistic. This is qualitative visual feedback, not a controlled A/B test or measured sink depth; dedicated server, remote multiplayer clients and ADS thermal behavior remain unverified.
+
+The earlier statement that RC6 had no in-game results applied **at build time**, before this subsequent feedback.

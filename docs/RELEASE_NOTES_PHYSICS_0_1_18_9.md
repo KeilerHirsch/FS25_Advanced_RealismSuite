@@ -12,7 +12,7 @@ Standalone physics preview for Farming Simulator 25 — built directly on native
 
 **Installation:** Replace the previous ARS Physics Beta ZIP; enable only **one** ARS Physics version per savegame. Back up your savegame. Avoid other mods that rewrite tyre/soil physics.
 
-**Beta status:** Tested in FS25 on dry plowed soil with narrow tyres and loaded trailer tyres; Lua 5.1 regression tests pass. Dedicated-server and independent multiplayer-client compatibility are not yet verified. ADS thermal behavior is not guaranteed.
+**Beta status:** Qualitative in-game screenshots and driving feedback on dry plowed soil; no instrumented sinking-depth test. Local Lua 5.1 smoke tests pass. Dedicated-server and independent multiplayer-client compatibility are not yet verified. ADS thermal behavior is not guaranteed.
 
 **This is the standalone Physics Beta, not the complete Advanced Realism Suite.**
 
@@ -33,9 +33,9 @@ Standalone physics preview for Farming Simulator 25 — built directly on native
 
 **Installation:** Alte ARS-Physics-Version deaktivieren, nur **eine** ZIP aktivieren. Spielstand vorher sichern. Andere Reifen-/Bodenphysik-Mods möglichst nicht parallel nutzen.
 
-**Beta-Hinweis:** Im LS25 auf trockenem Pflugacker mit schmalen Reifen und beladenen Anhängerreifen getestet. Lua-Regressionen bestanden. Dedicated Server und getrennte MP-Clients noch nicht nachgewiesen; ADS-Temperaturverhalten nicht garantiert.
+**Beta-Hinweis:** Screenshots und Fahrfeedback vom Operator auf trockenem Pflugacker; keine instrumentierte Einsinktiefenmessung. Lokale Lua-Tests bestanden. Dedicated Server und getrennte MP-Clients noch nicht nachgewiesen; ADS-Temperaturverhalten nicht garantiert.
 
 **Nicht die vollständige ARS-Suite.**
 
 **Release package:** FS25_ARS_Physics_Beta_0_1_18_9.zip
-**SHA-256:** 3C06969FD16280308420D1F884E45B5EA01793B531B2643DB3C1E5BE1DE886D9
+**SHA-256:** 6A138CBA404B89FDC33B6DA3283235D84B082BAD9A46287D286E38C98C88CB42
